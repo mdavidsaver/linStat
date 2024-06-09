@@ -25,7 +25,7 @@ struct Interval {
     uint64_t period; // seconds
     const char *label;
 };
-const Interval intervals[] = { // in decending order
+const Interval intervals[] = { // in descending order
     {60*60*24, "D"},
     {60*60, "H"},
     {60, "M"},

@@ -98,7 +98,8 @@ struct IFStatTable : public StatTable {
                 CASE(rx_compressed);
                 CASE(tx_compressed);
                 CASE(rx_nohandler);
-                CASE(rx_otherhost_dropped);
+                // TODO: test linux header version for support of:
+                //CASE(rx_otherhost_dropped);
 
 #undef CASE
 
@@ -126,6 +127,7 @@ struct IFStatTable : public StatTable {
         NLMsg msg(raw, (nlmsghdr*)raw->data());
         op = react.request(std::move(msg), [this](NLMsg&& rep){
             if(rep->nlmsg_type==RTM_NEWLINK) {
+                // TODO: handle possibility of multi-part reply for a single interface?
                 digest_newlink(rep.get());
 
             } else if(rep->nlmsg_type==NLMSG_ERROR) {

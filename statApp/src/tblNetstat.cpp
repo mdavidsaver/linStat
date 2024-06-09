@@ -19,7 +19,7 @@ const char * const tblName = "netstat";
 
 struct NetstatTable : public StatTable {
     std::string fname;
-    std::vector<std::string> labels; // presist to avoid re-alloc
+    std::vector<std::string> labels; // persist to avoid re-alloc
 
     explicit NetstatTable(const std::string& inst, const Reactor& react)
         :StatTable(tblName, inst, react)

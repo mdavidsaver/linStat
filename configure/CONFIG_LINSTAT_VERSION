@@ -1,0 +1,8 @@
+ifndef LINSTAT_TOP
+# define regardles of variable name used in configure/RELEASE
+# eg. use with DB_INSTALLS
+LINSTAT_TOP := $(dir $(lastword $(MAKEFILE_LIST)))
+endif
+
+# pre-release.  May use to test when module included at minimum version...
+LINSTAT_0_0_0 = YES

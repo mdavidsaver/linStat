@@ -55,7 +55,7 @@ struct ProcStatTable : public StatTable {
             if(linStatDebug>=3)
                 errlogPrintf(ERL_ERROR " %s No line\n", __func__);
         }
-        // 44558 (kwrite) R ... followed by space seperated numbers
+        // 44558 (kwrite) R ... followed by space separated numbers
 
         static const std::regex expr(R"((\d+)\s+\(((?:[^)]|\\.)*)\)\s+([A-Z]+)\s+(.*))");
 

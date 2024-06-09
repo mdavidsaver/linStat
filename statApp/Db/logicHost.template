@@ -44,7 +44,7 @@ record(int64in, "$(IOC):SYS_TOT_") {
     field(DTYP, "Linux Stat Get")
     field(INP , "@stat|localhost|cpu:2")
     field(SCAN, "I/O Intr")
-    field(PHAS, "1") # after consituent SYS_* processed
+    field(PHAS, "1") # after constituent SYS_* processed
     field(TSEL, "$(IOC):SYS_UTIME.TIME")
     field(FLNK, "$(IOC):SYS_TOT")
 }
