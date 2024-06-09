@@ -1,0 +1,46 @@
+name: linStat
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+    container:
+        name: ${{ matrix.name }}
+        runs-on: ubuntu-latest
+        container:
+            image: ${{ matrix.image }}
+        env:
+            CMP: ${{ matrix.cmp }}
+            BCFG: ${{ matrix.configuration }}
+            BASE: ${{ matrix.base }}
+            CI_CROSS_TARGETS: ${{ matrix.cross }}
+            EXTRA: ${{ matrix.extra }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                - name: Debian 11
+                  image: debian:11
+                  cmp: gcc
+                  configuration: default
+                  base: "7.0"
+
+                - name: Debian 12
+                  image: debian:12
+                  cmp: gcc
+                  configuration: default
+                  base: "7.0"
+
+                - name: Fedora latest
+                  image: fedora:latest
+                  cmp: gcc
+                  configuration: default
+                  base: "7.0"
+
+        steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: true
+        - name: Prepare and compile dependencies
+          run: python .ci/cue.py prepare
+        - name: Build main module
+          run: python .ci/cue.py build
