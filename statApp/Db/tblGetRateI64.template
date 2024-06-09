@@ -1,0 +1,35 @@
+record(int64in, "$(IOC):$(NAME)_") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@$(INP)")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "$(PHAS=0)")
+    field(TSE , "-2")
+    field(FLNK, "$(IOC):$(NAME)R_")
+    info(autosaveFields_pass0, "$(SAVE=)")
+}
+record(ai, "$(IOC):$(NAME)R_") {
+    field(DTYP, "Soft Timestamp")
+    field(TSEL, "$(IOC):$(NAME)_.TIME") # table update time
+    field(FLNK, "$(IOC):$(NAME)")
+}
+record(calc, "$(IOC):$(NAME)") {
+    field(INPA, "$(IOC):$(NAME)_")
+    field(INPB, "$(IOC):$(NAME)R_")
+    # C - prev count
+    # D - prev time
+    # E - result
+    field(CALC, "E:=(A-C)/(B-D);C:=A;D:=B;E")
+    field(EGU , "$(EGU=Hz)")
+    field(PREC, "$(PREC=1)")
+    field(HOPR, "$(HOPR=)")
+    field(LOPR, "$(LOPR=)")
+    field(HIHI, "$(HIHI=)")
+    field(HIGH, "$(HIGH=)")
+    field(LOW , "$(LOW=)")
+    field(LOLO, "$(LOLO=)")
+    field(HHSV, "$(HHSV=)")
+    field(HSV , "$(HSV=)")
+    field(LSV , "$(LSV=)")
+    field(LLSV, "$(LLSV=)")
+    field(TSEL, "$(IOC):$(NAME)_.TIME")
+}

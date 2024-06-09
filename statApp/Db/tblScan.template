@@ -1,0 +1,12 @@
+record(bo, "$(IOC):$(NAME)_SCAN") {
+    field(DTYP, "Linux Stat Scan")
+    field(OUT , "@$(OUT)")
+    field(PINI, "RUNNING")
+    field(ZNAM, "Scan")
+    field(ONAM, "Scan")
+    field(FLNK, "$(IOC):$(NAME)_SCAN_")
+}
+record(calcout, "$(IOC):$(NAME)_SCAN_") {
+    field(ODLY, "$(PERIOD=10)")
+    field(OUT , "$(IOC):$(NAME)_SCAN.PROC CA")
+}

@@ -1,0 +1,18 @@
+record(int64in, "$(IOC):$(NAME)") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@$(INP)")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "$(PHAS=0)")
+    field(TSE , "-2")
+    field(HOPR, "$(HOPR=)")
+    field(LOPR, "$(LOPR=)")
+    field(HIHI, "$(HIHI=)")
+    field(HIGH, "$(HIGH=)")
+    field(LOW , "$(LOW=)")
+    field(LOLO, "$(LOLO=)")
+    field(HHSV, "$(HHSV=)")
+    field(HSV , "$(HSV=)")
+    field(LSV , "$(LSV=)")
+    field(LLSV, "$(LLSV=)")
+    info(autosaveFields_pass0, "$(SAVE=)")
+}

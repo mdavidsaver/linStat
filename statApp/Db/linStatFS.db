@@ -1,0 +1,84 @@
+# host filesystem stats
+# macros
+#  P - common record prefix.  eg. P=LOCALHOST:ROOT
+#  DIR - File system path.  eg.  DIR=/
+
+record(bo, "$(P):FS_SCAN") {
+    field(DTYP, "Linux Stat Scan")
+    field(OUT , "@statvfs|$(DIR)|size")
+    field(PINI, "RUNNING")
+    field(ZNAM, "Scan")
+    field(ONAM, "Scan")
+    field(FLNK, "$(P):FS_SCAN_")
+}
+record(calcout, "$(P):FS_SCAN_") {
+    field(ODLY, "$(PERIOD=10)")
+    field(OUT , "$(P):FS_SCAN.PROC CA")
+}
+
+# available bytes
+record(int64in, "$(P):SIZE") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@statvfs|$(DIR)|size")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+    field(FLNK, "$(P):AVAIL")
+}
+record(int64in, "$(P):AVAIL") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@statvfs|$(DIR)|avail")
+    field(TSE , "-2")
+    field(FLNK, "$(P):AVAIL:P")
+}
+record(calc, "$(P):AVAIL:P") {
+    field(INPA, "$(P):SIZE NPP MS")
+    field(INPB, "$(P):AVAIL NPP MS")
+    field(CALC, "B/A*100")
+    field(EGU, "%")
+    field(HOPR, "100")
+    field(PREC, "2")
+    field(LOLO, "1")
+    field(LLSV, "MAJOR")
+    field(TSEL, "$(P):SIZE.TIME")
+}
+
+# updated HOPR when SIZE changes (~never)
+record(dfanout, "$(P):SIZE_") {
+    field(DOL , "$(P):SIZE CP")
+    field(OMSL, "closed_loop")
+    field(OUTA, "$(P):AVAIL.HOPR NPP")
+    field(TSEL, "$(P):SIZE.TIME")
+}
+
+# available inodes
+record(int64in, "$(P):ISIZE") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@statvfs|$(DIR)|isize")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+    field(FLNK, "$(P):IAVAIL")
+}
+record(int64in, "$(P):IAVAIL") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@statvfs|$(DIR)|iavail")
+    field(TSE , "-2")
+    field(FLNK, "$(P):IAVAIL:P")
+}
+record(calc, "$(P):IAVAIL:P") {
+    field(INPA, "$(P):ISIZE NPP MS")
+    field(INPB, "$(P):IAVAIL NPP MS")
+    field(CALC, "B/A*100")
+    field(EGU, "%")
+    field(HOPR, "100")
+    field(PREC, "2")
+    field(LOLO, "1")
+    field(LLSV, "MAJOR")
+    field(TSEL, "$(P):ISIZE.TIME")
+}
+
+# updated HOPR when ISIZE changes (~never)
+record(dfanout, "$(P):ISIZE_") {
+    field(DOL , "$(P):ISIZE CP")
+    field(OMSL, "closed_loop")
+    field(OUTA, "$(P):IAVAIL.HOPR NPP")
+}

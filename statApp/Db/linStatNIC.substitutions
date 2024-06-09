@@ -1,0 +1,18 @@
+# host Network Interface Card stats
+# macros
+#  P - common record prefix.  eg. P=LOCALHOST:ETH0
+#  NIC - Interface name.  eg NIC="eth0"
+
+file "tblScan.template" {
+{IOC="\$(IOC):NET:$(NIC)", NAME="NETDEV_SCAN", OUT="ifstat|\$(NIC)|xxx", PERIOD="60"}
+}
+
+file "tblGetRateI64.template" {
+{IOC="\$(IOC):NET:$(NIC)", NAME="RX", INP="ifstat|\$(NIC)|rx_bytes", EGU="B/s"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="RX:E", INP="ifstat|\$(NIC)|rx_errors", EGU="Hz",
+    HIGH="0.1", HSV="MAJOR"}
+
+{IOC="\$(IOC):NET:$(NIC)", NAME="TX", INP="ifstat|\$(NIC)|tx_bytes", EGU="B/s"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="RX:E", INP="ifstat|\$(NIC)|tx_errors", EGU="Hz",
+    HIGH="0.1", HSV="MAJOR"}
+}

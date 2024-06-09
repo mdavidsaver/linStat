@@ -1,0 +1,23 @@
+
+record(stringin, "$(IOC):STARTTOD") {
+    field(DESC, "Time and date of startup")
+    field(DTYP, "Soft Timestamp")
+    field(PINI, "YES")
+    field(INP,  "@%m/%d/%Y %H:%M:%S%z")
+}
+
+record(calcout, "$(IOC):HEARTBEAT") {
+    field(DESC, "1 Hz counter since startup")
+    field(CALC, "(A<2147483647)?A+1:1")
+    field(SCAN, "1 second")
+    field(INPA, "$(IOC):HEARTBEAT")
+}
+
+record(calcout, "$(IOC):START_CNT") {
+    field(DESC, "Increments at startup")
+    # VAL persists (with autosave)
+    field(CALC, "VAL+1")
+    field(PINI, "YES")
+
+    info(autosaveFields_pass0, "VAL")
+}

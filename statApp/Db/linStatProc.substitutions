@@ -1,0 +1,92 @@
+# process local information
+# Macros
+#  IOC - Common record prefix
+
+file "tblScan.template" {
+{IOC="\$(IOC)", NAME="PID_SCAN", OUT="pid|self|cwd", PERIOD="60"}
+{IOC="\$(IOC)", NAME="FD_SCAN", OUT="fd|self|FD_CNT", PERIOD="60"}
+{IOC="\$(IOC)", NAME="PID_STATUS_SCAN", OUT="procStatus|self|Pid", PERIOD="10"}
+{IOC="\$(IOC)", NAME="PID_STAT_SCAN", OUT="procStat|self|1", PERIOD="10"}
+{IOC="\$(IOC)", NAME="PDB_SCAN", OUT="pdb|self|nrec", PERIOD="10"}
+}
+
+file "tblGetI64.template" {
+{IOC="\$(IOC)", NAME="PROCESS_ID", INP="procStatus|self|Pid"}
+{IOC="\$(IOC)", NAME="PARENT_ID", INP="procStatus|self|PPid"}
+{IOC="\$(IOC)", NAME="RSS", INP="procStatus|self|VmRSS"}
+{IOC="\$(IOC)", NAME="RSS_PEAK", INP="procStatus|self|VmHWM"}
+{IOC="\$(IOC)", NAME="THREAD_CNT", INP="procStatus|self|Threads"}
+{IOC="\$(IOC)", NAME="FD_MAX", INP="pid|self|NOFILE"}
+{IOC="\$(IOC)", NAME="FD_CNT", INP="fd|self|FD_CNT"}
+{IOC="\$(IOC)", NAME="TCKPSEC", INP="pid|self|ticks_per_sec"}
+{IOC="\$(IOC)", NAME="RECORD_CNT", INP="pdb|self|nrec"}
+{IOC="\$(IOC)", NAME="CA_CLNT_CNT", INP="pdb|self|rsrv:nconn",
+ HOPR="200", HIHI="175", HIGH="100", HHSV="MAJOR", HSV="MINOR",
+ SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
+{IOC="\$(IOC)", NAME="CA_CONN_CNT", INP="pdb|self|rsrv:nchan",
+ HOPR="5000", HIHI="4500", HIGH="4000", HHSV="MAJOR", HSV="MINOR",
+ SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
+{IOC="\$(IOC)", NAME="SUSP_TASK_CNT", INP="pdb|self|nsuspend",
+ HIHI="1", HHSV="MAJOR",
+ SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
+}
+
+file "tblGetRateI64.template" {
+{IOC="\$(IOC)", NAME="PGFLT_MAJ", INP="procStat|self|10", EGU="Hz"}
+{IOC="\$(IOC)", NAME="PGFLT_MIN", INP="procStat|self|12", EGU="Hz"}
+}
+
+file "tblGetSI.template" {
+{IOC="\$(IOC)", NAME="KERNEL_VERS", INP="host|localhost|version"}
+{IOC="\$(IOC)", NAME="HOSTNAME", INP="host|localhost|nodename"}
+#{IOC="\$(IOC)", NAME="APP_DIR", INP="pid|self|cwd"}
+{IOC="\$(IOC)", NAME="APP_DIR1", INP="pid|self|cwd1"}
+{IOC="\$(IOC)", NAME="APP_DIR2", INP="pid|self|cwd2"}
+}
+
+file "getenv.template" {
+{IOC="\$(IOC)", NAME="ENGINEER", ENV="ENGINEER"}
+{IOC="\$(IOC)", NAME="LOCATION", ENV="LOCATION"}
+{IOC="\$(IOC)", NAME="ST_SCRIPT1", ENV="IOCSH_STARTUP_SCRIPT"}
+{IOC="\$(IOC)", NAME="EPICS_VERSION", ENV="EPICS_VERSION_FULL"}
+{IOC="\$(IOC)", NAME="CA_ADDR_LIST", ENV="EPICS_CA_ADDR_LIST"}
+{IOC="\$(IOC)", NAME="CA_CONN_TIME", ENV="EPICS_CA_CONN_TMO"}
+{IOC="\$(IOC)", NAME="CA_AUTO_ADDR", ENV="EPICS_CA_AUTO_ADDR_LIST"}
+{IOC="\$(IOC)", NAME="CA_RPTR_PORT", ENV="EPICS_CA_REPEATER_PORT"}
+{IOC="\$(IOC)", NAME="CA_SRVR_PORT", ENV="EPICS_CA_SERVER_PORT"}
+{IOC="\$(IOC)", NAME="CA_MAX_ARRAY", ENV="EPICS_CA_MAX_ARRAY_BYTES"}
+{IOC="\$(IOC)", NAME="CA_SRCH_TIME", ENV="EPICS_CA_MAX_SEARCH_PERIOD"}
+{IOC="\$(IOC)", NAME="CA_BEAC_TIME", ENV="EPICS_CA_BEACON_PERIOD"}
+{IOC="\$(IOC)", NAME="CAS_SRVR_PORT", ENV="EPICS_CAS_SERVER_PORT"}
+{IOC="\$(IOC)", NAME="CAS_AUTO_ADDR", ENV="EPICS_CAS_AUTO_BEACON_ADDR_LIST"}
+{IOC="\$(IOC)", NAME="CAS_ADDR_LIST", ENV="EPICS_CAS_BEACON_ADDR_LIST"}
+{IOC="\$(IOC)", NAME="CAS_BEACON_PERIOD", ENV="EPICS_CAS_BEACON_PERIOD"}
+{IOC="\$(IOC)", NAME="CAS_BEACON_PORT", ENV="EPICS_CAS_BEACON_PORT"}
+{IOC="\$(IOC)", NAME="CAS_ADDR_INTF_LIST", ENV="EPICS_CAS_INTF_ADDR_LIST"}
+{IOC="\$(IOC)", NAME="CAS_ADDR_IGNORE_LIST", ENV="EPICS_CAS_IGNORE_ADDR_LIST"}
+{IOC="\$(IOC)", NAME="TIMEZONE", ENV="EPICS_TIMEZONE"}
+{IOC="\$(IOC)", NAME="TS_NTP_INET", ENV="EPICS_TS_NTP_INET"}
+{IOC="\$(IOC)", NAME="IOC_LOG_PORT", ENV="EPICS_IOC_LOG_PORT"}
+{IOC="\$(IOC)", NAME="IOC_LOG_INET", ENV="EPICS_IOC_LOG_INET"}
+}
+
+file "iocBase.template" {
+{IOC="\$(IOC)"}
+}
+
+file "logicProc.template" {
+{IOC="\$(IOC)"}
+}
+
+file "timeProc.template" {
+{IOC="\$(IOC)"}
+}
+
+file "netStat.db" {
+{P="\$(IOC):NET:IOC", INST="self"}
+}
+
+# TODO
+# procStatus
+#   nonvoluntary_ctxt_switches
+#   voluntary_ctxt_switches

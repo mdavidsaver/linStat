@@ -1,0 +1,76 @@
+
+alias("$(IOC):EPICS_VERSION", "$(IOC):EPICS_VERS")
+
+record(stringin, "$(IOC):ST_SCRIPT2") {
+    field(UDF , "0")
+}
+
+record(calc, "$(IOC):FD_FREE") {
+    field(DESC, "Available FDs")
+    field(CALC, "B-A")
+    field(INPA, "$(IOC):FD_CNT  CP MS")
+    field(INPB, "$(IOC):FD_MAX  CP MS")
+    field(LOLO, "5")
+    field(LOW,  "20")
+    field(LLSV, "MAJOR")
+    field(LSV,  "MINOR")
+    field(TSEL, "$(IOC):FD_CNT.TIME")
+
+    info(autosaveFields_pass0, "HOPR LOPR LOW LOLO LSV LLSV")
+}
+
+# updated HOPR when FD_MAX changes (~never)
+record(dfanout, "$(IOC):FD_MAX_") {
+    field(DOL , "$(IOC):FD_MAX CP")
+    field(OMSL, "closed_loop")
+    field(OUTA, "$(IOC):FD_CNT.HOPR NPP")
+    field(OUTB, "$(IOC):FD_FREE.HOPR NPP")
+    field(TSEL, "$(IOC):FD_MAX.TIME")
+}
+
+
+# calculate process CPU usage
+record(int64in, "$(IOC):UTIME") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@procStat|self|14") # utime
+    field(SCAN, "I/O Intr")
+    field(PINI, "RUNNING")
+    field(EGU , "ticks")
+    field(TSE , "-2")
+    field(FLNK, "$(IOC):CTIME")
+}
+record(int64in, "$(IOC):CTIME") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@procStat|self|15") # ctime
+    field(EGU , "ticks")
+    field(TSE , "-2")
+    field(FLNK, "$(IOC):IOC_CPU_LOAD")
+}
+
+record(calcout, "$(IOC):IOC_CPU_LOAD") {
+    field(INPA, "$(IOC):TCKPSEC NPP MS") # tick / sec
+    field(INPB, "$(IOC):UTIME NPP MS") # tick
+    field(INPC, "$(IOC):CTIME NPP MS") # tick
+    field(INPD, "$(IOC):IOC_CPU_LOAD_ PP MS") # sec
+    # E - prev. num. (tick)
+    # F - prev. denom. (sec)
+    # G - result
+    field(CALC, "G:=(B+C-E)/A/(D-F);E:=B+C;F:=D;G*100")
+    field(EGU, "%")
+    field(PREC, "2")
+    field(HOPR, "100")
+    field(HIHI, "80")
+    field(HIGH, "70")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(ADEL, "5")
+    field(TSEL, "$(IOC):UTIME.TIME")
+
+    info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV ADEL")
+}
+
+record(ai, "$(IOC):IOC_CPU_LOAD_") {
+    field(DTYP, "General Time")
+    field(PREC, "3")
+    field(INP,  "@TIME")
+}

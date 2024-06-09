@@ -1,0 +1,9 @@
+driver(drvLinStat)
+registrar(linStatRegistrar)
+variable(linStatDebug, int)
+
+# link format: "<table>.<value>"
+device(bo, INST_IO, devLinStatBoScan, "Linux Stat Scan")
+device(ai, INST_IO, devLinStatAiTblTime, "Linux Stat Time")
+device(int64in, INST_IO, devLinStatI64iValue, "Linux Stat Get")
+device(stringin, INST_IO, devLinStatSiValue, "Linux Stat Get")

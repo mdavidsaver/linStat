@@ -1,0 +1,7 @@
+record(stringin, "$(IOC):$(NAME)") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@$(INP)")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "$(PHAS=0)")
+    field(TSE , "-2")
+}

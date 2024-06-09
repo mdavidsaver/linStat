@@ -1,0 +1,129 @@
+record(calcout, "$(IOC):MEM_USED_") {
+    field(INPA, "$(IOC):MEM_MAX CP MS")
+    field(INPB, "$(IOC):MEM_FREE CP MS")
+    field(CALC, "A-B")
+    field(OUT , "$(IOC):MEM_USED PP MS")
+    field(TSEL, "$(IOC):MEM_MAX.TIME")
+}
+record(int64in, "$(IOC):MEM_USED") {}
+
+# updated HOPR when MEM_MAX changes (~never)
+record(dfanout, "$(IOC):MEM_MAX_") {
+    field(DOL , "$(IOC):MEM_MAX CP")
+    field(OMSL, "closed_loop")
+    field(OUTA, "$(IOC):MEM_FREE.HOPR NPP")
+    field(OUTB, "$(IOC):MEM_USED.HOPR NPP")
+    field(TSEL, "$(IOC):MEM_MAX.TIME")
+}
+
+record(calcout, "$(IOC):SWP_USED_") {
+    field(INPA, "$(IOC):SWP_MAX CP MS")
+    field(INPB, "$(IOC):SWP_FREE CP MS")
+    field(CALC, "A-B")
+    field(OUT , "$(IOC):SWP_USED PP MS")
+    field(TSEL, "$(IOC):SWP_MAX.TIME")
+}
+record(int64in, "$(IOC):SWP_USED") {
+    field(TSEL, "$(IOC):SWP_MAX.TIME")
+}
+
+# updated HOPR when SWP_MAX changes (~never)
+record(dfanout, "$(IOC):SWP_MAX_") {
+    field(DOL , "$(IOC):SWP_MAX CP")
+    field(OMSL, "closed_loop")
+    field(OUTA, "$(IOC):SWP_FREE.HOPR NPP")
+    field(OUTB, "$(IOC):SWP_USED.HOPR NPP")
+    field(TSEL, "$(IOC):SWP_MAX.TIME")
+}
+
+
+
+# SYS_CPU_LOAD
+
+record(int64in, "$(IOC):SYS_TOT_") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@stat|localhost|cpu:2")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "1") # after consituent SYS_* processed
+    field(TSEL, "$(IOC):SYS_UTIME.TIME")
+    field(FLNK, "$(IOC):SYS_TOT")
+}
+record(calc, "$(IOC):SYS_TOT") {
+    field(INPA, "$(IOC):SYS_UTIME NPP MS")
+    field(INPB, "$(IOC):SYS_NTIME NPP MS")
+    field(INPC, "$(IOC):SYS_CTIME NPP MS")
+    field(INPD, "$(IOC):SYS_IDLE NPP MS")
+    field(INPE, "$(IOC):SYS_IOWAIT NPP MS")
+    field(INPF, "$(IOC):SYS_IRQ NPP MS")
+    field(INPG, "$(IOC):SYS_SIRQ NPP MS")
+    field(INPH, "$(IOC):SYS_STEAL NPP MS")
+    field(INPI, "$(IOC):SYS_GUEST NPP MS")
+    field(INPJ, "$(IOC):SYS_GUESTWAIT NPP MS")
+    field(CALC, "A+B+C+D+E+F+G+H+I+J")
+    field(TSEL, "$(IOC):SYS_UTIME.TIME")
+    field(FLNK, "$(IOC):SYS_ACT")
+}
+record(calc, "$(IOC):SYS_ACT") { # all not idle
+    field(INPA, "$(IOC):SYS_UTIME NPP MS")
+    field(INPB, "$(IOC):SYS_NTIME NPP MS")
+    field(INPC, "$(IOC):SYS_CTIME NPP MS")
+    # omit IDLE
+    field(INPE, "$(IOC):SYS_IOWAIT NPP MS")
+    field(INPF, "$(IOC):SYS_IRQ NPP MS")
+    field(INPG, "$(IOC):SYS_SIRQ NPP MS")
+    field(INPH, "$(IOC):SYS_STEAL NPP MS")
+    field(INPI, "$(IOC):SYS_GUEST NPP MS")
+    field(INPJ, "$(IOC):SYS_GUESTWAIT NPP MS")
+    field(CALC, "A+B+C+E+F+G+H+I+J")
+    field(TSEL, "$(IOC):SYS_UTIME.TIME")
+    field(FLNK, "$(IOC):SYS_BUSY")
+}
+record(calc, "$(IOC):SYS_BUSY") { # all not idle
+    field(INPA, "$(IOC):SYS_UTIME NPP MS")
+    field(INPB, "$(IOC):SYS_NTIME NPP MS")
+    field(INPC, "$(IOC):SYS_CTIME NPP MS")
+    field(CALC, "A+B+C")
+    field(TSEL, "$(IOC):SYS_UTIME.TIME")
+    field(FLNK, "$(IOC):SYS_CPU_LOAD")
+}
+record(calc, "$(IOC):SYS_CPU_LOAD") {
+    # load excluding IRQ ...
+    field(INPA, "$(IOC):SYS_TOT NPP MS")
+    field(INPB, "$(IOC):SYS_BUSY NPP MS")
+    # C - prev. num.
+    # D - prev. denom.
+    # E - result
+    field(CALC, "E:=(B-C)/(A-D);C:=B;D:=A;E*100")
+    field(EGU , "%")
+    field(PREC, "2")
+    field(HOPR, "100")
+    field(HIHI, "80")
+    field(HIGH, "70")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(ADEL, "5")
+    field(TSEL, "$(IOC):SYS_UTIME.TIME")
+    field(FLNK, "$(IOC):SYS_TOT_LOAD")
+
+    info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV ADEL")
+}
+record(calc, "$(IOC):SYS_TOT_LOAD") {
+    # load including IRQ ...
+    field(INPA, "$(IOC):SYS_TOT NPP MS")
+    field(INPB, "$(IOC):SYS_ACT NPP MS")
+    # C - prev. num.
+    # D - prev. denom.
+    # E - result
+    field(CALC, "E:=(B-C)/(A-D);C:=B;D:=A;E*100")
+    field(EGU, "%")
+    field(PREC, "2")
+    field(HOPR, "100")
+    field(HIHI, "80")
+    field(HIGH, "70")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(ADEL, "5")
+    field(TSEL, "$(IOC):SYS_UTIME.TIME")
+
+    info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV ADEL")
+}

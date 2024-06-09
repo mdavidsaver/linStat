@@ -1,0 +1,48 @@
+# System-wide (not process specific) information
+# Macros
+#  IOC - Common record prefix
+
+file "tblScan.template" {
+{IOC="\$(IOC)", NAME="MEM_SCAN", OUT="memInfo|localhost|MemTotal", PERIOD="10"}
+{IOC="\$(IOC)", NAME="HOST_SCAN", OUT="host|localhost|ncpu", PERIOD="60"}
+{IOC="\$(IOC)", NAME="STAT_SCAN", OUT="stat|localhost|cpu:2", PERIOD="10"}
+{IOC="\$(IOC)", NAME="UP_SCAN", OUT="uptime|localhost|uptime", PERIOD="10"}
+}
+
+file "tblGetI64.template" {
+{IOC="\$(IOC)", NAME="MEM_MAX", INP="memInfo|localhost|MemTotal"}
+{IOC="\$(IOC)", NAME="MEM_FREE", INP="memInfo|localhost|MemAvailable",
+ LLSV="MAJOR", LSV="MINOR",
+ SAVE="LOW LOLO LSV LLSV"}
+{IOC="\$(IOC)", NAME="SWP_MAX", INP="memInfo|localhost|SwapTotal"}
+{IOC="\$(IOC)", NAME="SWP_FREE", INP="memInfo|localhost|SwapFree",
+ LLSV="MAJOR", LSV="MINOR",
+ SAVE="LOW LOLO LSV LLSV"}
+{IOC="\$(IOC)", NAME="CPU_CNT", INP="host|localhost|ncpu"}
+{IOC="\$(IOC)", NAME="SYS_UTIME", INP="stat|localhost|cpu:2"}
+{IOC="\$(IOC)", NAME="SYS_NTIME", INP="stat|localhost|cpu:3"}
+{IOC="\$(IOC)", NAME="SYS_CTIME", INP="stat|localhost|cpu:4"}
+{IOC="\$(IOC)", NAME="SYS_IDLE", INP="stat|localhost|cpu:5"}
+{IOC="\$(IOC)", NAME="SYS_IOWAIT", INP="stat|localhost|cpu:6"}
+{IOC="\$(IOC)", NAME="SYS_IRQ", INP="stat|localhost|cpu:7"}
+{IOC="\$(IOC)", NAME="SYS_SIRQ", INP="stat|localhost|cpu:8"}
+{IOC="\$(IOC)", NAME="SYS_STEAL", INP="stat|localhost|cpu:9"}
+{IOC="\$(IOC)", NAME="SYS_GUEST", INP="stat|localhost|cpu:10"}
+{IOC="\$(IOC)", NAME="SYS_GUESTWAIT", INP="stat|localhost|cpu:11"}
+}
+
+file "tblGetSI.template" {
+{IOC="\$(IOC)", NAME="UPTIME", INP="uptime|localhost|uptime:disp"}
+}
+
+file "logicHost.template" {
+{IOC="\$(IOC)"}
+}
+
+file "timeHost.template" {
+{IOC="\$(IOC)"}
+}
+
+file "netStat.db" {
+{P="\$(IOC):NET:HOST", INST=""}
+}
