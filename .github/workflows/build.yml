@@ -2,6 +2,9 @@ name: linStat
 
 on: [push, pull_request, workflow_dispatch]
 
+env:
+  SETUP_PATH: .ci
+
 jobs:
     container:
         name: ${{ matrix.name }}
@@ -23,6 +26,8 @@ jobs:
                   cmp: gcc
                   configuration: default
                   base: "7.0"
+                  # g++ 10.2.1 defaults to c++14
+                  extra: "CMD_CXXFLAGS=-std=c++17"
 
                 - name: Debian 12
                   image: debian:12
@@ -37,10 +42,21 @@ jobs:
                   base: "7.0"
 
         steps:
+        - name: System setup
+          shell: bash
+          run: |
+            if type apt-get
+            then
+                apt-get update
+                apt-get -y install git python3 build-essential
+            elif type dnf
+            then
+                dnf install -y git python3 make perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel
+            fi
         - uses: actions/checkout@v4
           with:
             submodules: true
         - name: Prepare and compile dependencies
-          run: python .ci/cue.py prepare
+          run: python3 .ci/cue.py prepare
         - name: Build main module
-          run: python .ci/cue.py build
+          run: python3 .ci/cue.py build
