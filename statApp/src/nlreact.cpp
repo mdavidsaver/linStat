@@ -249,10 +249,8 @@ void Reactor::Pvt::run()
 
             } else {
                 auto hdr = reinterpret_cast<nlmsghdr*>(msg->data());
-                if(!NLMSG_OK(hdr, msg->size())) {
-                    errlogPrintf(ERL_ERROR " reactor ignores invalid msg\n");
-
-                } else {
+                auto remain = ret;
+                for(; NLMSG_OK(hdr, remain); hdr=NLMSG_NEXT(hdr,remain)) {
                     if(hdr->nlmsg_pid==nlpid) { // related to a request
                         auto it(handlers.find(hdr->nlmsg_seq));
                         if(it==handlers.end()) {
@@ -277,6 +275,10 @@ void Reactor::Pvt::run()
                     } else {
                         errlogPrintf(ERL_WARNING " Ignoring message with pid %d\n", hdr->nlmsg_pid);
                     }
+
+                }
+                if(remain) {
+                    errlogPrintf(ERL_ERROR " reactor ignores invalid msg\n");
                 }
             }
         }

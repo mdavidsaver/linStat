@@ -126,11 +126,11 @@ struct IFStatTable : public StatTable {
         auto raw(std::make_shared<std::vector<char>>(scratch)); // copy
         NLMsg msg(raw, (nlmsghdr*)raw->data());
         op = react.request(std::move(msg), [this](NLMsg&& rep){
-            if(rep->nlmsg_type==RTM_NEWLINK) {
+            if(rep->nlmsg_type==RTM_NEWLINK && rep->nlmsg_len >= NLMSG_HDRLEN+sizeof(ifinfomsg)) {
                 // TODO: handle possibility of multi-part reply for a single interface?
                 digest_newlink(rep.get());
 
-            } else if(rep->nlmsg_type==NLMSG_ERROR) {
+            } else if(rep->nlmsg_type==NLMSG_ERROR && rep->nlmsg_len >= NLMSG_HDRLEN+sizeof(nlmsgerr)) {
                 op.reset();
                 const auto err = reinterpret_cast<nlmsgerr*>(NLMSG_DATA(rep.get()));
                 if(err->error) {
