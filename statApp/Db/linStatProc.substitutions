@@ -8,6 +8,7 @@ file "tblScan.template" {
 {IOC="\$(IOC)", NAME="PID_STATUS_SCAN", OUT="procStatus|self|Pid", PERIOD="10"}
 {IOC="\$(IOC)", NAME="PID_STAT_SCAN", OUT="procStat|self|1", PERIOD="10"}
 {IOC="\$(IOC)", NAME="PDB_SCAN", OUT="pdb|self|nrec", PERIOD="10"}
+{IOC="\$(IOC)", NAME="MALL_SCAN", OUT="mallinfo|self|arena", PERIOD="30"}
 }
 
 file "tblGetI64.template" {
@@ -29,6 +30,8 @@ file "tblGetI64.template" {
 {IOC="\$(IOC)", NAME="SUSP_TASK_CNT", INP="pdb|self|nsuspend",
  HIHI="1", HHSV="MAJOR",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
+{IOC="\$(IOC)", NAME="MALLOC_MAX", INP="mallinfo|self|arena", EGU="B"}
+{IOC="\$(IOC)", NAME="MALLOC_USED", INP="mallinfo|self|uordblks", EGU="B"}
 }
 
 file "tblGetRateI64.template" {

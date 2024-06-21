@@ -1,4 +1,5 @@
 record(int64in, "$(IOC):$(NAME)_") {
+    field(DESC, "$(DESC=)")
     field(DTYP, "Linux Stat Get")
     field(INP , "@$(INP)")
     field(SCAN, "I/O Intr")

@@ -30,6 +30,7 @@ LIB_SRCS_Linux += tblProcStat.cpp
 LIB_SRCS_Linux += tblProcStatus.cpp
 LIB_SRCS_Linux += tblProcFD.cpp
 LIB_SRCS_Linux += tblProcPDB.cpp
+LIB_SRCS_Linux += tblProcMallinfo.cpp
 # file system
 LIB_SRCS_Linux += tblStatVFS.cpp
 
