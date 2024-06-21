@@ -15,6 +15,7 @@ However unlike iocStats, this module is limited to Linux.
 |    X    |     X    | CPU Usage   |
 |    X    |     X    | Mem Usage   |
 |    X    |     X    | FD Usage    |
+|    X    |          | malloc() stats |
 |    X    |          | Swap Usage  |
 |    X    |          | IP Stats.   |
 |    X    |          | NIC Stats.  |
@@ -56,7 +57,7 @@ makeBaseApp.pl -t ioc -i -p myApp myioc
 Edit and append `configure/RELEASE` (or create `configure/RELEASE.local`)
 to set the path to the built linStat tree.
 
-```
+```make
 LINSTAT=/path/to/linStat
 ```
 
@@ -99,7 +100,7 @@ Create/overwrite `iocBoot/iocmyioc/st.cmd`.
 # If no DB_INSTALLS for linStat*.db, then append LINSTAT /db directory.
 epicsEnvSet("EPICS_DB_INCLUDE_PATH", "$(PWD)../../db")
 
-dbLoadDatabase "../../dbd/myapp.dbd"
+dbLoadDatabase("../../dbd/myapp.dbd")
 myapp_registerRecordDeviceDriver(pdbbase)
 
 
@@ -121,7 +122,7 @@ dbLoadRecords("../../db/linStatProc.db","IOC=$(IOC)")
 # Network interface information
 dbLoadRecords("../../db/linStatNIC.db","IOC=$(IOC),NIC=lo")
 # may repeat with different NIC= network interface name(s)
-#dbLoadRecords("../../db/linStatNIC.db","IOC=$(IOC),NIC=eth")
+#dbLoadRecords("../../db/linStatNIC.db","IOC=$(IOC),NIC=eth0")
 
 # File system mount point information
 dbLoadRecords("../../db/linStatFS.db","P=$(IOC):ROOT,DIR=/")
@@ -129,7 +130,7 @@ dbLoadRecords("../../db/linStatFS.db","P=$(IOC):ROOT,DIR=/")
 # change both P= and DIR=
 #dbLoadRecords("../../db/linStatFS.db","P=$(IOC):DATA,DIR=/data")
 
-iocInit
+iocInit()
 ```
 
 ## TODO
@@ -143,11 +144,11 @@ iocInit
     - callback pool info
     - scan once info
 - System
+    - [ ] `/proc/net/snmp` (and `/proc/self/net/snmp`)
 - Process
     - [ ] `epicsExitLater()`
     - [ ] Memory locked by `mlockall()`
     - [ ] Context switch counts
-    - [ ] Page fault counts
     - [ ] Capabilities mask?
 - FS
 - NIC
