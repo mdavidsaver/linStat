@@ -19,11 +19,14 @@
 #include <stdint.h>
 
 #include <epicsAssert.h>
+#include <epicsVersion.h>
 #include <epicsTime.h>
 #include <callback.h>
 #include <dbScan.h>
 
 #include "nlreact.h"
+
+#define GLIBC_VERSION VERSION_INT(__GLIBC__, __GLIBC_MINOR__, 0, 0)
 
 namespace linStat {
 using Guard = std::unique_lock<std::mutex>;

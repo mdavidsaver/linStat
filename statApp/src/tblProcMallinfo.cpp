@@ -31,7 +31,11 @@ struct MallInfoTable : public StatTable {
     virtual void update() override final {
         Transaction tr(*this);
 
+#if GLIBC_VERSION >= VERSION_INT(2, 33, 0, 0)
         auto info(mallinfo2());
+#else
+        auto info(mallinfo());
+#endif
 #define CASE(NAME) tr.set(#NAME, info.NAME)
         CASE(arena);
         CASE(ordblks);
