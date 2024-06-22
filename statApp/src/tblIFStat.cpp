@@ -42,14 +42,19 @@ struct IFStatTable : public StatTable {
                        + sizeof(ifinfomsg)
                        + RTA_SPACE(inst.size()+1)); // IF name needs trailing nil
 
-        auto msg = reinterpret_cast<nlmsghdr*>(scratch.data());
+        auto cur =  scratch.data();
+        auto msg = reinterpret_cast<nlmsghdr*>(cur);
+        cur += sizeof(*msg);
+        auto ifinfo = reinterpret_cast<ifinfomsg*>(cur);
+        cur += sizeof(*ifinfo);
+        auto ifname = reinterpret_cast<rtattr*>(cur);
+
         msg->nlmsg_len = scratch.size();
         msg->nlmsg_type = RTM_GETLINK;
         msg->nlmsg_flags = NLM_F_REQUEST | NLM_F_ACK;
-        auto ifinfo = reinterpret_cast<ifinfomsg*>(scratch.data() + sizeof(nlmsghdr));
-        (void)ifinfo;
+
         // leave ifinfomsg zeroed
-        auto ifname = reinterpret_cast<rtattr*>(scratch.data() + sizeof(nlmsghdr) + sizeof(ifinfomsg));
+
         ifname->rta_type = IFLA_IFNAME;
         ifname->rta_len = RTA_LENGTH(inst.size()+1);
         inst.copy((char*)RTA_DATA(ifname), inst.size());
@@ -70,9 +75,11 @@ struct IFStatTable : public StatTable {
             RTA_OK(ratt, remaining);
             ratt = RTA_NEXT(ratt, remaining))
         {
-            //errlogPrintf("!!! %u\n", ratt->rta_type);
-            if(ratt->rta_type==IFLA_STATS64 && RTA_PAYLOAD(ratt)>=sizeof(rtnl_link_stats64)) {
-                auto stat = reinterpret_cast<const rtnl_link_stats64*>(RTA_DATA(ratt));
+#define XRTA_CHECK(TYPE, ENUM, ATTR) \
+    (( (ATTR)->rta_type == ENUM && RTA_PAYLOAD(ATTR)>=sizeof(TYPE) ? \
+    reinterpret_cast<const TYPE*>(RTA_DATA(ATTR)) : 0 ))
+
+            if(auto stat = XRTA_CHECK(rtnl_link_stats64, IFLA_STATS64, ratt)) {
 #define CASE(NAME) tr.set(#NAME, stat->NAME)
                 CASE(rx_packets);
                 CASE(tx_packets);
@@ -103,12 +110,10 @@ struct IFStatTable : public StatTable {
 
 #undef CASE
 
-            } else if(ratt->rta_type==IFLA_OPERSTATE && RTA_PAYLOAD(ratt)>=1) {
-                auto body = reinterpret_cast<const uint8_t*>(RTA_DATA(ratt));
+            } else if(auto body = XRTA_CHECK(uint8_t, IFLA_OPERSTATE, ratt)) {
                 tr.set("operatate", *body);
 
-            } else if(ratt->rta_type==IFLA_CARRIER && RTA_PAYLOAD(ratt)>=1) {
-                auto body = reinterpret_cast<const uint8_t*>(RTA_DATA(ratt));
+            } else if(auto body = XRTA_CHECK(uint8_t, IFLA_CARRIER, ratt)) {
                 tr.set("carrier", *body);
             }
         }

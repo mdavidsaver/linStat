@@ -13,6 +13,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <poll.h>
+#include <fcntl.h>
 #include <sys/socket.h>
 #include <linux/netlink.h>
 
@@ -97,6 +98,7 @@ struct Reactor::Pvt {
 Reactor Reactor::create()
 {
     auto inner(std::make_shared<Pvt>());
+    inner->weak_inner = inner;
 
     Reactor ret;
     ret.pvt.reset(inner.get(), [inner](Pvt*) mutable {
@@ -112,9 +114,9 @@ Reactor::Pvt::Pvt()
 {
     {
         int fds[2];
-        if(auto err = pipe(fds)) {
+        if(auto err = pipe2(fds, O_CLOEXEC)) {
             (void)err;
-            throw std::logic_error("Unable to allocate reator pipe");
+            throw std::runtime_error("Unable to allocate reator pipe");
         }
         notify.reset(fds[0]);
         wake.reset(fds[1]);
@@ -122,12 +124,14 @@ Reactor::Pvt::Pvt()
 
     // create non-blocking rtnetlink socket
     nlsock.reset(socket(AF_NETLINK, SOCK_DGRAM|SOCK_CLOEXEC|SOCK_NONBLOCK, NETLINK_ROUTE));
+    if(nlsock.fd==-1)
+        throw std::runtime_error("Unable to allocate netlink socket");
 
     {
         sockaddr_nl addr{};
         addr.nl_family = AF_NETLINK;
         if(bind(nlsock.fd, (const sockaddr*)&addr, sizeof(addr))) {
-            throw std::logic_error("Unable to bind NL socket");
+            throw std::runtime_error("Unable to bind NL socket");
         }
         socklen_t alen = sizeof(addr);
         if(getsockname(nlsock.fd, (sockaddr*)&addr, &alen)) {
@@ -344,7 +348,7 @@ JobHandle Reactor::submit(std::function<void ()> &&fn) const
     if(wake)
         pvt->poke();
 
-    std::weak_ptr<Pvt> wpvt;
+    std::weak_ptr<Pvt> wpvt(pvt->weak_inner);
     JobHandle ret(inner.get(), [wpvt, inner](Job*){
         if(auto pvt = wpvt.lock()) {
             Guard G(pvt->lock);
@@ -387,7 +391,7 @@ Handle Reactor::request(NLMsg &&req, std::function<void (NLMsg &&)> &&fn) const
     if(wake)
         pvt->poke();
 
-    std::weak_ptr<Pvt> wpvt;
+    std::weak_ptr<Pvt> wpvt(pvt->weak_inner);
     Handle ret(inner.get(), [wpvt, inner](Operation*){
         if(auto pvt = wpvt.lock()) {
             Guard G(pvt->lock);
