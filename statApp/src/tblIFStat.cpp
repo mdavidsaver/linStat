@@ -68,6 +68,10 @@ struct IFStatTable : public StatTable {
         auto pos = (const char*)NLMSG_DATA(msg);
         auto remaining = msg->nlmsg_len - NLMSG_HDRLEN;
 
+        const auto ifinfo = reinterpret_cast<const ifinfomsg*>(pos);
+
+        tr.set("if_flags", ifinfo->ifi_flags); // IFF_* defined in linux/if.h
+
         pos += sizeof(ifinfomsg); // skip
         remaining -= sizeof(ifinfomsg);
 
@@ -115,6 +119,24 @@ struct IFStatTable : public StatTable {
 
             } else if(auto body = XRTA_CHECK(uint8_t, IFLA_CARRIER, ratt)) {
                 tr.set("carrier", *body);
+
+            } else if(auto body = XRTA_CHECK(uint8_t, IFLA_LINKMODE, ratt)) {
+                tr.set("linkmode", *body);
+
+            } else if(auto body = XRTA_CHECK(uint32_t, IFLA_CARRIER_UP_COUNT, ratt)) {
+                tr.set("carrier_up_count", *body);
+
+            } else if(auto body = XRTA_CHECK(uint32_t, IFLA_CARRIER_DOWN_COUNT, ratt)) {
+                tr.set("carrier_down_count", *body);
+
+            } else if(auto body = XRTA_CHECK(uint32_t, IFLA_MTU, ratt)) {
+                tr.set("mtu", *body);
+
+            } else if(linStatDebug>=5) {
+                errlogPrintf("%s.%s ignore attr %hu size %zu\n",
+                             fact.c_str(), inst.c_str(),
+                             ratt->rta_type,
+                             ratt->rta_len - RTA_LENGTH(0));
             }
         }
 

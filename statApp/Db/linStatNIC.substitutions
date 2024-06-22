@@ -15,4 +15,15 @@ file "tblGetRateI64.template" {
 {IOC="\$(IOC):NET:$(NIC)", NAME="TX", INP="ifstat|\$(NIC)|tx_bytes", EGU="B/s"}
 {IOC="\$(IOC):NET:$(NIC)", NAME="RX:E", INP="ifstat|\$(NIC)|tx_errors", EGU="Hz",
     HIGH="0.1", HSV="MAJOR"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="UP:R", INP="ifstat|\$(NIC)|carrier_up_count", EGU="Hz"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="DOWN:R", INP="ifstat|\$(NIC)|carrier_down_count", EGU="Hz"}
+}
+
+file "tblGetI64.template" {
+{IOC="\$(IOC):NET:$(NIC)", NAME="IFFLAGS", INP="ifstat|\$(NIC)|if_flags"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="MTU", INP="ifstat|\$(NIC)|mtu"}
+}
+
+file "logicNIC.template" {
+{IOC="\$(IOC):NET:$(NIC)", NIC="\$(NIC)"}
 }

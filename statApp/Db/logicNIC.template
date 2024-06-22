@@ -1,0 +1,43 @@
+
+record(mbbi, "$(IOC):OPER") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@ifstat|$(NIC)|operatate")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "1")
+    field(TSE , "-2")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "3")
+    field(FRVL, "4")
+    field(FVVL, "5")
+    field(SXVL, "6")
+    field(ZRST, "Unknown")
+    field(ONST, "Not present")
+    field(TWST, "Down")
+    field(THST, "Lower Down")
+    field(FRST, "Testing")
+    field(FVST, "Dormant")
+    field(SXST, "Up")
+}
+
+record(bi, "$(IOC):LINK") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@ifstat|$(NIC)|linkmode")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "1")
+    field(TSE , "-2")
+    field(ZNAM, "Down")
+    field(ONAM, "Up")
+}
+
+record(bi, "$(IOC):CR") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@ifstat|$(NIC)|carrier")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "1")
+    field(TSE , "-2")
+    field(ZNAM, "No Carrier")
+    field(ONAM, "Running")
+    field(ZSV , "MAJOR")
+}
