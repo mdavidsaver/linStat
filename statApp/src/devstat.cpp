@@ -18,6 +18,10 @@
 #include <devSup.h>
 #include <dbCommon.h>
 #include <boRecord.h>
+#include <biRecord.h>
+#include <mbbiRecord.h>
+#include <mbbiDirectRecord.h>
+#include <longinRecord.h>
 #include <int64inRecord.h>
 #include <aiRecord.h>
 #include <stringinRecord.h>
@@ -83,7 +87,7 @@ long showErr(void *praw, const char* func, std::exception& e) noexcept {
 
 #define CATCH() catch(std::exception& e) { return showErr(prec, __func__, e); }
 
-long devLinTblIoIntr(int detach, struct dbCommon *pcom, IOSCANPVT* pscan)
+long devLinTblIoIntr(int detach, struct dbCommon *pcom, IOSCANPVT* pscan) noexcept
 {
     (void)detach;
     auto pvt = static_cast<Pvt*>(pcom->dpvt);
@@ -95,63 +99,81 @@ long devLinTblIoIntr(int detach, struct dbCommon *pcom, IOSCANPVT* pscan)
     return -1;
 }
 
-long devLinStatSubmitTbl(boRecord *prec) noexcept {
-    TRY {
-        if(prec->tpro>1 || linStatDebug>=5)
-            errlogPrintf("%s : DEBUG submit %s.%s\n",
-                         prec->name,
-                         pvt->tbl->fact.c_str(),
-                         pvt->tbl->inst.c_str());
+const bodset devLinStatBoScan = {
+    {
+        5,
+        nullptr,
+        nullptr,
+        &devLinInitRecord,
+        nullptr,
+    },
+    [](boRecord *prec) noexcept -> long {
+        TRY {
+            if(prec->tpro>1 || linStatDebug>=5)
+                errlogPrintf("%s : DEBUG submit %s.%s\n",
+                             prec->name,
+                             pvt->tbl->fact.c_str(),
+                             pvt->tbl->inst.c_str());
 
-        std::weak_ptr<StatTable> wself(pvt->tbl);
-        pvt->scanHandle = linStatReactor.submit([wself]() noexcept {
-            if(auto job = wself.lock()) {
-                try {
-                    if(linStatDebug>=5) {
-                        errlogPrintf("worker execute %s.%s\n", job->fact.c_str(), job->inst.c_str());
-                    }
-                    job->update();
-                    if(linStatDebug>=5) {
-                        errlogPrintf("worker completes %s.%s\n", job->fact.c_str(), job->inst.c_str());
-                    }
-                    if(!job->last_ok)
-                        errlogPrintf("Tbl %s:%s INFO Success\n",
-                                     job->fact.c_str(),
-                                     job->inst.c_str());
-                    job->last_ok = true;
+            std::weak_ptr<StatTable> wself(pvt->tbl);
+            pvt->scanHandle = linStatReactor.submit([wself]() noexcept {
+                if(auto job = wself.lock()) {
+                    try {
+                        if(linStatDebug>=5) {
+                            errlogPrintf("worker execute %s.%s\n", job->fact.c_str(), job->inst.c_str());
+                        }
+                        job->update();
+                        if(linStatDebug>=5) {
+                            errlogPrintf("worker completes %s.%s\n", job->fact.c_str(), job->inst.c_str());
+                        }
+                        if(!job->last_ok)
+                            errlogPrintf("Tbl %s:%s INFO Success\n",
+                                         job->fact.c_str(),
+                                         job->inst.c_str());
+                        job->last_ok = true;
 
-                } catch(std::exception& e){
-                    if(job->last_ok)
-                        errlogPrintf("Tbl %s:%s " ERL_ERROR " : %s\n",
-                                     job->fact.c_str(),
-                                     job->inst.c_str(),
-                                     e.what());
-                    job->last_ok = false;
+                    } catch(std::exception& e){
+                        if(job->last_ok)
+                            errlogPrintf("Tbl %s:%s " ERL_ERROR " : %s\n",
+                                         job->fact.c_str(),
+                                         job->inst.c_str(),
+                                         e.what());
+                        job->last_ok = false;
+                    }
                 }
-            }
-        });
+            });
+
+            return 0;
+        } CATCH()
+    },
+};
+
+template<typename Rec>
+long devLinStatGetRVal(Rec *prec) noexcept {
+    TRY {
+        Guard G(pvt->tbl->lock);
+
+        const auto& pvar = pvt->tbl->lookup(pvt->param);
+        if(std::holds_alternative<std::monostate>(pvar)) {
+            recGblSetSevrMsg(prec, READ_ALARM, INVALID_ALARM, "No val");
+            return 0;
+        }
+        const auto& param = std::get<IntVal>(pvar);
+
+        if(prec->tse==epicsTimeEventDeviceTime) {
+            prec->time = pvt->tbl->currentTime;
+        }
+
+        prec->rval = param.first;
+        if(prec->mask)
+            prec->rval &= prec->mask;
 
         return 0;
     } CATCH()
 }
 
-long devLinStatGetTblTime(aiRecord *prec) noexcept {
-    TRY {
-        Guard G(pvt->tbl->lock);
-
-        epicsTimeStamp time = pvt->tbl->currentTime;
-
-        prec->val = time.secPastEpoch+POSIX_TIME_AT_EPICS_EPOCH + 1e-9*time.nsec;
-
-        if(prec->tse==epicsTimeEventDeviceTime) {
-            prec->time = time;
-        }
-
-        return 2;
-    } CATCH()
-}
-
-long devLinStaGetValue64(int64inRecord* prec) noexcept {
+template<typename Rec>
+long devLinStatGetVal(Rec* prec) noexcept {
     TRY {
         Guard G(pvt->tbl->lock);
 
@@ -179,68 +201,76 @@ long devLinStaGetValue64(int64inRecord* prec) noexcept {
     } CATCH()
 }
 
-long devLinStaGetValueS(stringinRecord* prec) noexcept {
-    TRY {
-        Guard G(pvt->tbl->lock);
-
-        const auto& pvar = pvt->tbl->lookup(pvt->param);
-        if(std::holds_alternative<std::monostate>(pvar)) {
-            recGblSetSevrMsg(prec, READ_ALARM, INVALID_ALARM, "No val");
-            return 0;
-        }
-        const auto& param = std::get<std::string>(pvar);
-
-        if(prec->tse==epicsTimeEventDeviceTime) {
-            prec->time = pvt->tbl->currentTime;
-        }
-
-        auto n = param.copy(prec->val, sizeof(prec->val)-1);
-        prec->val[n] = '\0';
-
-        return 0;
-    } CATCH()
-}
-
-const bodset devLinStatBoScan = {
-    {
-        5,
-        nullptr,
-        nullptr,
-        &devLinInitRecord,
-        nullptr,
-    },
-    &devLinStatSubmitTbl,
+template<int n>
+constexpr dset commonReading = {
+    n,
+    nullptr,
+    nullptr,
+    &devLinInitRecord,
+    &devLinTblIoIntr,
 };
 const aidset devLinStatAiTblTime = {
-    {
-        6,
-        nullptr,
-        nullptr,
-        &devLinInitRecord,
-        &devLinTblIoIntr,
+    commonReading<6>,
+    [](aiRecord *prec) noexcept -> long {
+        TRY {
+            Guard G(pvt->tbl->lock);
+
+            epicsTimeStamp time = pvt->tbl->currentTime;
+
+            prec->val = time.secPastEpoch+POSIX_TIME_AT_EPICS_EPOCH + 1e-9*time.nsec;
+
+            if(prec->tse==epicsTimeEventDeviceTime) {
+                prec->time = time;
+            }
+
+            return 2;
+        } CATCH()
     },
-    &devLinStatGetTblTime,
     nullptr,
 };
-const int64indset devLinStatI64iValue = {
-    {
-        5,
-        nullptr,
-        nullptr,
-        &devLinInitRecord,
-        &devLinTblIoIntr,
-    },
-    &devLinStaGetValue64,
+const bidset devLinStatBIValue = {
+    commonReading<5>,
+    &devLinStatGetRVal<biRecord>,
+};
+const mbbidset devLinStatMBBIValue = {
+    commonReading<5>,
+    &devLinStatGetRVal<mbbiRecord>,
+};
+const mbbidirectdset devLinStatMBBIDirectValue = {
+    commonReading<5>,
+    &devLinStatGetRVal<mbbiDirectRecord>,
+};
+const longindset devLinStatLIValue = {
+    commonReading<5>,
+    &devLinStatGetVal<longinRecord>,
+};
+const int64indset devLinStatI64Value = {
+    commonReading<5>,
+    &devLinStatGetVal<int64inRecord>,
 };
 const stringindset devLinStatSiValue = {
-    {
-        5,
-        nullptr,
-        nullptr,
-        &devLinInitRecord,
-        &devLinTblIoIntr,
+    commonReading<5>,
+    [](stringinRecord* prec) noexcept -> long {
+        TRY {
+            Guard G(pvt->tbl->lock);
+
+            const auto& pvar = pvt->tbl->lookup(pvt->param);
+            if(std::holds_alternative<std::monostate>(pvar)) {
+                recGblSetSevrMsg(prec, READ_ALARM, INVALID_ALARM, "No val");
+                return 0;
+            }
+            const auto& param = std::get<std::string>(pvar);
+
+            if(prec->tse==epicsTimeEventDeviceTime) {
+                prec->time = pvt->tbl->currentTime;
+            }
+
+            auto n = param.copy(prec->val, sizeof(prec->val)-1);
+            prec->val[n] = '\0';
+
+            return 0;
+        } CATCH()
     },
-    &devLinStaGetValueS,
 };
 
 } // namespace
@@ -248,6 +278,10 @@ const stringindset devLinStatSiValue = {
 extern "C" {
 epicsExportAddress(dset, devLinStatBoScan);
 epicsExportAddress(dset, devLinStatAiTblTime);
-epicsExportAddress(dset, devLinStatI64iValue);
+epicsExportAddress(dset, devLinStatBIValue);
+epicsExportAddress(dset, devLinStatMBBIValue);
+epicsExportAddress(dset, devLinStatMBBIDirectValue);
+epicsExportAddress(dset, devLinStatLIValue);
+epicsExportAddress(dset, devLinStatI64Value);
 epicsExportAddress(dset, devLinStatSiValue);
 }
