@@ -248,6 +248,30 @@ const int64indset devLinStatI64Value = {
     commonReading<5>,
     &devLinStatGetVal<int64inRecord>,
 };
+const aidset devLinStatF64Value = {
+    commonReading<6>,
+    [](aiRecord *prec) noexcept -> long {
+        TRY {
+            Guard G(pvt->tbl->lock);
+
+            const auto& pvar = pvt->tbl->lookup(pvt->param);
+            if(std::holds_alternative<std::monostate>(pvar)) {
+                recGblSetSevrMsg(prec, READ_ALARM, INVALID_ALARM, "No val");
+                return 0;
+            }
+            const auto& param = std::get<IntVal>(pvar);
+
+            if(prec->tse==epicsTimeEventDeviceTime) {
+                prec->time = pvt->tbl->currentTime;
+            }
+
+            prec->rval = param.first;
+
+            return 0;
+        } CATCH()
+    },
+    nullptr,
+};
 const stringindset devLinStatSiValue = {
     commonReading<5>,
     [](stringinRecord* prec) noexcept -> long {
@@ -283,5 +307,6 @@ epicsExportAddress(dset, devLinStatMBBIValue);
 epicsExportAddress(dset, devLinStatMBBIDirectValue);
 epicsExportAddress(dset, devLinStatLIValue);
 epicsExportAddress(dset, devLinStatI64Value);
+epicsExportAddress(dset, devLinStatF64Value);
 epicsExportAddress(dset, devLinStatSiValue);
 }
