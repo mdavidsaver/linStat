@@ -7,6 +7,7 @@ file "tblScan.template" {
 {IOC="\$(IOC)", NAME="HOST_SCAN", OUT="host|localhost|ncpu", PERIOD="60"}
 {IOC="\$(IOC)", NAME="STAT_SCAN", OUT="stat|localhost|cpu:2", PERIOD="10"}
 {IOC="\$(IOC)", NAME="UP_SCAN", OUT="uptime|localhost|uptime", PERIOD="10"}
+{IOC="\$(IOC)", NAME="THERM_SCAN", OUT="thermo|localhost|temp_max", PERIOD="30"}
 }
 
 file "tblGetI64.template" {

@@ -1,3 +1,25 @@
+record(ai, "$(IOC):T_MAX") {
+    field(DESC, "Hottest temperature")
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@thermo|localhost|temp_max")
+    field(SCAN, "I/O Intr")
+    field(ASLO, "0.001")
+    field(EGU , "C")
+    field(HOPR, "100")
+    field(HIHI, "80")
+    field(HIGH, "70")
+    field(HHSV, "MAJOR")
+    field(HSV , "MINOR")
+    field(ADEL, "0.5")
+    field(FLNK, "$(IOC):T_LOC_MAX")
+
+    info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV ADEL")
+}
+record(stringin, "$(IOC):T_LOC_MAX") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@thermo|localhost|name_max")
+}
+
 record(calcout, "$(IOC):MEM_USED_") {
     field(INPA, "$(IOC):MEM_MAX CP MS")
     field(INPB, "$(IOC):MEM_FREE CP MS")
