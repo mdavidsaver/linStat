@@ -12,3 +12,6 @@ device(longin, INST_IO, devLinStatLIValue, "Linux Stat Get")
 device(int64in, INST_IO, devLinStatI64Value, "Linux Stat Get")
 device(ai, INST_IO, devLinStatF64Value, "Linux Stat Get")
 device(stringin, INST_IO, devLinStatSiValue, "Linux Stat Get")
+
+# link format: "@"
+device(bo, INST_IO, devLinStatsBoExit, "Linux Stat Exit")

@@ -25,6 +25,7 @@
 #include <int64inRecord.h>
 #include <aiRecord.h>
 #include <stringinRecord.h>
+#include <epicsExit.h>
 #include <epicsExport.h>
 
 #include "linStat.h"
@@ -297,6 +298,20 @@ const stringindset devLinStatSiValue = {
     },
 };
 
+const bodset devLinStatsBoExit = {
+    {
+        5,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+    },
+    [](boRecord *) noexcept -> long {
+        epicsExitLater(0);
+        return 0;
+    }
+};
+
 } // namespace
 
 extern "C" {
@@ -309,4 +324,5 @@ epicsExportAddress(dset, devLinStatLIValue);
 epicsExportAddress(dset, devLinStatI64Value);
 epicsExportAddress(dset, devLinStatF64Value);
 epicsExportAddress(dset, devLinStatSiValue);
+epicsExportAddress(dset, devLinStatsBoExit);
 }

@@ -1,3 +1,10 @@
+record(bo, "$(IOC):SYSRESET") {
+    field(DTYP, "Linux Stat Exit")
+    field(OUT , "@")
+    field(ZNAM, "Exit")
+    field(ONAM, "Exit")
+}
+
 # records using devSup from Base
 record(mbbo, "$(IOC):ACCESS") {
     field(DESC, "$(IOC) Acc Mode")
