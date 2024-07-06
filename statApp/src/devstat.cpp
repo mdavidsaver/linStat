@@ -62,24 +62,24 @@ long devLinInitRecord(dbCommon *pcom) noexcept {
 
         return 0;
     }catch(std::exception& e){
-        epicsPrintf("%s " ERL_ERROR " %s, \"%s\" : %s\n", pcom->name, __func__, lstr, e.what());
+        fprintf(stderr, "%s " ERL_ERROR " %s, \"%s\" : %s\n", pcom->name, __func__, lstr, e.what());
         return -1;
     }
 }
 
-Pvt* getPvt(void *praw) noexcept {
-    auto pcom = static_cast<dbCommon*>(praw);
-    auto pvt = static_cast<Pvt*>(pcom->dpvt);
+template<class Rec>
+Pvt* getPvt(Rec *prec) noexcept {
+    auto pvt = static_cast<Pvt*>(prec->dpvt);
     if(!pvt) {
-        recGblSetSevrMsg(pcom, COMM_ALARM, INVALID_ALARM, "Init Fail");
+        recGblSetSevrMsg(prec, COMM_ALARM, INVALID_ALARM, "Init Fail");
     }
     return pvt;
 }
 
-long showErr(void *praw, const char* func, std::exception& e) noexcept {
-    auto pcom = static_cast<dbCommon*>(praw);
-    recGblSetSevrMsg(pcom, COMM_ALARM, INVALID_ALARM, "%s", e.what());
-    errlogPrintf("%s " ERL_ERROR " %s : %s\n", pcom->name, func, e.what());
+template<class Rec>
+long showErr(Rec *prec, const char* func, std::exception& e) noexcept {
+    recGblSetSevrMsg(prec, COMM_ALARM, INVALID_ALARM, "%s", e.what());
+    errlogPrintf("%s " ERL_ERROR " %s : %s\n", prec->name, func, e.what());
     return -1;
 }
 

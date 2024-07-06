@@ -121,9 +121,16 @@ std::shared_ptr<StatTable> StatTable::lookup(const std::string &name, const std:
         auto tbl(fact.create(inst, react));
 
         // initial, synchronous, update
-        {
+        try {
             // establish lock order Gbl::lock -> StatTable::lock
             tbl->update();
+            tbl->last_ok = true;
+        } catch(std::exception& e){
+            errlogPrintf("Tbl %s:%s " ERL_ERROR " first : %s\n",
+                         tbl->fact.c_str(),
+                         tbl->inst.c_str(),
+                         e.what());
+            tbl->last_ok = false;
         }
 
         gbl.tables.emplace(key, tbl);
