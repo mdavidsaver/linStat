@@ -1,13 +1,22 @@
+# reading
+# - /proc/net/netstat
+# - /proc/net/snmp
+# or
+# - /proc/self/net/netstat
+# - /proc/self/net/snmp
 
 file "tblScan.template" {
-{IOC="\$(P)", NAME="NET_SCAN", OUT="netstat|\$(INST)|IpExt:InOctets", PERIOD="60"}
+{IOC="\$(P)", NAME="SNMP_SCAN", OUT="netstat|/proc\$(INST)/net/snmp|Ip:InReceives", PERIOD="60"}
+{IOC="\$(P)", NAME="NET_SCAN", OUT="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets", PERIOD="60"}
 }
 
 file "tblGetRateI64.template" {
-{IOC="\$(P)", NAME="RX", INP="netstat|\$(INST)|IpExt:InOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="RX:B", INP="netstat|\$(INST)|IpExt:InBcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="RX:M", INP="netstat|\$(INST)|IpExt:InMcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="TX", INP="netstat|\$(INST)|IpExt:OutBcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="TX:B", INP="netstat|\$(INST)|IpExt:OutBcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="TX:M", INP="netstat|\$(INST)|IpExt:OutMcastOctets", EGU="B/s"}
+{IOC="\$(P)", NAME="UDP_RX", INP="netstat|/proc\$(INST)/net/snmp|Udp:InDatagrams", EGU="pkt/s"}
+{IOC="\$(P)", NAME="UDP_TX", INP="netstat|/proc\$(INST)/net/snmp|Udp:OutDatagrams", EGU="pkt/s"}
+{IOC="\$(P)", NAME="RX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets", EGU="B/s"}
+{IOC="\$(P)", NAME="RX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InBcastOctets", EGU="B/s"}
+{IOC="\$(P)", NAME="RX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InMcastOctets", EGU="B/s"}
+{IOC="\$(P)", NAME="TX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets", EGU="B/s"}
+{IOC="\$(P)", NAME="TX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets", EGU="B/s"}
+{IOC="\$(P)", NAME="TX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutMcastOctets", EGU="B/s"}
 }

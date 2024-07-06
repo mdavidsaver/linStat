@@ -86,7 +86,7 @@ file "timeProc.template" {
 }
 
 file "netStat.db" {
-{P="\$(IOC):NET:IOC", INST="self"}
+{P="\$(IOC):NET:IOC", INST="/self"}
 }
 
 # TODO

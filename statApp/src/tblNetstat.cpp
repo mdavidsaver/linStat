@@ -3,7 +3,11 @@
  * linStat is distributed subject to a Software License Agreement found
  * in file LICENSE that is included with this distribution.
  */
-/* Read /proc/net/netstat or /proc/self/net/netstat
+/* Read sequence-of-tables format use for:
+ * - /proc/net/netstat
+ * - /proc/net/snmp
+ * - /proc/self/net/netstat
+ * - /proc/self/net/snmp
  */
 
 #include <errlog.h>
@@ -23,12 +27,8 @@ struct NetstatTable : public StatTable {
 
     explicit NetstatTable(const std::string& inst, const Reactor& react)
         :StatTable(tblName, inst, react)
-    {
-        if(inst.empty())
-            fname = "/proc/net/netstat";
-        else
-            fname = SB()<<"/proc/"<<inst<<"/net/netstat";
-    }
+        ,fname(inst)
+    {}
     virtual ~NetstatTable() {}
 
     virtual void update() override final {

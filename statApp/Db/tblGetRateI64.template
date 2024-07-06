@@ -19,7 +19,8 @@ record(calc, "$(IOC):$(NAME)") {
     # C - prev count
     # D - prev time
     # E - result
-    field(CALC, "E:=(A-C)/(B-D);C:=A;D:=B;E")
+    field(INPF, "$(ASLO=1.0)")
+    field(CALC, "E:=(A-C)/(B-D);C:=A;D:=B;E*F")
     field(EGU , "$(EGU=Hz)")
     field(PREC, "$(PREC=1)")
     field(HOPR, "$(HOPR=)")

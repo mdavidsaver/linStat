@@ -144,7 +144,6 @@ iocInit()
     - callback pool info
     - scan once info
 - System
-    - [ ] `/proc/net/snmp` (and `/proc/self/net/snmp`)
 - Process
     - [ ] `epicsExitLater()`
     - [ ] Memory locked by `mlockall()`
