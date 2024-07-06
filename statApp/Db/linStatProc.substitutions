@@ -57,9 +57,12 @@ file "tblGetRateI64.template" {
 }
 
 file "tblGetSI.template" {
-#{IOC="\$(IOC)", NAME="APP_DIR", INP="pid|self|cwd"}
 {IOC="\$(IOC)", NAME="APP_DIR1", INP="pid|self|cwd1"}
 {IOC="\$(IOC)", NAME="APP_DIR2", INP="pid|self|cwd2"}
+}
+
+file "tblGetLSI.template" {
+{IOC="\$(IOC)", NAME="APP_DIR", INP="pid|self|cwd"}
 }
 
 file "getenv.template" {

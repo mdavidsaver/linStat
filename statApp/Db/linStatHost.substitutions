@@ -40,6 +40,10 @@ file "tblGetSI.template" {
 {IOC="\$(IOC)", NAME="UPTIME", INP="uptime|localhost|uptime:disp"}
 }
 
+file "tblGetLSI.template" {
+{IOC="\$(IOC)", NAME="KERNEL_VERS_FULL", INP="host|localhost|version"}
+}
+
 file "logicHost.template" {
 {IOC="\$(IOC)"}
 }

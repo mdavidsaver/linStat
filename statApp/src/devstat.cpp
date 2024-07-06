@@ -25,6 +25,7 @@
 #include <int64inRecord.h>
 #include <aiRecord.h>
 #include <stringinRecord.h>
+#include <lsiRecord.h>
 #include <epicsExit.h>
 #include <epicsExport.h>
 
@@ -297,6 +298,32 @@ const stringindset devLinStatSiValue = {
         } CATCH()
     },
 };
+const lsidset devLinStatLsiValue = {
+    commonReading<5>,
+    [](lsiRecord* prec) noexcept -> long {
+        TRY {
+            Guard G(pvt->tbl->lock);
+
+            const auto& pvar = pvt->tbl->lookup(pvt->param);
+            if(std::holds_alternative<std::monostate>(pvar)) {
+                recGblSetSevrMsg(prec, READ_ALARM, INVALID_ALARM, "No val");
+                return 0;
+            }
+            const auto& param = std::get<std::string>(pvar);
+
+            if(prec->tse==epicsTimeEventDeviceTime) {
+                prec->time = pvt->tbl->currentTime;
+            }
+
+            // SIZE will always be >= 16
+            auto n = param.copy(prec->val, prec->sizv-1);
+            prec->val[n] = '\0';
+            prec->len = n;
+
+            return 0;
+        } CATCH()
+    },
+};
 
 const bodset devLinStatsBoExit = {
     {
@@ -324,5 +351,6 @@ epicsExportAddress(dset, devLinStatLIValue);
 epicsExportAddress(dset, devLinStatI64Value);
 epicsExportAddress(dset, devLinStatF64Value);
 epicsExportAddress(dset, devLinStatSiValue);
+epicsExportAddress(dset, devLinStatLsiValue);
 epicsExportAddress(dset, devLinStatsBoExit);
 }

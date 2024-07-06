@@ -1,0 +1,9 @@
+record(lsi, "$(IOC):$(NAME)") {
+    field(DESC, "$(DESC=)")
+    field(SIZV, "$(SIZV=128)")
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@$(INP)")
+    field(SCAN, "I/O Intr")
+    field(PHAS, "$(PHAS=0)")
+    field(TSE , "-2")
+}
