@@ -75,10 +75,10 @@ record(ai, "$(IOC):IOC_CPU_LOAD_") {
     field(INP,  "@TIME")
 }
 
-# updated HOPR when MALLOC_MAX changes (~never)
-record(dfanout, "$(IOC):MALLOC_MAX_") {
-    field(DOL , "$(IOC):MALLOC_MAX CP")
+# updated HOPR when MALLOC_POOL changes (~never)
+record(dfanout, "$(IOC):MALLOC_POOL_") {
+    field(DOL , "$(IOC):MALLOC_POOL CP")
     field(OMSL, "closed_loop")
     field(OUTA, "$(IOC):MALLOC_USED.HOPR NPP")
-    field(TSEL, "$(IOC):MALLOC_MAX.TIME")
+    field(TSEL, "$(IOC):MALLOC_POOL.TIME")
 }

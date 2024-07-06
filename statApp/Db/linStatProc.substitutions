@@ -39,7 +39,7 @@ file "tblGetI64.template" {
 {IOC="\$(IOC)", NAME="SUSP_TASK_CNT", INP="pdb|self|nsuspend",
  HIHI="1", HHSV="MAJOR",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
-{IOC="\$(IOC)", NAME="MALLOC_MAX", INP="mallinfo|self|arena", EGU="B",
+{IOC="\$(IOC)", NAME="MALLOC_POOL", INP="mallinfo|self|arena", EGU="B",
  ADEL="1048576"}
 {IOC="\$(IOC)", NAME="MALLOC_USED", INP="mallinfo|self|uordblks", EGU="B",
  ADEL="1048576"}

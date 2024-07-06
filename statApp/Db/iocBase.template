@@ -3,6 +3,7 @@ record(bo, "$(IOC):SYSRESET") {
     field(OUT , "@")
     field(ZNAM, "Exit")
     field(ONAM, "Exit")
+    field(UDF, "0")
 }
 
 # records using devSup from Base
@@ -17,6 +18,7 @@ record(mbbo, "$(IOC):ACCESS") {
     field(TWSV, "MINOR")
     field(THST, "OFFLINE")
     field(THSV, "MAJOR")
+    field(UDF, "0")
 
     info(autosaveFields_pass0, "VAL")
 }
@@ -26,6 +28,7 @@ record( sub, "$(IOC):READACF") {
     field(INAM, "asSubInit")
     field(SNAM, "asSubProcess")
     field(BRSV, "INVALID")
+    field(UDF, "0")
 }
 
 
@@ -44,6 +47,7 @@ record(bo, "$(IOC):GTIM_RESET") {
     field(OUT,  "@RSTERRCNT")
     field(ZNAM, "Reset")
     field(ONAM, "Reset")
+    field(UDF , "0")
 }
 
 record(longin, "$(IOC):GTIM_ERR_CNT") {
