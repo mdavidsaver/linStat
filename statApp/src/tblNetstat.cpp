@@ -10,6 +10,8 @@
  * - /proc/self/net/snmp
  */
 
+#include <sstream>
+
 #include <errlog.h>
 #include <epicsThread.h>
 #include <epicsString.h>
@@ -36,71 +38,40 @@ struct NetstatTable : public StatTable {
 
         std::ifstream strm(fname);
         if(!strm.is_open()) {
-            errlogPrintf("Tbl %s.%s " ERL_ERROR " Unable to open: %s\n",
-                         fact.c_str(),
-                         inst.c_str(),
-                         fname.c_str());
-            return;
+            throw std::runtime_error(SB()<<"Unable to open: "<<fname);
         }
 
-        std::string table; // doubles as parser state.  empty == expect header, !empty == expect values
-
-        std::string line;
-        while(std::getline(strm, line)) {
+        while(true) {
             // consecutive pairs of lines like:
             //   Tbl: Label1 Label2 ...
             //   Tbl: Value1 Value2 ...
+            std::string head, vals;
 
-            auto sep = line.find_first_of(':');
-            if(!sep)
-                continue; // not likely...
-
-            auto name(line.substr(0, sep));
-            if(table.empty()) {
-                labels.clear();
-
-                char *save = nullptr;
-                for(const char *ent = epicsStrtok_r(line.data() + sep+1, " ", &save);
-                    ent;
-                    ent = epicsStrtok_r(nullptr, " ", &save))
-                {
-                    labels.push_back(ent);
-                }
-                table = name;
-
-            } else if(table!=name) {
-                errlogPrintf("Tbl %s.%s " ERL_ERROR " mis-matched tables %s != %s\n",
-                             fact.c_str(),
-                             inst.c_str(),
-                             name.c_str(),
-                             table.c_str());
-                break;
-
-            } else {
-                auto it = labels.begin();
-                char *save = nullptr;
-                for(const char *ent = epicsStrtok_r(line.data() + sep+1, " ", &save);
-                    ent && it!=labels.end();
-                    ent = epicsStrtok_r(nullptr, " ", &save), ++it)
-                {
-                    uint64_t val;
-                    try {
-                        val = std::stoul(ent);
-                    } catch(std::exception& e){
-                        if(linStatDebug>=3)
-                            errlogPrintf(ERL_ERROR " %s Unable to parse:%s \"%s\"\n",
-                                         __func__,
-                                         it->c_str(),
-                                         ent);
-                        continue;
-                    }
-
-                    tr.set(SB()<<table<<":"<<(*it), val);
-                }
-                table.clear();
+            if(!std::getline(strm, head) || !std::getline(strm, vals)) {
+                if(strm.eof())
+                    break;
+                throw std::runtime_error("I/O error");
             }
-        }
 
+            std::istringstream hstrm(head), vstrm(vals);
+
+            std::string table;
+            {
+                std::string othert;
+                if(!(hstrm>>table) || !(vstrm>>othert) || table!=othert || table.empty() || table.back()!=':')
+                    throw std::runtime_error(SB()<<"Ill-formatted table "<<table);
+            }
+
+            std::string col;
+            uint64_t val;
+            while((hstrm>>col) && (vstrm>>val)) {
+                tr.set(SB()<<table<<col, val);
+            }
+            if(hstrm.eof() && vstrm.eof())
+                continue;
+
+            throw std::runtime_error(SB()<<"Invalid table values "<<table);
+        }
     }
 };
 
