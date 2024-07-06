@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-07-06 09:09:32 by dev-->
+<display version="2.0.0">
+  <name>FS: $(P)</name>
+  <width>550</width>
+  <height>105</height>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>TITLE</class>
+    <text>FS: $(P)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>550</width>
+    <height>30</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_14</name>
+    <text>Free</text>
+    <y>55</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_7</name>
+    <pv_name>$(P):AVAIL</pv_name>
+    <x>85</x>
+    <y>55</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_15</name>
+    <text>/</text>
+    <x>170</x>
+    <y>55</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_8</name>
+    <pv_name>$(P):SIZE</pv_name>
+    <x>200</x>
+    <y>55</y>
+    <width>90</width>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar</name>
+    <pv_name>$(P):AVAIL</pv_name>
+    <x>300</x>
+    <y>55</y>
+    <width>210</width>
+    <fill_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_16</name>
+    <text>Inode Free</text>
+    <y>80</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_9</name>
+    <pv_name>$(P):IAVAIL</pv_name>
+    <x>85</x>
+    <y>80</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_17</name>
+    <text>/</text>
+    <x>170</x>
+    <y>80</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_10</name>
+    <pv_name>$(P):ISIZE</pv_name>
+    <x>200</x>
+    <y>80</y>
+    <width>90</width>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_1</name>
+    <pv_name>$(P):IAVAIL</pv_name>
+    <x>300</x>
+    <y>80</y>
+    <width>210</width>
+    <fill_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_20</name>
+    <text>Path</text>
+    <y>30</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_17</name>
+    <pv_name>$(P):PATH.VAL$</pv_name>
+    <x>85</x>
+    <y>30</y>
+    <width>430</width>
+    <format>6</format>
+  </widget>
+</display>

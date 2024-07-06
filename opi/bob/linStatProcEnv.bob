@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-07-06 08:06:34 by dev-->
+<display version="2.0.0">
+  <name>ENV: $(IOC)</name>
+  <width>550</width>
+  <height>588</height>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>TITLE</class>
+    <text>ENV: $(IOC)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>550</width>
+    <height>31</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+  </widget>
+  <widget type="template" version="2.0.0">
+    <name>Template/Instance</name>
+    <file>_linStatProcEnv.bob</file>
+    <instances>
+      <instance>
+        <macros>
+          <NAME>ENGINEER</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>LOCATION</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>ST_SCRIPT1</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>EPICS_VERSION</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_CONN_TIME</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_AUTO_ADDR</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_RPTR_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_SRVR_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_MAX_ARRAY</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_SRCH_TIME</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CA_BEAC_TIME</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CAS_SRVR_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CAS_AUTO_ADDR</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CAS_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CAS_BEACON_PERIOD</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CAS_BEACON_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CAS_ADDR_INTF_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>CAS_ADDR_IGNORE_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>TIMEZONE</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>TS_NTP_INET</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>IOC_LOG_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>IOC_LOG_INET</NAME>
+        </macros>
+      </instance>
+    </instances>
+    <x>20</x>
+    <y>36</y>
+    <width>459</width>
+    <height>552</height>
+    <gap>0</gap>
+  </widget>
+</display>

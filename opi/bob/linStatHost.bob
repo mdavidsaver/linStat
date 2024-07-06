@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-07-06 08:35:55 by dev-->
+<display version="2.0.0">
+  <name>Host $(IOC)</name>
+  <width>550</width>
+  <height>440</height>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>TITLE</class>
+    <text>Host: $(IOC)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>550</width>
+    <height>31</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>RAM Free</text>
+    <x>10</x>
+    <y>70</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(IOC):MEM_FREE</pv_name>
+    <x>90</x>
+    <y>70</y>
+    <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_1</name>
+    <pv_name>$(IOC):MEM_MAX</pv_name>
+    <x>210</x>
+    <y>70</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <text>/</text>
+    <x>180</x>
+    <y>70</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar</name>
+    <pv_name>$(IOC):MEM_FREE</pv_name>
+    <x>310</x>
+    <y>70</y>
+    <width>210</width>
+    <fill_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <text>Swap Free</text>
+    <x>10</x>
+    <y>100</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_2</name>
+    <pv_name>$(IOC):SWP_FREE</pv_name>
+    <x>90</x>
+    <y>100</y>
+    <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_3</name>
+    <pv_name>$(IOC):SWP_MAX</pv_name>
+    <x>210</x>
+    <y>100</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <text>/</text>
+    <x>180</x>
+    <y>100</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_1</name>
+    <pv_name>$(IOC):SWP_FREE</pv_name>
+    <x>310</x>
+    <y>100</y>
+    <width>210</width>
+    <fill_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_6</name>
+    <text>User Load</text>
+    <x>10</x>
+    <y>130</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_4</name>
+    <pv_name>$(IOC):SYS_CPU_LOAD</pv_name>
+    <x>90</x>
+    <y>130</y>
+    <width>90</width>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_2</name>
+    <pv_name>$(IOC):SYS_CPU_LOAD</pv_name>
+    <x>310</x>
+    <y>130</y>
+    <width>210</width>
+    <fill_color>
+      <color red="0" green="0" blue="255">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_7</name>
+    <text>Tot Load</text>
+    <x>10</x>
+    <y>160</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_5</name>
+    <pv_name>$(IOC):SYS_TOT_LOAD</pv_name>
+    <x>90</x>
+    <y>160</y>
+    <width>90</width>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_3</name>
+    <pv_name>$(IOC):SYS_TOT_LOAD</pv_name>
+    <x>310</x>
+    <y>160</y>
+    <width>210</width>
+    <fill_color>
+      <color red="0" green="0" blue="255">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_8</name>
+    <text>/</text>
+    <x>180</x>
+    <y>130</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_9</name>
+    <text>100</text>
+    <x>210</x>
+    <y>130</y>
+    <width>90</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_11</name>
+    <text>100</text>
+    <x>210</x>
+    <y>160</y>
+    <width>90</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_12</name>
+    <text>/</text>
+    <x>180</x>
+    <y>160</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_13</name>
+    <text># CPU</text>
+    <x>10</x>
+    <y>190</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_6</name>
+    <pv_name>$(IOC):CPU_CNT</pv_name>
+    <x>90</x>
+    <y>190</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_14</name>
+    <text>Uptime</text>
+    <x>10</x>
+    <y>220</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_7</name>
+    <pv_name>$(IOC):UPTIME</pv_name>
+    <x>90</x>
+    <y>220</y>
+    <width>210</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_15</name>
+    <text>Time</text>
+    <x>10</x>
+    <y>250</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_8</name>
+    <pv_name>$(IOC):TOD</pv_name>
+    <x>90</x>
+    <y>250</y>
+    <width>210</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_9</name>
+    <pv_name>$(IOC):NET:HOST:RX</pv_name>
+    <x>160</x>
+    <y>280</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_16</name>
+    <text>Total IP</text>
+    <x>10</x>
+    <y>280</y>
+    <width>70</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_17</name>
+    <text>RX</text>
+    <x>110</x>
+    <y>280</y>
+    <width>40</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_10</name>
+    <pv_name>$(IOC):NET:HOST:TX</pv_name>
+    <x>310</x>
+    <y>280</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_18</name>
+    <text>TX</text>
+    <x>260</x>
+    <y>280</y>
+    <width>40</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_19</name>
+    <text>Total BCast</text>
+    <x>10</x>
+    <y>310</y>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_11</name>
+    <pv_name>$(IOC):NET:HOST:RX:B</pv_name>
+    <x>160</x>
+    <y>310</y>
+    <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_12</name>
+    <pv_name>$(IOC):NET:HOST:TX:B</pv_name>
+    <x>310</x>
+    <y>310</y>
+    <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_13</name>
+    <pv_name>$(IOC):NET:HOST:TX:M</pv_name>
+    <x>310</x>
+    <y>340</y>
+    <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_14</name>
+    <pv_name>$(IOC):NET:HOST:RX:M</pv_name>
+    <x>160</x>
+    <y>340</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_22</name>
+    <text>Total MCast</text>
+    <x>10</x>
+    <y>340</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_23</name>
+    <text>Max. Temp.</text>
+    <x>10</x>
+    <y>365</y>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_15</name>
+    <pv_name>$(IOC):T_MAX</pv_name>
+    <x>160</x>
+    <y>365</y>
+    <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_16</name>
+    <pv_name>$(IOC):T_LOC_MAX</pv_name>
+    <x>310</x>
+    <y>365</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_24</name>
+    <text>Sens.</text>
+    <x>260</x>
+    <y>365</y>
+    <width>40</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_20</name>
+    <text>Kernel</text>
+    <x>10</x>
+    <y>400</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_17</name>
+    <pv_name>$(IOC):KERNEL_VERS_FULL.VAL$</pv_name>
+    <x>90</x>
+    <y>400</y>
+    <width>430</width>
+    <format>6</format>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_25</name>
+    <text>Hostname</text>
+    <x>10</x>
+    <y>45</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_19</name>
+    <pv_name>$(IOC):HOSTNAME</pv_name>
+    <x>90</x>
+    <y>45</y>
+    <width>210</width>
+  </widget>
+</display>

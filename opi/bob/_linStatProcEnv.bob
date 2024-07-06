@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-07-06 08:11:53 by dev-->
+<display version="2.0.0">
+  <name>$(NAME)</name>
+  <width>522</width>
+  <height>24</height>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(IOC):$(NAME).DESC</pv_name>
+    <x>2</x>
+    <y>2</y>
+    <width>238</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_1</name>
+    <pv_name>$(IOC):$(NAME)</pv_name>
+    <x>250</x>
+    <y>2</y>
+    <width>270</width>
+  </widget>
+</display>

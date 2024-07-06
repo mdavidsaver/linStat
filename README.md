@@ -136,7 +136,6 @@ iocInit()
 ## TODO
 
 - OPIs
-    - Decide to convert/extend iocStats `.bob` or re-do?
 - PDB
     - scan tasks
         - [ ] execution time (diff time between `PHAS=-32768` and `PHAS=32767`)
@@ -148,3 +147,4 @@ iocInit()
     - [ ] Capabilities mask?
 - FS
 - NIC
+    - [ ] Link speed
