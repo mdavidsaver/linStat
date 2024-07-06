@@ -30,27 +30,27 @@ long linStatReport(int level) noexcept {
 
         for(auto fact : StatTableIter()) {
             if(fact.name)
-                epicsPrintf("  Factory %s : %p\n", fact.name, fact.create);
+                epicsStdoutPrintf("  Factory %s : %p\n", fact.name, fact.create);
         }
 
         if(level<=2)
             return 0;
 
         for(const auto& tbl : StatTable::list_all()) {
-            epicsPrintf("  Table: %s.%s\n", tbl->fact.c_str(), tbl->inst.c_str());
+            epicsStdoutPrintf("  Table: %s.%s\n", tbl->fact.c_str(), tbl->inst.c_str());
             Guard G(tbl->lock);
             for(const auto& pr : tbl->current) {
                 if(auto val = std::get_if<IntVal>(&pr.second)) {
-                    epicsPrintf("    int64_t %s = %lld %s\n",
+                    epicsStdoutPrintf("    int64_t %s = %lld %s\n",
                                 pr.first.c_str(),
                                 (long long)val->first,
                                 val->second.c_str());
                 } else if(auto val = std::get_if<std::string>(&pr.second)) {
-                    epicsPrintf("    string %s = %s\n",
+                    epicsStdoutPrintf("    string %s = %s\n",
                                 pr.first.c_str(),
                                 val->c_str());
                 } else {
-                    epicsPrintf("    ?????? %s\n",
+                    epicsStdoutPrintf("    ?????? %s\n",
                                 pr.first.c_str());
                 }
             }
@@ -58,7 +58,7 @@ long linStatReport(int level) noexcept {
 
         return 0;
     }catch(std::exception& e){
-        epicsPrintf(ERL_ERROR " : %s\n", e.what());
+        epicsStdoutPrintf(ERL_ERROR " : %s\n", e.what());
         return -1;
     }
 }
