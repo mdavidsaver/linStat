@@ -41,7 +41,7 @@ struct DBEntry {
 
 struct PDBTable : public StatTable {
     uint64_t nrec=0;
-    std::atomic<uint64_t> nsuspend{0};
+    std::atomic<uint32_t> nsuspend{0};
 
     explicit PDBTable(const std::string& inst, const Reactor& react);
     virtual ~PDBTable();
