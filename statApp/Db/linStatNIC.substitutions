@@ -4,7 +4,7 @@
 #  NIC - Interface name.  eg NIC="eth0"
 
 file "tblScan.template" {
-{IOC="\$(IOC):NET:$(NIC)", NAME="NETDEV_SCAN", OUT="ifstat|\$(NIC)|xxx", PERIOD="10"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="NETDEV", OUT="ifstat|\$(NIC)|xxx", PERIOD="10"}
 }
 
 file "tblGetRateI64.template" {

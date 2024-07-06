@@ -3,12 +3,12 @@
 #  IOC - Common record prefix
 
 file "tblScan.template" {
-{IOC="\$(IOC)", NAME="PID_SCAN", OUT="pid|self|cwd", PERIOD="60"}
-{IOC="\$(IOC)", NAME="FD_SCAN", OUT="fd|self|FD_CNT", PERIOD="60"}
-{IOC="\$(IOC)", NAME="PID_STATUS_SCAN", OUT="procStatus|self|Pid", PERIOD="10"}
-{IOC="\$(IOC)", NAME="PID_STAT_SCAN", OUT="procStat|self|1", PERIOD="10"}
-{IOC="\$(IOC)", NAME="PDB_SCAN", OUT="pdb|self|nrec", PERIOD="10"}
-{IOC="\$(IOC)", NAME="MALL_SCAN", OUT="mallinfo|self|arena", PERIOD="30"}
+{IOC="\$(IOC)", NAME="PID", OUT="pid|self|cwd", PERIOD="60"}
+{IOC="\$(IOC)", NAME="FD", OUT="fd|self|FD_CNT", PERIOD="60"}
+{IOC="\$(IOC)", NAME="PID_STATUS", OUT="procStatus|self|Pid", PERIOD="10"}
+{IOC="\$(IOC)", NAME="PID_STAT", OUT="procStat|self|1", PERIOD="10"}
+{IOC="\$(IOC)", NAME="PDB", OUT="pdb|self|nrec", PERIOD="10"}
+{IOC="\$(IOC)", NAME="MALL", OUT="mallinfo|self|arena", PERIOD="30"}
 }
 
 file "tblGetI64.template" {

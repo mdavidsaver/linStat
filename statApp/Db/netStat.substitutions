@@ -6,8 +6,8 @@
 # - /proc/self/net/snmp
 
 file "tblScan.template" {
-{IOC="\$(P)", NAME="SNMP_SCAN", OUT="netstat|/proc\$(INST)/net/snmp|Ip:InReceives", PERIOD="60"}
-{IOC="\$(P)", NAME="NET_SCAN", OUT="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets", PERIOD="60"}
+{IOC="\$(P)", NAME="SNMP", OUT="netstat|/proc\$(INST)/net/snmp|Ip:InReceives", PERIOD="60"}
+{IOC="\$(P)", NAME="NET", OUT="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets", PERIOD="60"}
 }
 
 file "tblGetRateI64.template" {
