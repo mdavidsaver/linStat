@@ -14,8 +14,10 @@ file "tblScan.template" {
 file "tblGetI64.template" {
 {IOC="\$(IOC)", NAME="PROCESS_ID", INP="procStatus|self|Pid"}
 {IOC="\$(IOC)", NAME="PARENT_ID", INP="procStatus|self|PPid"}
-{IOC="\$(IOC)", NAME="RSS", INP="procStatus|self|VmRSS"}
-{IOC="\$(IOC)", NAME="RSS_PEAK", INP="procStatus|self|VmHWM"}
+{IOC="\$(IOC)", NAME="MEM_SWP", INP="procStatus|self|VmSwap"}
+{IOC="\$(IOC)", NAME="MEM_LCK", INP="procStatus|self|VmLck"}
+{IOC="\$(IOC)", NAME="MEM_RSS", INP="procStatus|self|VmRSS"}
+{IOC="\$(IOC)", NAME="MEM_RSS_PEAK", INP="procStatus|self|VmHWM"}
 {IOC="\$(IOC)", NAME="THREAD_CNT", INP="procStatus|self|Threads"}
 {IOC="\$(IOC)", NAME="FD_MAX", INP="pid|self|NOFILE"}
 {IOC="\$(IOC)", NAME="FD_CNT", INP="fd|self|FD_CNT"}

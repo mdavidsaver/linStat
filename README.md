@@ -145,7 +145,6 @@ iocInit()
     - scan once info
 - System
 - Process
-    - [ ] Memory locked by `mlockall()`
     - [ ] Context switch counts
     - [ ] Capabilities mask?
 - FS
