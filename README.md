@@ -145,7 +145,6 @@ iocInit()
     - scan once info
 - System
 - Process
-    - [ ] Context switch counts
     - [ ] Capabilities mask?
 - FS
 - NIC

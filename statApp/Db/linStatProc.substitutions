@@ -39,6 +39,8 @@ file "tblGetI64.template" {
 file "tblGetRateI64.template" {
 {IOC="\$(IOC)", NAME="PGFLT_MAJ", INP="procStat|self|10", EGU="Hz"}
 {IOC="\$(IOC)", NAME="PGFLT_MIN", INP="procStat|self|12", EGU="Hz"}
+{IOC="\$(IOC)", NAME="SWTH_VOL", INP="procStatus|self|voluntary_ctxt_switches", EGU="Hz"}
+{IOC="\$(IOC)", NAME="SWTH_FRC", INP="procStatus|self|nonvoluntary_ctxt_switches", EGU="Hz"}
 }
 
 file "tblGetSI.template" {
