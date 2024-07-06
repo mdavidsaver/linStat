@@ -7,13 +7,17 @@ file "tblScan.template" {
 {IOC="\$(IOC):NET:$(NIC)", NAME="NETDEV", OUT="ifstat|\$(NIC)|xxx", PERIOD="10"}
 }
 
+file "tblGetSI.template" {
+{IOC="\$(IOC):NET:$(NIC)", NAME="NAME", INP="ifstat|\$(NIC)|name"}
+}
+
 file "tblGetRateI64.template" {
-{IOC="\$(IOC):NET:$(NIC)", NAME="RX", INP="ifstat|\$(NIC)|rx_bytes", EGU="B/s"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="RX", INP="ifstat|\$(NIC)|rx_bytes", ASLO="0.0009765625", EGU="KB/s"}
 {IOC="\$(IOC):NET:$(NIC)", NAME="RX:E", INP="ifstat|\$(NIC)|rx_errors", EGU="Hz",
     HIGH="0.1", HSV="MAJOR"}
 
-{IOC="\$(IOC):NET:$(NIC)", NAME="TX", INP="ifstat|\$(NIC)|tx_bytes", EGU="B/s"}
-{IOC="\$(IOC):NET:$(NIC)", NAME="RX:E", INP="ifstat|\$(NIC)|tx_errors", EGU="Hz",
+{IOC="\$(IOC):NET:$(NIC)", NAME="TX", INP="ifstat|\$(NIC)|tx_bytes", ASLO="0.0009765625", EGU="KB/s"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="TX:E", INP="ifstat|\$(NIC)|tx_errors", EGU="Hz",
     HIGH="0.1", HSV="MAJOR"}
 {IOC="\$(IOC):NET:$(NIC)", NAME="UP:R", INP="ifstat|\$(NIC)|carrier_up_count", EGU="Hz"}
 {IOC="\$(IOC):NET:$(NIC)", NAME="DOWN:R", INP="ifstat|\$(NIC)|carrier_down_count", EGU="Hz"}
@@ -21,7 +25,7 @@ file "tblGetRateI64.template" {
 
 file "tblGetI64.template" {
 {IOC="\$(IOC):NET:$(NIC)", NAME="IFFLAGS", INP="ifstat|\$(NIC)|if_flags"}
-{IOC="\$(IOC):NET:$(NIC)", NAME="MTU", INP="ifstat|\$(NIC)|mtu"}
+{IOC="\$(IOC):NET:$(NIC)", NAME="MTU", INP="ifstat|\$(NIC)|mtu", EGU="B"}
 }
 
 file "logicNIC.template" {

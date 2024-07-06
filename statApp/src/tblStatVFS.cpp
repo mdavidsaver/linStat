@@ -29,11 +29,18 @@ struct StatVFSTable : public StatTable {
 
     virtual void update() override final {
         Transaction tr(*this);
+        tr.set("path", inst);
+
+        const auto toMB = [](uint64_t b) -> uint64_t {
+            constexpr uint64_t MB = 1u<<20u;
+            // rounding up
+            return (b+MB-1) / MB;
+        };
 
         struct statvfs64 tmp{};
         if(0==statvfs64(inst.c_str(), &tmp)) {
-            tr.set("size", tmp.f_frsize * tmp.f_blocks, "B");
-            tr.set("avail", tmp.f_bsize * tmp.f_bavail, "B");
+            tr.set("size", toMB(tmp.f_frsize * tmp.f_blocks), "MB");
+            tr.set("avail", toMB(tmp.f_bsize * tmp.f_bavail), "MB");
             tr.set("isize", tmp.f_files, "files");
             tr.set("iavail", tmp.f_favail, "files");
             if(!success)

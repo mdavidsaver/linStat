@@ -64,6 +64,7 @@ struct IFStatTable : public StatTable {
 
     void digest_newlink(const nlmsghdr *msg) {
         Transaction tr(*this);
+        tr.set("name", inst);
 
         auto pos = (const char*)NLMSG_DATA(msg);
         auto remaining = msg->nlmsg_len - NLMSG_HDRLEN;

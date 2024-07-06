@@ -16,11 +16,19 @@ record(calcout, "$(P):FS_SCAN_") {
     field(OUT , "$(P):FS_SCAN.PROC CA")
 }
 
+record(lsi, "$(P):PATH") {
+    field(SIZV, "1024") # ~PATH_MAX
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@statvfs|$(DIR)|path")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+    field(FLNK, "$(P):SIZE")
+}
+
 # available bytes
 record(int64in, "$(P):SIZE") {
     field(DTYP, "Linux Stat Get")
     field(INP , "@statvfs|$(DIR)|size")
-    field(SCAN, "I/O Intr")
     field(TSE , "-2")
     field(FLNK, "$(P):AVAIL")
 }
