@@ -14,38 +14,49 @@ file "tblScan.template" {
 file "tblGetI64.template" {
 {IOC="\$(IOC)", NAME="PROCESS_ID", INP="procStatus|self|Pid"}
 {IOC="\$(IOC)", NAME="PARENT_ID", INP="procStatus|self|PPid"}
-{IOC="\$(IOC)", NAME="MEM_SWP", INP="procStatus|self|VmSwap"}
-{IOC="\$(IOC)", NAME="MEM_LCK", INP="procStatus|self|VmLck"}
-{IOC="\$(IOC)", NAME="MEM_RSS", INP="procStatus|self|VmRSS"}
-{IOC="\$(IOC)", NAME="MEM_RSS_PEAK", INP="procStatus|self|VmHWM"}
+{IOC="\$(IOC)", NAME="MEM_SWP", INP="procStatus|self|VmSwap",
+ ADEL="1048576"}
+{IOC="\$(IOC)", NAME="MEM_LCK", INP="procStatus|self|VmLck",
+ ADEL="1048576"}
+{IOC="\$(IOC)", NAME="MEM_RSS", INP="procStatus|self|VmRSS",
+ ADEL="1048576"}
+{IOC="\$(IOC)", NAME="MEM_RSS_PEAK", INP="procStatus|self|VmHWM",
+ ADEL="1048576"}
 {IOC="\$(IOC)", NAME="THREAD_CNT", INP="procStatus|self|Threads"}
 {IOC="\$(IOC)", NAME="FD_MAX", INP="pid|self|NOFILE"}
-{IOC="\$(IOC)", NAME="FD_CNT", INP="fd|self|FD_CNT"}
+{IOC="\$(IOC)", NAME="FD_CNT", INP="fd|self|FD_CNT",
+ ADEL="10"}
 {IOC="\$(IOC)", NAME="TCKPSEC", INP="pid|self|ticks_per_sec"}
 {IOC="\$(IOC)", NAME="RECORD_CNT", INP="pdb|self|nrec"}
 {IOC="\$(IOC)", NAME="CA_CLNT_CNT", INP="pdb|self|rsrv:nconn",
  HOPR="200", HIHI="175", HIGH="100", HHSV="MAJOR", HSV="MINOR",
+ ADEL="10",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
 {IOC="\$(IOC)", NAME="CA_CONN_CNT", INP="pdb|self|rsrv:nchan",
  HOPR="5000", HIHI="4500", HIGH="4000", HHSV="MAJOR", HSV="MINOR",
+ ADEL="10",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
 {IOC="\$(IOC)", NAME="SUSP_TASK_CNT", INP="pdb|self|nsuspend",
  HIHI="1", HHSV="MAJOR",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
-{IOC="\$(IOC)", NAME="MALLOC_MAX", INP="mallinfo|self|arena", EGU="B"}
-{IOC="\$(IOC)", NAME="MALLOC_USED", INP="mallinfo|self|uordblks", EGU="B"}
+{IOC="\$(IOC)", NAME="MALLOC_MAX", INP="mallinfo|self|arena", EGU="B",
+ ADEL="1048576"}
+{IOC="\$(IOC)", NAME="MALLOC_USED", INP="mallinfo|self|uordblks", EGU="B",
+ ADEL="1048576"}
 }
 
 file "tblGetRateI64.template" {
-{IOC="\$(IOC)", NAME="PGFLT_MAJ", INP="procStat|self|10", EGU="Hz"}
-{IOC="\$(IOC)", NAME="PGFLT_MIN", INP="procStat|self|12", EGU="Hz"}
-{IOC="\$(IOC)", NAME="SWTH_VOL", INP="procStatus|self|voluntary_ctxt_switches", EGU="Hz"}
-{IOC="\$(IOC)", NAME="SWTH_FRC", INP="procStatus|self|nonvoluntary_ctxt_switches", EGU="Hz"}
+{IOC="\$(IOC)", NAME="PGFLT_MAJ", INP="procStat|self|10", EGU="Hz",
+ ADEL="1"}
+{IOC="\$(IOC)", NAME="PGFLT_MIN", INP="procStat|self|12", EGU="Hz",
+ ADEL="1"}
+{IOC="\$(IOC)", NAME="SWTH_VOL", INP="procStatus|self|voluntary_ctxt_switches", EGU="Hz",
+ ADEL="1"}
+{IOC="\$(IOC)", NAME="SWTH_FRC", INP="procStatus|self|nonvoluntary_ctxt_switches", EGU="Hz",
+ ADEL="1"}
 }
 
 file "tblGetSI.template" {
-{IOC="\$(IOC)", NAME="KERNEL_VERS", INP="host|localhost|version"}
-{IOC="\$(IOC)", NAME="HOSTNAME", INP="host|localhost|nodename"}
 #{IOC="\$(IOC)", NAME="APP_DIR", INP="pid|self|cwd"}
 {IOC="\$(IOC)", NAME="APP_DIR1", INP="pid|self|cwd1"}
 {IOC="\$(IOC)", NAME="APP_DIR2", INP="pid|self|cwd2"}

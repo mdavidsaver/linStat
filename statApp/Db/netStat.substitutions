@@ -11,12 +11,20 @@ file "tblScan.template" {
 }
 
 file "tblGetRateI64.template" {
-{IOC="\$(P)", NAME="UDP_RX", INP="netstat|/proc\$(INST)/net/snmp|Udp:InDatagrams", EGU="pkt/s"}
-{IOC="\$(P)", NAME="UDP_TX", INP="netstat|/proc\$(INST)/net/snmp|Udp:OutDatagrams", EGU="pkt/s"}
-{IOC="\$(P)", NAME="RX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="RX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InBcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="RX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InMcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="TX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="TX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets", EGU="B/s"}
-{IOC="\$(P)", NAME="TX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutMcastOctets", EGU="B/s"}
+{IOC="\$(P)", NAME="UDP_RX", INP="netstat|/proc\$(INST)/net/snmp|Udp:InDatagrams",
+ ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
+{IOC="\$(P)", NAME="UDP_TX", INP="netstat|/proc\$(INST)/net/snmp|Udp:OutDatagrams",
+ ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
+{IOC="\$(P)", NAME="RX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets",
+ ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
+{IOC="\$(P)", NAME="RX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InBcastOctets",
+ ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
+{IOC="\$(P)", NAME="RX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InMcastOctets",
+ ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
+{IOC="\$(P)", NAME="TX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets",
+ ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
+{IOC="\$(P)", NAME="TX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets",
+ ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
+{IOC="\$(P)", NAME="TX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutMcastOctets",
+ ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
 }

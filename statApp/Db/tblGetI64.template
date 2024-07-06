@@ -15,5 +15,6 @@ record(int64in, "$(IOC):$(NAME)") {
     field(HSV , "$(HSV=)")
     field(LSV , "$(LSV=)")
     field(LLSV, "$(LLSV=)")
+    field(ADEL, "$(ADEL=)")
     info(autosaveFields_pass0, "$(SAVE=)")
 }

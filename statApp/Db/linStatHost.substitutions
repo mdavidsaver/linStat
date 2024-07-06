@@ -14,10 +14,12 @@ file "tblGetI64.template" {
 {IOC="\$(IOC)", NAME="MEM_MAX", INP="memInfo|localhost|MemTotal"}
 {IOC="\$(IOC)", NAME="MEM_FREE", INP="memInfo|localhost|MemAvailable",
  LLSV="MAJOR", LSV="MINOR",
+ ADEL="1048576"
  SAVE="LOW LOLO LSV LLSV"}
 {IOC="\$(IOC)", NAME="SWP_MAX", INP="memInfo|localhost|SwapTotal"}
 {IOC="\$(IOC)", NAME="SWP_FREE", INP="memInfo|localhost|SwapFree",
  LLSV="MAJOR", LSV="MINOR",
+ ADEL="1048576",
  SAVE="LOW LOLO LSV LLSV"}
 {IOC="\$(IOC)", NAME="CPU_CNT", INP="host|localhost|ncpu"}
 {IOC="\$(IOC)", NAME="SYS_UTIME", INP="stat|localhost|cpu:2"}
@@ -33,6 +35,8 @@ file "tblGetI64.template" {
 }
 
 file "tblGetSI.template" {
+{IOC="\$(IOC)", NAME="KERNEL_VERS", INP="host|localhost|version"}
+{IOC="\$(IOC)", NAME="HOSTNAME", INP="host|localhost|nodename"}
 {IOC="\$(IOC)", NAME="UPTIME", INP="uptime|localhost|uptime:disp"}
 }
 

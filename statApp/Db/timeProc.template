@@ -11,6 +11,7 @@ record(calcout, "$(IOC):HEARTBEAT") {
     field(CALC, "(A<2147483647)?A+1:1")
     field(SCAN, "1 second")
     field(INPA, "$(IOC):HEARTBEAT")
+    field(EGU, "s")
 }
 
 record(calcout, "$(IOC):START_CNT") {

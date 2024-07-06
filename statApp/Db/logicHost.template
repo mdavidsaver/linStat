@@ -27,7 +27,9 @@ record(calcout, "$(IOC):MEM_USED_") {
     field(OUT , "$(IOC):MEM_USED PP MS")
     field(TSEL, "$(IOC):MEM_MAX.TIME")
 }
-record(int64in, "$(IOC):MEM_USED") {}
+record(int64in, "$(IOC):MEM_USED") {
+    field(ADEL, "1048576")
+}
 
 # updated HOPR when MEM_MAX changes (~never)
 record(dfanout, "$(IOC):MEM_MAX_") {
@@ -46,6 +48,7 @@ record(calcout, "$(IOC):SWP_USED_") {
     field(TSEL, "$(IOC):SWP_MAX.TIME")
 }
 record(int64in, "$(IOC):SWP_USED") {
+    field(ADEL, "1048576")
     field(TSEL, "$(IOC):SWP_MAX.TIME")
 }
 

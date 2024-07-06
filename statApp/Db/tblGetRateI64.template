@@ -33,5 +33,6 @@ record(calc, "$(IOC):$(NAME)") {
     field(HSV , "$(HSV=)")
     field(LSV , "$(LSV=)")
     field(LLSV, "$(LLSV=)")
+    field(ADEL, "$(ADEL=)")
     field(TSEL, "$(IOC):$(NAME)_.TIME")
 }
