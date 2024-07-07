@@ -161,6 +161,16 @@ Reactor::Pvt::Pvt()
         }
         nlpid = addr.nl_pid;
     }
+    {
+        int val = 1;
+        if(setsockopt(nlsock.fd, SOL_NETLINK, NETLINK_NO_ENOBUFS, &val, sizeof(val)))
+            throw std::logic_error("Unable to NETLINK_NO_ENOBUFS NL socket");
+    }
+    {
+        int val = 1;
+        if(setsockopt(nlsock.fd, SOL_NETLINK, NETLINK_CAP_ACK, &val, sizeof(val)))
+            throw std::logic_error("Unable to NETLINK_NO_ENOBUFS NL socket");
+    }
 }
 
 Reactor::Pvt::~Pvt()
