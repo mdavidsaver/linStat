@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2024-07-06 08:53:15 by dev-->
+<!--Saved on 2024-07-07 16:35:25 by dev-->
 <display version="2.0.0">
   <name>IOC: $(IOC)</name>
   <width>550</width>
-  <height>585</height>
+  <height>540</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <class>TITLE</class>
@@ -11,7 +11,7 @@
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>550</width>
-    <height>31</height>
+    <height>30</height>
     <font use_class="true">
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
       </font>
@@ -26,119 +26,119 @@
     <name>Label_13</name>
     <text>PID</text>
     <x>20</x>
-    <y>35</y>
+    <y>40</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_6</name>
     <pv_name>$(IOC):PROCESS_ID</pv_name>
     <x>100</x>
-    <y>35</y>
+    <y>40</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_14</name>
     <text>Parent</text>
     <x>200</x>
-    <y>35</y>
+    <y>40</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_7</name>
     <pv_name>$(IOC):PARENT_ID</pv_name>
     <x>280</x>
-    <y>35</y>
+    <y>40</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_15</name>
     <text>Mem RSS</text>
     <x>20</x>
-    <y>70</y>
+    <y>106</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_8</name>
     <pv_name>$(IOC):MEM_RSS</pv_name>
     <x>100</x>
-    <y>70</y>
+    <y>106</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_16</name>
     <text>Peak</text>
     <x>200</x>
-    <y>70</y>
+    <y>106</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_9</name>
     <pv_name>$(IOC):MEM_RSS_PEAK</pv_name>
     <x>280</x>
-    <y>70</y>
+    <y>106</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_17</name>
     <text>Mem Swp</text>
     <x>20</x>
-    <y>100</y>
+    <y>136</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_10</name>
     <pv_name>$(IOC):MEM_SWP</pv_name>
     <x>100</x>
-    <y>100</y>
+    <y>136</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_18</name>
     <text>Locked</text>
     <x>200</x>
-    <y>100</y>
+    <y>136</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_11</name>
     <pv_name>$(IOC):MEM_LCK</pv_name>
     <x>280</x>
-    <y>100</y>
+    <y>136</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_19</name>
     <text># Threads</text>
     <x>20</x>
-    <y>130</y>
+    <y>166</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_12</name>
     <pv_name>$(IOC):THREAD_CNT</pv_name>
     <x>100</x>
-    <y>130</y>
+    <y>166</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_20</name>
     <text>FD Free</text>
     <x>20</x>
-    <y>160</y>
+    <y>196</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_13</name>
     <pv_name>$(IOC):FD_FREE</pv_name>
     <x>100</x>
-    <y>160</y>
+    <y>196</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_21</name>
     <text>/</text>
     <x>190</x>
-    <y>160</y>
+    <y>196</y>
     <width>30</width>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
@@ -146,7 +146,7 @@
     <name>Progress Bar_2</name>
     <pv_name>$(IOC):FD_FREE</pv_name>
     <x>320</x>
-    <y>160</y>
+    <y>196</y>
     <width>210</width>
     <fill_color>
       <color name="On" red="0" green="255" blue="0">
@@ -157,14 +157,14 @@
     <name>Text Update_14</name>
     <pv_name>$(IOC):FD_MAX</pv_name>
     <x>220</x>
-    <y>160</y>
+    <y>196</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_23</name>
     <text>malloc() eff</text>
     <x>20</x>
-    <y>190</y>
+    <y>226</y>
     <width>70</width>
     <tooltip>malloc() efficiency</tooltip>
   </widget>
@@ -172,14 +172,14 @@
     <name>Text Update_15</name>
     <pv_name>$(IOC):MALLOC_USED</pv_name>
     <x>100</x>
-    <y>190</y>
+    <y>226</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_24</name>
     <text>/</text>
     <x>190</x>
-    <y>190</y>
+    <y>226</y>
     <width>30</width>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
@@ -187,7 +187,7 @@
     <name>Progress Bar_3</name>
     <pv_name>$(IOC):MALLOC_USED</pv_name>
     <x>320</x>
-    <y>190</y>
+    <y>226</y>
     <width>210</width>
     <fill_color>
       <color name="OK" red="0" green="255" blue="0">
@@ -198,181 +198,106 @@
     <name>Text Update_16</name>
     <pv_name>$(IOC):MALLOC_POOL</pv_name>
     <x>220</x>
-    <y>190</y>
+    <y>226</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_25</name>
     <text>Page Faults: Major</text>
     <x>20</x>
-    <y>220</y>
+    <y>256</y>
     <width>180</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_17</name>
     <pv_name>$(IOC):PGFLT_MAJ</pv_name>
     <x>200</x>
-    <y>220</y>
+    <y>256</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_26</name>
     <text>Minor</text>
     <x>300</x>
-    <y>220</y>
+    <y>256</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_18</name>
     <pv_name>$(IOC):PGFLT_MIN</pv_name>
     <x>380</x>
-    <y>220</y>
+    <y>256</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_27</name>
     <text>Context Switch: Preempt</text>
     <x>20</x>
-    <y>250</y>
+    <y>286</y>
     <width>180</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_19</name>
     <pv_name>$(IOC):SWTH_FRC</pv_name>
     <x>200</x>
-    <y>250</y>
+    <y>286</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_28</name>
     <text>Vol.</text>
     <x>300</x>
-    <y>250</y>
+    <y>286</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_20</name>
     <pv_name>$(IOC):SWTH_VOL</pv_name>
     <x>380</x>
-    <y>250</y>
+    <y>286</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_29</name>
     <text>Running</text>
     <x>20</x>
-    <y>280</y>
+    <y>316</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_21</name>
     <pv_name>$(IOC):HEARTBEAT</pv_name>
     <x>100</x>
-    <y>280</y>
+    <y>316</y>
     <width>210</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_30</name>
     <text>Started</text>
     <x>20</x>
-    <y>310</y>
+    <y>346</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_22</name>
     <pv_name>$(IOC):STARTTOD</pv_name>
     <x>100</x>
-    <y>310</y>
+    <y>346</y>
     <width>210</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_31</name>
     <text># starts</text>
     <x>330</x>
-    <y>310</y>
+    <y>346</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_23</name>
     <pv_name>$(IOC):START_CNT</pv_name>
     <x>410</x>
-    <y>310</y>
+    <y>346</y>
     <width>90</width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_32</name>
-    <pv_name>$(IOC):NET:IOC:RX</pv_name>
-    <x>170</x>
-    <y>340</y>
-    <width>90</width>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_39</name>
-    <text>Total IP</text>
-    <x>20</x>
-    <y>340</y>
-    <width>70</width>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_40</name>
-    <text>RX</text>
-    <x>120</x>
-    <y>340</y>
-    <width>40</width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_33</name>
-    <pv_name>$(IOC):NET:IOC:TX</pv_name>
-    <x>320</x>
-    <y>340</y>
-    <width>90</width>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_41</name>
-    <text>TX</text>
-    <x>270</x>
-    <y>340</y>
-    <width>40</width>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_42</name>
-    <text>Total BCast</text>
-    <x>20</x>
-    <y>370</y>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_34</name>
-    <pv_name>$(IOC):NET:IOC:RX:B</pv_name>
-    <x>170</x>
-    <y>370</y>
-    <width>90</width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_35</name>
-    <pv_name>$(IOC):NET:IOC:TX:B</pv_name>
-    <x>320</x>
-    <y>370</y>
-    <width>90</width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_36</name>
-    <pv_name>$(IOC):NET:IOC:TX:M</pv_name>
-    <x>320</x>
-    <y>400</y>
-    <width>90</width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_37</name>
-    <pv_name>$(IOC):NET:IOC:RX:M</pv_name>
-    <x>170</x>
-    <y>400</y>
-    <width>90</width>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_43</name>
-    <text>Total MCast</text>
-    <x>20</x>
-    <y>400</y>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>Action Button</name>
@@ -384,9 +309,10 @@
       </action>
     </actions>
     <x>460</x>
-    <y>70</y>
+    <y>106</y>
     <width>80</width>
     <height>20</height>
+    <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>Action Button_1</name>
@@ -399,7 +325,7 @@
     </actions>
     <pv_name>$(IOC):SYSRESET</pv_name>
     <x>460</x>
-    <y>130</y>
+    <y>166</y>
     <width>80</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
@@ -417,7 +343,7 @@
     </actions>
     <pv_name>$(IOC):READACF</pv_name>
     <x>460</x>
-    <y>110</y>
+    <y>146</y>
     <width>80</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
@@ -427,7 +353,7 @@
     <name>Text Update_24</name>
     <pv_name>$(IOC):APP_DIR.VAL$</pv_name>
     <x>100</x>
-    <y>425</y>
+    <y>376</y>
     <width>430</width>
     <format>6</format>
   </widget>
@@ -435,91 +361,91 @@
     <name>Label_22</name>
     <text>CWD</text>
     <x>20</x>
-    <y>425</y>
+    <y>376</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_25</name>
     <pv_name>$(IOC):SUSP_TASK_CNT</pv_name>
     <x>280</x>
-    <y>130</y>
+    <y>166</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_32</name>
     <text># Suspend</text>
     <x>200</x>
-    <y>130</y>
+    <y>166</y>
     <width>70</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_33</name>
     <text>CA Client connections</text>
     <x>20</x>
-    <y>450</y>
+    <y>401</y>
     <width>180</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_26</name>
     <pv_name>$(IOC):CA_CLNT_CNT</pv_name>
     <x>200</x>
-    <y>450</y>
+    <y>401</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_34</name>
     <text>PVs</text>
     <x>300</x>
-    <y>450</y>
+    <y>401</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_27</name>
     <pv_name>$(IOC):CA_CONN_CNT</pv_name>
     <x>380</x>
-    <y>450</y>
+    <y>401</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_35</name>
     <text># Records</text>
     <x>20</x>
-    <y>480</y>
+    <y>431</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_28</name>
     <pv_name>$(IOC):RECORD_CNT</pv_name>
     <x>100</x>
-    <y>480</y>
+    <y>431</y>
     <width>90</width>
   </widget>
   <widget type="combo" version="2.0.0">
     <name>Combo Box</name>
     <pv_name>$(IOC):ACCESS</pv_name>
-    <x>440</x>
-    <y>44</y>
+    <x>430</x>
+    <y>40</y>
     <height>20</height>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_36</name>
     <text>IOC General Time Provider</text>
     <x>20</x>
-    <y>505</y>
+    <y>456</y>
     <width>210</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_45</name>
     <text>Current</text>
     <x>20</x>
-    <y>529</y>
+    <y>480</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_29</name>
     <pv_name>$(IOC):GTIM_CUR_SRC</pv_name>
     <x>100</x>
-    <y>529</y>
+    <y>480</y>
     <width>140</width>
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
@@ -527,14 +453,14 @@
     <name>Label_46</name>
     <text>Event</text>
     <x>250</x>
-    <y>529</y>
+    <y>480</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_31</name>
     <pv_name>$(IOC):GTIM_EVT_SRC</pv_name>
     <x>330</x>
-    <y>529</y>
+    <y>480</y>
     <width>140</width>
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
@@ -542,14 +468,14 @@
     <name>Label_47</name>
     <text># Monotonic Errors</text>
     <x>20</x>
-    <y>560</y>
+    <y>511</y>
     <width>130</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_38</name>
     <pv_name>$(IOC):GTIM_ERR_CNT</pv_name>
     <x>160</x>
-    <y>560</y>
+    <y>511</y>
     <width>140</width>
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
@@ -564,7 +490,7 @@
     </actions>
     <pv_name>$(IOC):GTIM_RESET</pv_name>
     <x>310</x>
-    <y>560</y>
+    <y>511</y>
     <width>20</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
@@ -574,8 +500,49 @@
     <name>Text Update_39</name>
     <pv_name>$(IOC):GTIM_HI_SRC</pv_name>
     <x>250</x>
-    <y>505</y>
+    <y>456</y>
     <width>140</width>
     <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_6</name>
+    <text>Proc Load</text>
+    <x>20</x>
+    <y>70</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_4</name>
+    <pv_name>$(IOC):IOC_CPU_LOAD</pv_name>
+    <x>100</x>
+    <y>70</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_8</name>
+    <text>/</text>
+    <x>190</x>
+    <y>70</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_9</name>
+    <text>100</text>
+    <x>220</x>
+    <y>70</y>
+    <width>90</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_4</name>
+    <pv_name>$(IOC):IOC_CPU_LOAD</pv_name>
+    <x>320</x>
+    <y>70</y>
+    <width>210</width>
+    <fill_color>
+      <color red="0" green="0" blue="255">
+      </color>
+    </fill_color>
   </widget>
 </display>
