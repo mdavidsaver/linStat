@@ -6,8 +6,6 @@
 /* Read sequence-of-tables format use for:
  * - /proc/net/netstat
  * - /proc/net/snmp
- * - /proc/self/net/netstat
- * - /proc/self/net/snmp
  */
 
 #include <sstream>

@@ -102,12 +102,3 @@ file "logicProc.template" {
 file "timeProc.template" {
 {IOC="\$(IOC)"}
 }
-
-file "netStat.db" {
-{P="\$(IOC):NET:IOC", INST="/self"}
-}
-
-# TODO
-# procStatus
-#   nonvoluntary_ctxt_switches
-#   voluntary_ctxt_switches
