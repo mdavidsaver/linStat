@@ -7,6 +7,7 @@
 #include <deque>
 #include <thread>
 #include <mutex>
+#include <condition_variable>
 #include <stdexcept>
 #include <map>
 
@@ -24,8 +25,16 @@
 #include "nlreact.h"
 
 namespace linStat {
-using Guard = epicsGuard<std::mutex>;
-using UnGuard = epicsGuardRelease<std::mutex>;
+using Guard = std::unique_lock<std::mutex>;
+struct UnGuard {
+    std::unique_lock<std::mutex>& G;
+    UnGuard(std::unique_lock<std::mutex>& G) : G(G) {
+        G.unlock();
+    }
+    ~UnGuard() {
+        G.lock();
+    }
+};
 
 namespace {
 struct FD {
@@ -64,15 +73,28 @@ struct FD {
 struct Operation {
     uint32_t seq;
     std::function<void(NLMsg&&)> cb;
+    // sync bits with Pvt::lock, Pvt::busy
+    bool cancel = false;
+    bool busy = false;
 };
 
 struct Job {
+    // null'd when last external referenced dropped
     std::function<void ()> cb;
+    // sync bits with Pvt::lock, Pvt::busy
+    bool done = false;
+    bool busy = false;
+    // states:
+    //  !done && !busy  -- queued and waiting
+    //   done && !busy  -- complete (or cancelled)
+    //  !done &&  busy  -- callback in progress
+    //   done &&  busy  -- invalid...
 };
 
 struct Reactor::Pvt {
     std::weak_ptr<Pvt> weak_inner;
     std::mutex lock;
+    std::condition_variable busy;
 
     FD notify; // RX end of pipe
     FD wake; // TX end of pipe
@@ -215,20 +237,29 @@ void Reactor::Pvt::run()
             }
         }
 
+        // handle submit()d work
         {
             auto jobs(std::move(todo));
             for(auto cjob : jobs) {
                 if(auto job = cjob.lock()) {
+                    if(job->done || !job->cb)
+                        continue;
+                    job->busy = true;
                     try {
                         UnGuard U(G);
                         job->cb();
                     } catch(std::exception& e){
-                        errlogPrintf(ERL_ERROR " Unhandled error in job : %s\n", e.what());
+                        errlogPrintf(ERL_ERROR " Unhandled error in job %s : %s\n",
+                                     job->cb.target_type().name(), e.what());
                     }
+                    job->busy = false;
+                    job->done = true;
+                    busy.notify_all(); // Notify while locked will bounce.  Concurrent cancel considered unlikely.
                 }
             }
         }
 
+        // clean out wakeup pipe
         if(PFD[0].revents&POLLIN) {
             char junk[16];
             auto ret = read(notify.fd, junk, sizeof(junk));
@@ -238,6 +269,7 @@ void Reactor::Pvt::run()
             }
         }
 
+        // handle RX
         if(PFD[1].revents&POLLIN) {
             sockaddr_nl src;
             socklen_t srclen = sizeof(src);
@@ -263,12 +295,18 @@ void Reactor::Pvt::run()
 
                         } else {
                             if(auto H = it->second.lock()) {
-                                try {
-                                    NLMsg m(msg, hdr); // alias...
-                                    UnGuard U(G);
-                                    H->cb(std::move(m));
-                                } catch(std::exception& e){
-                                    errlogPrintf(ERL_ERROR " Unhandled error in handler : %s\n", e.what());
+                                if(!H->cancel && H->cb) {
+                                    H->busy = true;
+                                    try {
+                                        NLMsg m(msg, hdr); // alias...
+                                        UnGuard U(G);
+                                        H->cb(std::move(m));
+                                        // it may be invalidated
+                                    } catch(std::exception& e){
+                                        errlogPrintf(ERL_ERROR " Unhandled error in handler : %s\n", e.what());
+                                    }
+                                    H->busy = false;
+                                    busy.notify_all();
                                 }
                             }
                         }
@@ -287,10 +325,10 @@ void Reactor::Pvt::run()
             }
         }
 
+        // handle TX
         if(PFD[1].revents&POLLOUT) {
             while(!ready.empty()) {
                 const auto msg = std::move(ready.front());
-                ready.pop_front();
 
                 sockaddr_nl dst{};
                 dst.nl_family = AF_NETLINK;
@@ -298,13 +336,22 @@ void Reactor::Pvt::run()
                 // nlmsg_len includes nlmsghdr length
                 // no need to unlock for non-blocking
                 auto ret = sendto(nlsock.fd, msg.get(), msg->nlmsg_len, 0, (const sockaddr*)&dst, sizeof(dst));
+                auto err = errno;
+
+                if(ret<0 && (err==EWOULDBLOCK || err==EAGAIN))
+                    break; // try again later...
+
+                ready.pop_front();
+
                 if(ret<0) {
-                    auto err = errno;
-                    if(err!=EWOULDBLOCK && err!=EAGAIN)
-                        errlogPrintf(ERL_ERROR " reactor sendto() fails %d\n", err);
+                    errlogPrintf(ERL_ERROR " reactor sendto() fails %d\n", err);
 
                 } else if(ret!=msg->nlmsg_len) {
                     errlogPrintf(ERL_ERROR " reactor sendto() incomplete\n");
+                    // can this happen?  message too long?
+
+                } else {
+                    // success
                 }
             }
 
@@ -350,12 +397,24 @@ JobHandle Reactor::submit(std::function<void ()> &&fn) const
 
     std::weak_ptr<Pvt> wpvt(pvt->weak_inner);
     JobHandle ret(inner.get(), [wpvt, inner](Job*){
+        // user drops last external reference
         if(auto pvt = wpvt.lock()) {
             Guard G(pvt->lock);
-            inner->cb = nullptr;
+            // wait for concurrent execution to complete
+            if(inner->busy) {
+                if(pvt->worker.get_id()==std::this_thread::get_id()) {
+                    // cancel during callback
+
+                } else {
+                    pvt->busy.wait(G, [&] {return !inner->busy; });
+                }
+            }
+            inner->done = true; // may already be set
+
         } else {
             // worker already joined, no concurrency
         }
+        inner->cb = nullptr; // dtor any bindings through user reference
     });
 
     return ret;
@@ -395,11 +454,19 @@ Handle Reactor::request(NLMsg &&req, std::function<void (NLMsg &&)> &&fn) const
     Handle ret(inner.get(), [wpvt, inner](Operation*){
         if(auto pvt = wpvt.lock()) {
             Guard G(pvt->lock);
-            inner->cb = nullptr;
+            if(pvt->worker.get_id()==std::this_thread::get_id()) {
+                // cancel during callback
+
+            } else {
+                // wait for concurrent execution to complete
+                pvt->busy.wait(G, [&] {return !inner->busy; });
+            }
+            inner->cancel = true;
             pvt->handlers.erase(inner->seq);
         } else {
             // worker already joined, no concurrency
         }
+        inner->cb = nullptr; // dtor any bindings through user reference
     });
 
     return ret;

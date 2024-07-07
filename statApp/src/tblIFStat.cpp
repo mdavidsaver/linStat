@@ -25,6 +25,7 @@ const char * const tblName = "ifstat";
 
 struct IFStatTable : public StatTable {
     Handle op;
+    epicsTime opStart;
     std::vector<char> scratch;
 
     explicit IFStatTable(const std::string& inst, const Reactor& react)
@@ -144,7 +145,11 @@ struct IFStatTable : public StatTable {
     }
 
     virtual void update() override final {
+        const auto now(epicsTime::getMonotonic());
+
         if(op) {
+            if(now-opStart > 1.0)
+                op.reset(); // abandon.  will retry next time
             if(linStatDebug>=5)
                 errlogPrintf("%s.%s INFO busy\n",
                              fact.c_str(), inst.c_str());
@@ -155,7 +160,6 @@ struct IFStatTable : public StatTable {
         NLMsg msg(raw, (nlmsghdr*)raw->data());
         op = react.request(std::move(msg), [this](NLMsg&& rep){
             if(rep->nlmsg_type==RTM_NEWLINK && rep->nlmsg_len >= NLMSG_HDRLEN+sizeof(ifinfomsg)) {
-                // TODO: handle possibility of multi-part reply for a single interface?
                 digest_newlink(rep.get());
 
             } else if(rep->nlmsg_type==NLMSG_ERROR && rep->nlmsg_len >= NLMSG_HDRLEN+sizeof(nlmsgerr)) {
@@ -170,6 +174,7 @@ struct IFStatTable : public StatTable {
                              fact.c_str(), inst.c_str(), rep->nlmsg_type);
             }
         });
+        opStart = now;
         if(linStatDebug>=5)
             errlogPrintf("%s.%s INFO submit\n",
                          fact.c_str(), inst.c_str());
