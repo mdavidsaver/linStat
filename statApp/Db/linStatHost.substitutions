@@ -14,7 +14,7 @@ file "tblGetI64.template" {
 {IOC="\$(IOC)", NAME="MEM_MAX", INP="memInfo|localhost|MemTotal"}
 {IOC="\$(IOC)", NAME="MEM_FREE", INP="memInfo|localhost|MemAvailable",
  LLSV="MAJOR", LSV="MINOR",
- ADEL="1048576"
+ ADEL="1048576",
  SAVE="LOW LOLO LSV LLSV"}
 {IOC="\$(IOC)", NAME="SWP_MAX", INP="memInfo|localhost|SwapTotal"}
 {IOC="\$(IOC)", NAME="SWP_FREE", INP="memInfo|localhost|SwapFree",
