@@ -36,7 +36,14 @@ record(int64in, "$(P):AVAIL") {
     field(DTYP, "Linux Stat Get")
     field(INP , "@statvfs|$(DIR)|avail")
     field(TSE , "-2")
+    field(LOLO, "134217728") # 128MB
+    field(LOW , "10737418240") # 10GB
+    field(LLSV, "MAJOR")
+    field(LSV , "MINOR")
+    field(ADEL, "134217728")
     field(FLNK, "$(P):AVAIL:P")
+
+    info(autosaveFields_pass0, "LOLO LOW LLSV LSV")
 }
 record(calc, "$(P):AVAIL:P") {
     field(INPA, "$(P):SIZE NPP MS")
@@ -47,7 +54,10 @@ record(calc, "$(P):AVAIL:P") {
     field(PREC, "2")
     field(LOLO, "1")
     field(LLSV, "MAJOR")
+    field(MDEL, "0.05")
     field(TSEL, "$(P):SIZE.TIME")
+
+    info(autosaveFields_pass0, "LOLO LOW LLSV LSV")
 }
 
 # updated HOPR when SIZE changes (~never)
@@ -70,7 +80,10 @@ record(int64in, "$(P):IAVAIL") {
     field(DTYP, "Linux Stat Get")
     field(INP , "@statvfs|$(DIR)|iavail")
     field(TSE , "-2")
+    field(MDEL, "128")
     field(FLNK, "$(P):IAVAIL:P")
+
+    info(autosaveFields_pass0, "LOLO LOW LLSV LSV")
 }
 record(calc, "$(P):IAVAIL:P") {
     field(INPA, "$(P):ISIZE NPP MS")
@@ -81,7 +94,10 @@ record(calc, "$(P):IAVAIL:P") {
     field(PREC, "2")
     field(LOLO, "1")
     field(LLSV, "MAJOR")
+    field(MDEL, "0.5")
     field(TSEL, "$(P):ISIZE.TIME")
+
+    info(autosaveFields_pass0, "LOLO LOW LLSV LSV")
 }
 
 # updated HOPR when ISIZE changes (~never)
