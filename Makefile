@@ -7,6 +7,9 @@ DIRS += configure
 DIRS += statApp
 statApp_DEPEND_DIRS = configure
 
+DIRS += test
+test_DEPEND_DIRS = statApp
+
 ifeq (YES,$(LINSTAT_BUILD_EXAMPLE))
 DIRS += exampleApp
 exampleApp_DEPEND_DIRS = statApp

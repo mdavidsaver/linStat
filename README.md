@@ -149,6 +149,10 @@ iocInit()
     - callback pool info
     - scan once info
 - System
+  - [ ] Fan speed/status
+  - [ ] Disk SMART status
+  - [ ] RAID array state
+  - [ ] Power/battery state
 - Process
     - [ ] Capabilities mask?
 - FS

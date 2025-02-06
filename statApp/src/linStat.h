@@ -34,6 +34,7 @@ namespace linStat {
 using Guard = std::unique_lock<std::mutex>;
 
 extern int linStatDebug;
+LINSTAT_API
 extern Reactor linStatReactor;
 
 struct SB {

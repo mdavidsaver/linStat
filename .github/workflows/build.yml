@@ -3,60 +3,144 @@ name: linStat
 on: [push, pull_request, workflow_dispatch]
 
 env:
-  SETUP_PATH: .ci
+  SETUP_PATH: .ci-local:.ci
 
 jobs:
-    container:
+    host:
         name: ${{ matrix.name }}
         runs-on: ubuntu-latest
-        container:
-            image: ${{ matrix.image }}
         env:
-            CMP: ${{ matrix.cmp }}
-            BCFG: ${{ matrix.configuration }}
+            SET: ${{ matrix.set || 'defaults' }}
+            CMP: gcc
+            BCFG: default
             BASE: ${{ matrix.base }}
-            CI_CROSS_TARGETS: ${{ matrix.cross }}
             EXTRA: ${{ matrix.extra }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                - name: ubuntu-latest-7.0-cxx17
+                  base: "7.0"
+
+                - name: ubuntu-latest 7.0.5
+                  base: "R7.0.5"
+                  set: "nofortify"
+
+                - name: ubuntu-latest 7.0.4
+                  base: "R7.0.4"
+                  set: "nofortify"
+
+        steps:
+        - name: System setup
+          shell: bash
+          run: |
+            sudo apt-get update
+            sudo apt-get -y install git python3 build-essential libreadline-dev gdb
+        - uses: actions/checkout@v4
+          with:
+            submodules: true
+        - name: Automatic core dumper analysis
+          uses: mdavidsaver/ci-core-dumper@master
+        - name: Prepare and compile dependencies
+          run: python3 .ci/cue.py prepare
+        - name: Build main module
+          run: python3 .ci/cue.py build
+        - name: Run main module tests
+          run: python3 .ci/cue.py test
+        - name: Collect and show test results
+          if: ${{ always() }}
+          run: python3 .ci/cue.py test-results
+        - name: dbior
+          if: ${{ always() }}
+          run: cat test/*/drvLinStat.dbior || true
+        - name: Upload tapfiles Artifact
+          if: ${{ always() }}
+          uses: actions/upload-artifact@v4
+          with:
+            name: tapfiles ${{ matrix.name }}
+            path: '**/O.*/*.tap'
+            if-no-files-found: ignore
+
+    docker:
+        name: ${{ matrix.name }}
+        runs-on: ubuntu-latest
+        env:
+            BASE: ${{ matrix.base }}
+            CMP: gcc
+            BCFG: default
+            EXTRA: ${{ matrix.extra }}
+            VV: "1"
+
         strategy:
             fail-fast: false
             matrix:
                 include:
                 - name: Debian 11
                   image: debian:11
-                  cmp: gcc
-                  configuration: default
                   base: "7.0"
-                  # g++ 10.2.1 defaults to c++14
-                  extra: "CMD_CXXFLAGS=-std=c++17"
 
                 - name: Debian 12
                   image: debian:12
-                  cmp: gcc
-                  configuration: default
                   base: "7.0"
 
                 - name: Fedora latest
                   image: fedora:latest
-                  cmp: gcc
-                  configuration: default
                   base: "7.0"
 
         steps:
-        - name: System setup
-          shell: bash
+        - uses: actions/checkout@v3
+          with:
+              submodules: true
+
+        - name: Automatic core dumper analysis
+          uses: mdavidsaver/ci-core-dumper@master
+
+        - name: Run...
           run: |
+            env > env.list
+            cat <<EOF > runit.sh
+            #!/bin/sh
+            set -e -x
+            cd /io
+            id
+            ulimit -aH
+            ulimit -aS
+
             if type apt-get
             then
                 apt-get update
-                apt-get -y install git python3 build-essential
+                apt-get -y install git python3 build-essential gdb
             elif type dnf
             then
-                dnf install -y git python3 make perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel
+                dnf install -y git python3 make perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel gdb
+                # fake out cue.py
+                ln -s /bin/true /usr/bin/apt-get
             fi
-        - uses: actions/checkout@v4
+
+            # quiet warnings spam from perl
+            export LANG=C
+
+            python3 --version
+            python3 .ci/cue.py prepare
+            python3 .ci/cue.py build
+            python3 .ci/cue.py -T 15M test
+            python3 .ci/cue.py test-results
+            EOF
+            chmod +x runit.sh
+            docker run --rm --quiet \
+                --pull=always \
+                --env-file env.list \
+                -v `pwd`:/io \
+                ${{ matrix.image }} \
+                /io/runit.sh
+
+        - name: dbior
+          if: ${{ always() }}
+          run: cat test/*/drvLinStat.dbior || true
+        - name: Upload tapfiles Artifact
+          if: ${{ always() }}
+          uses: actions/upload-artifact@v4
           with:
-            submodules: true
-        - name: Prepare and compile dependencies
-          run: python3 .ci/cue.py prepare
-        - name: Build main module
-          run: python3 .ci/cue.py build
+            name: tapfiles ${{ matrix.name }}
+            path: '**/O.*/*.tap'
+            if-no-files-found: ignore

@@ -22,6 +22,8 @@
 #  define ERL_WARNING "WARNING"
 #endif
 
+#define LINSTAT_API __attribute__ ((visibility("default")))
+
 extern "C" {
 struct nlmsghdr;
 } // extern "C"
@@ -35,7 +37,7 @@ using NLMsg = std::shared_ptr<nlmsghdr>;
 using JobHandle = std::shared_ptr<Job>;
 using Handle = std::shared_ptr<Operation>;
 
-struct Reactor {
+struct LINSTAT_API Reactor {
     struct Pvt;
 
     Reactor() = default;
