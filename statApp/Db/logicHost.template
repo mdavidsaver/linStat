@@ -1,7 +1,7 @@
 record(ai, "$(IOC):T_MAX") {
     field(DESC, "Hottest temperature")
     field(DTYP, "Linux Stat Get")
-    field(INP , "@thermo|localhost|temp_max")
+    field(INP , "@hwmon|localhost|temp_max")
     field(SCAN, "I/O Intr")
     field(ASLO, "0.001")
     field(EGU , "C")
@@ -17,7 +17,7 @@ record(ai, "$(IOC):T_MAX") {
 }
 record(stringin, "$(IOC):T_LOC_MAX") {
     field(DTYP, "Linux Stat Get")
-    field(INP , "@thermo|localhost|name_max")
+    field(INP , "@hwmon|localhost|name_max")
 }
 
 record(calcout, "$(IOC):MEM_USED_") {

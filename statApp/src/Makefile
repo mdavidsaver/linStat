@@ -25,7 +25,7 @@ LIB_SRCS_Linux += tblMemInfo.cpp
 LIB_SRCS_Linux += tblUptime.cpp
 LIB_SRCS_Linux += tblNetstat.cpp
 LIB_SRCS_Linux += tblIFStat.cpp
-LIB_SRCS_Linux += tblThermo.cpp
+LIB_SRCS_Linux += tblHwmon.cpp
 # process
 LIB_SRCS_Linux += tblPid.cpp
 LIB_SRCS_Linux += tblProcStat.cpp
