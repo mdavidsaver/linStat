@@ -15,6 +15,7 @@
 #include <sstream>
 #include <fstream>
 #include <variant>
+#include <filesystem>
 
 #include <stdint.h>
 
@@ -122,6 +123,10 @@ struct StatTableIter {
     const StatTableFactory *begin() const;
     const StatTableFactory* end() const;
 };
+
+// utility
+bool starts_with(const std::string& inp, const char *prefix);
+bool read_file(const std::filesystem::path& fname, std::string& out);
 
 } // namespace linStat
 

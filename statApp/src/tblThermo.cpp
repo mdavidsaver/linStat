@@ -22,22 +22,6 @@ namespace fs = std::filesystem;
 
 const char * const tblName = "thermo";
 
-bool starts_with(const std::string& inp, const char *prefix)
-{
-    auto pl = strlen(prefix);
-    if(inp.size() < pl)
-        return false;
-    return memcmp(inp.c_str(), prefix, pl)==0;
-}
-
-bool read_file(const fs::path& fname, std::string& out) {
-    std::ifstream strm(fname);
-    if(!strm.is_open())
-        return false;
-
-    return !!(strm>>out);
-}
-
 struct ThermoTable : public StatTable {
 
     const fs::path base;

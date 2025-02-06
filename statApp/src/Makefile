@@ -16,6 +16,7 @@ DBD += linStat.dbd
 LIB_SRCS_Linux += iochooks.cpp
 LIB_SRCS_Linux += devstat.cpp
 LIB_SRCS_Linux += nlreact.cpp
+LIB_SRCS_Linux += lsutils.cpp
 LIB_SRCS_Linux += tblBase.cpp
 # host
 LIB_SRCS_Linux += tblStat.cpp
