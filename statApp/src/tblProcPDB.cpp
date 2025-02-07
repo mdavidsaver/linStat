@@ -14,6 +14,7 @@
 #include <dbAccess.h>
 #include <dbStaticLib.h>
 #include <dbServer.h>
+#include <initHooks.h>
 // because dbServer::stats() isn't implemented...
 #include <rsrv.h>
 #include <taskwd.h>
@@ -26,6 +27,8 @@ namespace {
 using namespace linStat;
 
 const char * const tblName = "pdb";
+
+bool markDBServStarted;
 
 struct DBEntry {
     DBENTRY ent;
@@ -52,7 +55,7 @@ struct PDBTable : public StatTable {
         tr.set("nrec", nrec);
         tr.set("nsuspend", nsuspend);
 
-        if(interruptAccept) { // first update() during init_record(), before RSRV initialized...
+        if(markDBServStarted) { // first update() during init_record(), before RSRV initialized...
             unsigned nchan=0, nconn=0;
             casStatsFetch(&nchan, &nconn);
             tr.set("rsrv:nchan", nchan);
@@ -74,9 +77,22 @@ const taskwdMonitor wdactions = {
     nullptr,
 };
 
+void markDBServStart(initHookState state)
+{
+    if(state==initHookAfterCaServerRunning)
+        markDBServStarted = true;
+}
+
 PDBTable::PDBTable(const std::string &inst, const Reactor& react)
     :StatTable(tblName, inst, react)
 {
+    {
+        static bool registered;
+        if(!registered) {
+            registered = true;
+            initHookRegister(markDBServStart);
+        }
+    }
     if(inst!="self")
         throw std::runtime_error("Only 'self' supported");
 
