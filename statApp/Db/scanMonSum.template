@@ -1,0 +1,12 @@
+
+record(calc, "$(IOC):SCANMON_SEVR")
+{
+    field(INPA, "$(IOC):01HZ_SEVR CP MSS")
+    field(INPB, "$(IOC):02HZ_SEVR CP MSS")
+    field(INPC, "$(IOC):05HZ_SEVR CP MSS")
+    field(INPD, "$(IOC):1HZ_SEVR CP MSS")
+    field(INPE, "$(IOC):2HZ_SEVR CP MSS")
+    field(INPF, "$(IOC):5HZ_SEVR CP MSS")
+    field(INPG, "$(IOC):10HZ_SEVR CP MSS")
+    field(CALC, "MAX(A,B,C,D,E,F,G)")
+}

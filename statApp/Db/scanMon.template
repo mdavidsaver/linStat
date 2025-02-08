@@ -1,0 +1,65 @@
+
+record(ai, "$(IOC):$(SCANNAME)_START_")
+{
+    field(DTYP, "Soft Timestamp")
+    field(SCAN, "$(SCAN)")
+    field(PHAS, "-32768") # should be first record in scan list
+}
+# ... other records process
+record(ai, "$(IOC):$(SCANNAME)_END_")
+{
+    field(DTYP, "Soft Timestamp")
+    field(SCAN, "$(SCAN)")
+    field(PHAS, "32767") # should be last record in scan list
+    field(FLNK, "$(IOC):$(SCANNAME)_SCAN_TIME")
+}
+record(calc, "$(IOC):$(SCANNAME)_SCAN_TIME")
+{
+    field(DESC, "Fract of period not idle")
+    field(INPA, "$(IOC):$(SCANNAME)_START_ NPP MSS")
+    field(INPB, "$(IOC):$(SCANNAME)_END_ NPP MSS")
+    field(INPC, "$(PERIOD)")
+    field(CALC, "(B-A)/C*100")
+    field(EGU , "%")
+    field(PREC, "1")
+    field(HOPR, "100")
+    field(ADEL, "0.5")
+    field(LOW , "0")
+    field(HIGH, "$(HIGH=75)")
+    field(HIHI, "$(HIHI=90)")
+    field(LSV , "INVALID") # expect END >= START
+    field(HSV , "MINOR")
+    field(HHSV, "MAJOR")
+    field(FLNK, "$(IOC):$(SCANNAME)_UPD_TIME")
+
+    info(autosaveFields_pass0, "HIHI HIGH LOW LOLO HHSV HSV LSV LLSV ADEL")
+}
+record(calc, "$(IOC):$(SCANNAME)_UPD_TIME")
+{
+    field(DESC, "period stability")
+    field(INPA, "$(IOC):$(SCANNAME)_START_ NPP MSS")
+    # B holds previous start
+    field(INPC, "$(PERIOD)")
+    # D holds temporary
+    field(CALC, "D:=(A-B)/C*100;B:=A;D")
+    field(EGU , "%")
+    field(PREC, "1")
+    field(HOPR, "200")
+    field(ADEL, "0.5")
+    field(LOLO, "90")
+    field(LOW , "95")
+    field(HIGH, "105")
+    field(HIHI, "110")
+    field(LLSV, "MAJOR")
+    field(LSV , "MINOR")
+    field(HSV , "MINOR")
+    field(HHSV, "MAJOR")
+    field(FLNK, "$(IOC):$(SCANNAME)_SEVR")
+
+    info(autosaveFields_pass0, "HIHI HIGH LOW LOLO HHSV HSV LSV LLSV ADEL")
+}
+record(calcout, "$(IOC):$(SCANNAME)_SEVR") {
+    field(INPA, "$(IOC):$(SCANNAME)_SCAN_TIME.SEVR NPP MSS")
+    field(INPB, "$(IOC):$(SCANNAME)_UPD_TIME.SEVR NPP MSS")
+    field(CALC, "MAX(A,B)")
+}

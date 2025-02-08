@@ -95,6 +95,20 @@ file "iocBase.template" {
 {IOC="\$(IOC)"}
 }
 
+file "scanMon.template" {
+{IOC="\$(IOC)", SCANNAME="01HZ", SCAN="10 second", PERIOD="10.0"}
+{IOC="\$(IOC)", SCANNAME="02HZ", SCAN="5 second",  PERIOD="5.0"}
+{IOC="\$(IOC)", SCANNAME="05HZ", SCAN="2 second",  PERIOD="2.0"}
+{IOC="\$(IOC)", SCANNAME="1HZ",  SCAN="1 second",  PERIOD="1.0"}
+{IOC="\$(IOC)", SCANNAME="2HZ",  SCAN=".5 second", PERIOD="0.5"}
+{IOC="\$(IOC)", SCANNAME="5HZ",  SCAN=".2 second", PERIOD="0.2"}
+{IOC="\$(IOC)", SCANNAME="10HZ", SCAN=".1 second", PERIOD="0.1"}
+}
+
+file "scanMonSum.template" {
+{IOC="\$(IOC)"}
+}
+
 file "logicProc.template" {
 {IOC="\$(IOC)"}
 }

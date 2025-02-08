@@ -21,12 +21,12 @@ However unlike iocStats, this module is limited to Linux.
 |    X    |     X    | CPU Usage   |
 |    X    |     X    | Mem Usage   |
 |    X    |     X    | FD Usage    |
+|    X    |     X    | DB Scan stats. |
 |    X    |          | malloc() stats |
 |    X    |          | Swap Usage  |
 |    X    |          | IP Stats.   |
 |    X    |          | NIC Stats.  |
 |    X    |          | FS Usage    |
-|         |     X    | DB Scan stats. (TODO)  |
 
 Additional information provided by linStat includes:
 
