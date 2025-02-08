@@ -38,6 +38,9 @@ CHECK_RELEASE = YES
 # set to NO to build only library
 LINSTAT_BUILD_EXAMPLE ?= YES
 
+# requires >= c++17 compiler support
+USR_CXXFLAGS += -std=c++17
+
 # These allow developers to override the CONFIG_SITE variable
 # settings without having to modify the configure/CONFIG_SITE
 # file itself.

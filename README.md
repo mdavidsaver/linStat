@@ -3,6 +3,12 @@
 An EPICS Driver to serve up Linux system and/or process
 specific information from an IOC.
 
+Requires:
+
+- EPICS Base >= 7.0.4
+- gcc or clang with c++17 support
+- Linux
+
 ## Comparison with iocStats
 
 This module provides a super-set for the information provided by
