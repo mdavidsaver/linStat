@@ -24,6 +24,7 @@
 #include <epicsTime.h>
 #include <callback.h>
 #include <dbScan.h>
+#include <errlog.h>
 
 #include "nlreact.h"
 

@@ -13,6 +13,15 @@
 #include <memory>
 #include <functional>
 
+#include <errlog.h>
+
+#ifndef ERL_ERROR
+#  define ERL_ERROR "ERROR"
+#endif
+#ifndef ERL_WARNING
+#  define ERL_WARNING "WARNING"
+#endif
+
 extern "C" {
 struct nlmsghdr;
 } // extern "C"

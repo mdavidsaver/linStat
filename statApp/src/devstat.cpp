@@ -11,6 +11,7 @@
 #include <regex>
 
 #include <dbAccess.h>
+#include <dbEvent.h>
 #include <recGbl.h>
 #include <alarm.h>
 #include <errlog.h>
@@ -30,6 +31,10 @@
 #include <epicsExport.h>
 
 #include "linStat.h"
+
+#ifndef HAS_ALARM_MESSAGE
+#  define recGblSetSevrMsg(PREC, STAT, SEVR, ...) (void)recGblSetSevr(PREC, STAT, SEVR)
+#endif
 
 namespace {
 using namespace linStat;
