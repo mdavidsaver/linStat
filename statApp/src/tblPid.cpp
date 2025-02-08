@@ -81,7 +81,10 @@ struct PidTable : public StatTable {
                 std::string cwd(scratch.data());
                 // break up long paths based on stringin limitation
                 tr.set("cwd1", cwd.substr(0, 39).data());
-                tr.set("cwd2", cwd.substr(39, 39*2).data());
+                if(cwd.size()>39)
+                    tr.set("cwd2", cwd.substr(39, 39*2).data());
+                else
+                    tr.set("cwd2", "");
                 break;
             } else if(errno==ERANGE) {
                 scratch.resize(scratch.size()*2);
