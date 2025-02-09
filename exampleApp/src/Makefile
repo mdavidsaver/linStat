@@ -18,6 +18,19 @@ linStatDemo_DBD += linStat.dbd
 linStatDemo_LIBS += linStat
 endif
 
+# Link QSRV
+ifdef PVXS_MAJOR_VERSION # prefer v2
+linStatDemo_DBD += pvxsIoc.dbd
+linStatDemo_LIBS += pvxsIoc pvxs
+else
+ifdef EPICS_QSRV_MAJOR_VERSION # fallback to v1
+linStatDemo_LIBS += qsrv
+linStatDemo_LIBS += $(EPICS_BASE_PVA_CORE_LIBS)
+linStatDemo_DBD += PVAServerRegister.dbd
+linStatDemo_DBD += qsrv.dbd
+endif
+endif
+
 linStatDemo_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 #===========================
