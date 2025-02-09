@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-02-08 12:48:14 by dev-->
+<display version="2.0.0">
+  <name>Scan $(SCANNAME)</name>
+  <width>255</width>
+  <height>30</height>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>$(SCANNAME)</text>
+    <x>5</x>
+    <y>5</y>
+    <width>60</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(P)_UPD_TIME</pv_name>
+    <x>80</x>
+    <y>5</y>
+    <width>80</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_1</name>
+    <pv_name>$(P)_SCAN_TIME</pv_name>
+    <x>170</x>
+    <y>5</y>
+    <width>80</width>
+  </widget>
+</display>

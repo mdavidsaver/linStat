@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2024-07-07 16:35:25 by dev-->
+<!--Saved on 2025-02-09 18:19:30 by dev-->
 <display version="2.0.0">
   <name>IOC: $(IOC)</name>
   <width>550</width>
-  <height>540</height>
+  <height>800</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <class>TITLE</class>
@@ -303,9 +303,9 @@
     <name>Action Button</name>
     <actions>
       <action type="open_display">
+        <description>Show Env.</description>
         <file>linStatProcEnv.bob</file>
         <target>tab</target>
-        <description>Show Env.</description>
       </action>
     </actions>
     <x>460</x>
@@ -318,9 +318,9 @@
     <name>Action Button_1</name>
     <actions>
       <action type="write_pv">
+        <description>Terminate</description>
         <pv_name>$(pv_name)</pv_name>
         <value>0</value>
-        <description>Terminate</description>
       </action>
     </actions>
     <pv_name>$(IOC):SYSRESET</pv_name>
@@ -336,9 +336,9 @@
     <name>Action Button_2</name>
     <actions>
       <action type="write_pv">
+        <description>Reload ACF</description>
         <pv_name>$(pv_name)</pv_name>
         <value>0</value>
-        <description>Reload ACF</description>
       </action>
     </actions>
     <pv_name>$(IOC):READACF</pv_name>
@@ -483,9 +483,9 @@
     <name>Action Button_3</name>
     <actions>
       <action type="write_pv">
+        <description>0</description>
         <pv_name>$(pv_name)</pv_name>
         <value>0</value>
-        <description>0</description>
       </action>
     </actions>
     <pv_name>$(IOC):GTIM_RESET</pv_name>
@@ -544,5 +544,119 @@
       <color red="0" green="0" blue="255">
       </color>
     </fill_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_5</name>
+    <macros>
+      <P>$(IOC):01HZ</P>
+      <SCANNAME>0.1 Hz</SCANNAME>
+    </macros>
+    <file>_linStatScan.bob</file>
+    <x>20</x>
+    <y>570</y>
+    <width>255</width>
+    <height>30</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_6</name>
+    <macros>
+      <P>$(IOC):02HZ</P>
+      <SCANNAME>0.2 Hz</SCANNAME>
+    </macros>
+    <file>_linStatScan.bob</file>
+    <x>20</x>
+    <y>600</y>
+    <width>255</width>
+    <height>30</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_7</name>
+    <macros>
+      <P>$(IOC):2HZ</P>
+      <SCANNAME>2 Hz</SCANNAME>
+    </macros>
+    <file>_linStatScan.bob</file>
+    <x>20</x>
+    <y>690</y>
+    <width>255</width>
+    <height>30</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_8</name>
+    <macros>
+      <P>$(IOC):05HZ</P>
+      <SCANNAME>0.5 Hz</SCANNAME>
+    </macros>
+    <file>_linStatScan.bob</file>
+    <x>20</x>
+    <y>630</y>
+    <width>255</width>
+    <height>30</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_9</name>
+    <macros>
+      <P>$(IOC):10HZ</P>
+      <SCANNAME>10 Hz</SCANNAME>
+    </macros>
+    <file>_linStatScan.bob</file>
+    <x>20</x>
+    <y>750</y>
+    <width>255</width>
+    <height>30</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_11</name>
+    <macros>
+      <P>$(IOC):5HZ</P>
+      <SCANNAME>5 Hz</SCANNAME>
+    </macros>
+    <file>_linStatScan.bob</file>
+    <x>20</x>
+    <y>720</y>
+    <width>255</width>
+    <height>30</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_12</name>
+    <macros>
+      <P>$(IOC):1HZ</P>
+      <SCANNAME>1 Hz</SCANNAME>
+    </macros>
+    <file>_linStatScan.bob</file>
+    <x>20</x>
+    <y>660</y>
+    <width>255</width>
+    <height>30</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>SCAN</text>
+    <x>30</x>
+    <y>550</y>
+    <width>70</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <text>Period</text>
+    <x>110</x>
+    <y>550</y>
+    <width>70</width>
+    <tooltip>Time between consecuative scan start times divided by nominal period.</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <text>Exec</text>
+    <x>200</x>
+    <y>550</y>
+    <width>70</width>
+    <tooltip>Time to scan all records</tooltip>
   </widget>
 </display>
