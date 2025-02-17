@@ -9,6 +9,8 @@ Requires:
 - gcc or clang with c++17 support
 - Linux
 
+![Example OPI](documentation/example.png)
+
 ## Comparison with iocStats
 
 This module provides a super-set for the information provided by
@@ -149,9 +151,9 @@ iocInit()
     - callback pool info
     - scan once info
 - System
-  - [ ] Fan speed/status
+  - [ ] Fan speed/status (`/sys/class/hwmon/hwmon*/fan*`)
   - [ ] Disk SMART status
-  - [ ] RAID array state
+  - [ ] RAID array state (`/proc/mdstat` or `ioctl(/dev/md0` or `/sys/block/*/md/array_state`)
   - [ ] Power/battery state
 - Process
     - [ ] Capabilities mask?
