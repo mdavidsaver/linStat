@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2024-07-06 09:59:56 by dev-->
+<!--Saved on 2025-05-17 09:46:41 by dev-->
 <display version="2.0.0">
   <name>NIC: $(IOC) $(NIC)</name>
   <macros>
     <P>$(IOC):NET:$(NIC)</P>
   </macros>
   <width>550</width>
-  <height>135</height>
+  <height>160</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <class>TITLE</class>
@@ -59,53 +59,56 @@
     <x>150</x>
     <y>60</y>
     <width>90</width>
+    <horizontal_alignment>2</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_41</name>
     <text>TX</text>
-    <x>250</x>
+    <x>296</x>
     <y>60</y>
     <width>40</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_33</name>
     <pv_name>$(P):TX</pv_name>
-    <x>300</x>
+    <x>346</x>
     <y>60</y>
     <width>90</width>
+    <horizontal_alignment>2</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_42</name>
-    <text>Errors</text>
+    <text>... Drops</text>
     <y>85</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_34</name>
-    <pv_name>$(P):RX:E</pv_name>
+    <pv_name>$(P):RX:D</pv_name>
     <x>150</x>
     <y>85</y>
     <width>90</width>
+    <horizontal_alignment>2</horizontal_alignment>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_35</name>
-    <pv_name>$(P):TX:E</pv_name>
-    <x>300</x>
+    <pv_name>$(P):TX:D</pv_name>
+    <x>346</x>
     <y>85</y>
     <width>90</width>
+    <horizontal_alignment>2</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_43</name>
     <text>MTU</text>
-    <x>5</x>
-    <y>110</y>
+    <y>135</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_36</name>
     <pv_name>$(P):MTU</pv_name>
-    <x>85</x>
-    <y>110</y>
+    <x>80</x>
+    <y>135</y>
     <width>90</width>
   </widget>
   <widget type="led" version="2.0.0">
@@ -132,5 +135,48 @@
     <x>430</x>
     <y>35</y>
     <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_38</name>
+    <pv_name>$(P):RX:E</pv_name>
+    <x>150</x>
+    <y>110</y>
+    <width>90</width>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_39</name>
+    <pv_name>$(P):TX:E</pv_name>
+    <x>346</x>
+    <y>110</y>
+    <width>90</width>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_44</name>
+    <text>... Errors</text>
+    <y>110</y>
+    <width>70</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_45</name>
+    <text>OS DRV</text>
+    <x>190</x>
+    <y>135</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_42</name>
+    <pv_name>$(P):DRV</pv_name>
+    <x>270</x>
+    <y>135</y>
+    <width>90</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_43</name>
+    <pv_name>$(P):DRV:STAT</pv_name>
+    <x>370</x>
+    <y>135</y>
+    <width>66</width>
   </widget>
 </display>

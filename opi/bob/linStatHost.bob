@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2024-07-06 08:35:55 by dev-->
+<!--Saved on 2025-05-12 14:57:50 by dev-->
 <display version="2.0.0">
   <name>Host $(IOC)</name>
   <width>550</width>
-  <height>440</height>
+  <height>455</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <class>TITLE</class>
@@ -265,81 +265,81 @@
     <name>Label_19</name>
     <text>Total BCast</text>
     <x>10</x>
-    <y>310</y>
+    <y>340</y>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_11</name>
     <pv_name>$(IOC):NET:HOST:RX:B</pv_name>
     <x>160</x>
-    <y>310</y>
+    <y>340</y>
     <width>90</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_12</name>
     <pv_name>$(IOC):NET:HOST:TX:B</pv_name>
     <x>310</x>
-    <y>310</y>
+    <y>340</y>
     <width>90</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_13</name>
     <pv_name>$(IOC):NET:HOST:TX:M</pv_name>
     <x>310</x>
-    <y>340</y>
+    <y>370</y>
     <width>90</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_14</name>
     <pv_name>$(IOC):NET:HOST:RX:M</pv_name>
     <x>160</x>
-    <y>340</y>
+    <y>370</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_22</name>
     <text>Total MCast</text>
     <x>10</x>
-    <y>340</y>
+    <y>370</y>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_23</name>
     <text>Max. Temp.</text>
     <x>10</x>
-    <y>365</y>
+    <y>395</y>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_15</name>
     <pv_name>$(IOC):T_MAX</pv_name>
     <x>160</x>
-    <y>365</y>
+    <y>395</y>
     <width>90</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_16</name>
     <pv_name>$(IOC):T_LOC_MAX</pv_name>
     <x>310</x>
-    <y>365</y>
+    <y>395</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_24</name>
     <text>Sens.</text>
     <x>260</x>
-    <y>365</y>
+    <y>395</y>
     <width>40</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_20</name>
     <text>Kernel</text>
     <x>10</x>
-    <y>400</y>
+    <y>430</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_17</name>
     <pv_name>$(IOC):KERNEL_VERS_FULL.VAL$</pv_name>
     <x>90</x>
-    <y>400</y>
+    <y>430</y>
     <width>430</width>
     <format>6</format>
   </widget>
@@ -356,5 +356,18 @@
     <x>90</x>
     <y>45</y>
     <width>210</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_18</name>
+    <pv_name>$(IOC):NET:HOST:RX:D</pv_name>
+    <x>160</x>
+    <y>310</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_21</name>
+    <text>... Drop</text>
+    <x>10</x>
+    <y>310</y>
   </widget>
 </display>
