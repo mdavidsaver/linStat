@@ -15,6 +15,9 @@ file "tblGetRateI64.template" {
  ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
 {IOC="\$(P)", NAME="UDP_TX", INP="netstat|/proc\$(INST)/net/snmp|Udp:OutDatagrams",
  ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
+{IOC="\$(P)", NAME="RX:D", INP="netstat|/proc\$(INST)/net/snmp|Ip:InDiscards",
+ ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
+
 {IOC="\$(P)", NAME="RX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets",
  ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
 {IOC="\$(P)", NAME="RX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InBcastOctets",
