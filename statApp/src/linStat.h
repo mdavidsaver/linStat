@@ -101,6 +101,7 @@ struct Transaction {
 
     void set(const std::string& name, int64_t val, const std::string &egu = std::string());
     void set(const std::string& name, const std::string &val);
+    void set(const std::string& name);
 };
 
 struct StatTableFactory {

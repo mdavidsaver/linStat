@@ -85,6 +85,11 @@ void Transaction::set(const std::string& name, const std::string& val)
     ent = val;
 }
 
+void Transaction::set(const std::string &name)
+{
+    next[name] = std::monostate();
+}
+
 std::vector<std::shared_ptr<StatTable>> StatTable::list_all()
 {
     std::vector<std::shared_ptr<StatTable>> ret;
