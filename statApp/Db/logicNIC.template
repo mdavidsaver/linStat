@@ -41,3 +41,28 @@ record(bi, "$(IOC):CR") {
     field(ONAM, "Running")
     field(ZSV , "MAJOR")
 }
+
+record(bi, "$(IOC):DRV:STAT") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@ethtool|$(NIC)|found_stat")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+    field(ZNAM, "No Stats")
+    field(ONAM, "Has Stat")
+}
+
+# aggregate packet drop rates
+record(calc, "$(IOC):RX:D") {
+    field(INPA, "$(IOC):RX:D:IP CP MS")
+    field(INPB, "$(IOC):RX:D:DRV CP MS")
+    field(CALC, "A+B")
+    field(EGU , "pkt/s")
+    field(PREC, "1")
+}
+record(calc, "$(IOC):TX:D") {
+    field(INPA, "$(IOC):TX:D:IP CP MS")
+    field(INPB, "$(IOC):TX:D:DRV CP MS")
+    field(CALC, "A+B")
+    field(EGU , "pkt/s")
+    field(PREC, "1")
+}
