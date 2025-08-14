@@ -12,6 +12,7 @@
 #include <linux/netlink.h>
 #include <linux/rtnetlink.h>
 #include <linux/if_link.h>
+#include <linux/version.h>
 
 #include <errlog.h>
 #include <epicsThread.h>
@@ -125,12 +126,14 @@ struct IFStatTable : public StatTable {
             } else if(auto body = XRTA_CHECK(uint8_t, IFLA_LINKMODE, ratt)) {
                 tr.set("linkmode", *body);
 
+                // IFLA_CARRIER_UP/DOWN_COUNT were added in Linux 4.16
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,16,0)
             } else if(auto body = XRTA_CHECK(uint32_t, IFLA_CARRIER_UP_COUNT, ratt)) {
                 tr.set("carrier_up_count", *body);
 
             } else if(auto body = XRTA_CHECK(uint32_t, IFLA_CARRIER_DOWN_COUNT, ratt)) {
                 tr.set("carrier_down_count", *body);
-
+#endif
             } else if(auto body = XRTA_CHECK(uint32_t, IFLA_MTU, ratt)) {
                 tr.set("mtu", *body);
 
