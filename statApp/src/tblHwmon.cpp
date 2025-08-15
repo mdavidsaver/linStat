@@ -129,6 +129,9 @@ struct HWMonTable : public StatTable {
         if(have_Tmax) {
             tr.set("temp_max", Tmax, "mC"); // 1/1000 deg. C
             tr.set("name_max", Nmax);
+        } else {
+            tr.set("temp_max");
+            tr.set("name_max");
         }
     }
 };
