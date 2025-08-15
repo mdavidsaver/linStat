@@ -40,6 +40,7 @@ LIB_SRCS_Linux += tblStatVFS.cpp
 LIB_SRCS_DEFAULT += dummy.c
 
 LIB_LIBS += $(EPICS_BASE_IOC_LIBS)
+linStat_SYS_LIBS += stdc++fs
 
 #===========================
 
