@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
             SET: ${{ matrix.set || 'defaults' }}
-            CMP: gcc
+            CMP: ${{ matrix.compiler || 'gcc' }}
             BCFG: default
             BASE: ${{ matrix.base }}
             EXTRA: ${{ matrix.extra }}
@@ -21,6 +21,10 @@ jobs:
                 include:
                 - name: ubuntu-latest-7.0-cxx17
                   base: "7.0"
+
+                - name: ubuntu-latest-7.0-clang
+                  base: "7.0"
+                  compiler: clang
 
                 - name: ubuntu-latest 7.0.5
                   base: "R7.0.5"
