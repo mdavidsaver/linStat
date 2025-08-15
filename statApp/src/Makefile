@@ -1,6 +1,9 @@
 TOP=../..
 
 include $(TOP)/configure/CONFIG
+ifdef T_A
+include $(TOP)/configure/O.$(T_A)/TOOLCHAIN
+endif
 #----------------------------------------
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
@@ -40,6 +43,11 @@ LIB_SRCS_Linux += tblStatVFS.cpp
 LIB_SRCS_DEFAULT += dummy.c
 
 LIB_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+ifeq (YES,$(LINSTAT_NEED_STDCXXFS))
+# see configure/toolchain.cpp
+LIB_SYS_LIBS += stdc++fs
+endif
 
 #===========================
 
