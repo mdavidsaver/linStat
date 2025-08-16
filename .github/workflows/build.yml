@@ -79,6 +79,9 @@ jobs:
             fail-fast: false
             matrix:
                 include:
+                - name: centos 8
+                  image: centos:8
+
                 - name: Debian 11
                   image: debian:11
                   base: "7.0"
@@ -116,7 +119,16 @@ jobs:
                 apt-get -y install git python3 build-essential gdb
             elif type dnf
             then
+                # handle antique centos
+                if ! dnf install -y git
+                then
+                    sed -i 's/mirror\.centos\.org/vault.centos.org/g' /etc/yum.repos.d/CentOS-*.repo
+                    sed -i 's/^#.*baseurl=http/baseurl=http/g' /etc/yum.repos.d/CentOS-*.repo
+                    sed -i 's/^mirrorlist=http/#mirrorlist=http/g' /etc/yum.repos.d/CentOS-*.repo
+                fi
+
                 dnf install -y git python3 make perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel gdb
+
                 # fake out cue.py
                 ln -s /bin/true /usr/bin/apt-get
             fi
