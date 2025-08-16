@@ -6,8 +6,8 @@ specific information from an IOC.
 Requires:
 
 - EPICS Base >= 7.0.4
-- gcc or clang with c++17 support
-- Linux
+- gcc or clang with c++17 support (GCC >= 8.5)
+- Linux >= 4.12
 
 ![Example OPI](documentation/example.png)
 
@@ -38,11 +38,6 @@ Additional information provided by linStat includes:
 - File System usage
 
 ## Building
-
-Requires:
-
-- epics-base >= 7.0.8
-- Compiler supporting c++17 or later
 
 ```sh
 git clone https://github.com/mdavidsaver/linStat
@@ -145,9 +140,6 @@ iocInit()
 
 - OPIs
 - PDB
-    - scan tasks
-        - [ ] execution time (diff time between `PHAS=-32768` and `PHAS=32767`)
-        - [ ] scan period (diff time between successive scans)
     - callback pool info
     - scan once info
 - System
