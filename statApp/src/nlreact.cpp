@@ -21,6 +21,7 @@
 #include <dbDefs.h>
 #include <epicsGuard.h>
 #include <errlog.h>
+#include <epicsStdio.h>
 
 #include "nlreact.h"
 
@@ -480,6 +481,28 @@ Handle Reactor::request(NLMsg &&req, std::function<void (NLMsg &&)> &&fn) const
     });
 
     return ret;
+}
+
+void Reactor::report()
+{
+    bool running = false;
+    size_t nhandlers = size_t(-1), ntodo = size_t(-1), nready = size_t(-1);
+    if(pvt) {
+        Guard G(pvt->lock);
+        running = pvt->running;
+        nhandlers = pvt->handlers.size();
+        ntodo = pvt->todo.size();
+        nready = pvt->ready.size();
+    }
+    printf("  running: %s\n"
+           "  #handlers: %zu\n"
+           "  #todo: %zu\n"
+           "  #ready: %zu\n"
+           " Higher detail level shows param table\n",
+           running ? "yes" : "no",
+           nhandlers,
+           ntodo,
+           nready);
 }
 
 } // namespace linStat

@@ -25,8 +25,10 @@ using namespace linStat;
 
 long linStatReport(int level) noexcept {
     try {
-        if(level<=0)
+        if(level<=0){
+            linStatReactor.report();
             return 0;
+        }
 
         for(auto fact : StatTableIter()) {
             if(fact.name)

@@ -50,6 +50,8 @@ struct LINSTAT_API Reactor {
     JobHandle submit(std::function<void()>&& fn) const;
     Handle request(NLMsg&& req, std::function<void(NLMsg&&)>&& fn) const;
 
+    void report();
+
 private:
     std::shared_ptr<Pvt> pvt;
 };
