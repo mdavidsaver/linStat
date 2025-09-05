@@ -54,6 +54,8 @@ struct HWMonTable : public StatTable {
         int32_t Tmax = -42;
         std::string Nmax;
 
+        int64_t Fnum = 0, Fturning = 0, Fstuck = 0;
+
         // iterate through hwmon* devices
         for(const auto& ent : fs::directory_iterator(base)) {
             if(!ent.is_directory() || !starts_with(ent.path().filename().string(), "hwmon"))
@@ -69,6 +71,13 @@ struct HWMonTable : public StatTable {
 
             // iterate through and group parameters by sensor
             std::map<std::string, std::pair<std::string, int32_t>> temperatures;
+
+            struct Fan {
+                std::string label;
+                int32_t input=0;
+                int32_t target=0;
+            };
+            std::map<std::string, Fan> fans;
 
             for(const auto& sv : fs::directory_iterator(ent.path())) {
                 // looking for entries of the form: <type><inst#>_<param>
@@ -89,9 +98,23 @@ struct HWMonTable : public StatTable {
                 if(!read_file(sv.path(), value))
                     continue;
 
+                auto toint = [&]() -> int32_t {
+                    try{
+                        return std::stol(value);
+                    }catch(std::exception&){
+                        if(linStatDebug>0)
+                            errlogPrintf("%s.%s : error parsing '%s'\n",
+                                         fact.c_str(),
+                                         inst.c_str(),
+                                         value.c_str());
+                        return -1;
+                    }
+                };
+
                 if(type=="temp") {
                     if(param=="label") {
                         temperatures[SB()<<type<<inst].first = std::move(value);
+
                     } else if(param=="input") {
                         try{
                             temperatures[SB()<<type<<inst].second = std::stol(value);
@@ -102,6 +125,17 @@ struct HWMonTable : public StatTable {
                                              inst.c_str(),
                                              value.c_str());
                         }
+                    }
+
+                } else if(type=="fan") {
+                    if(param=="input") {
+                        fans[SB()<<type<<inst].input = toint();
+
+                    } else if(param=="label") {
+                        fans[SB()<<type<<inst].label = std::move(value);
+
+                    } else if(param=="target") {
+                        fans[SB()<<type<<inst].target = toint();
                     }
                 }
             }
@@ -124,6 +158,25 @@ struct HWMonTable : public StatTable {
                 }
             }
 
+            label_counts.clear();
+            Fnum += fans.size();
+
+            for(const auto& f : fans) {
+                auto label(f.second.label);
+                if(label.empty())
+                    label = f.first;
+
+                auto count(label_counts[label]++);
+
+                tr.set(SB()<<dev<<'.'<<label<<'.'<<count<<".label", SB()<<label<<" ["<<count<<']');
+                tr.set(SB()<<dev<<'.'<<label<<'.'<<count<<".input", f.second.input, "rpm");
+                tr.set(SB()<<dev<<'.'<<label<<'.'<<count<<".target", f.second.target, "rpm");
+
+                if(f.second.input)
+                    Fturning++;
+                else if(f.second.target)
+                    Fstuck++;
+            }
         }
 
         if(have_Tmax) {
@@ -133,6 +186,10 @@ struct HWMonTable : public StatTable {
             tr.set("temp_max");
             tr.set("name_max");
         }
+
+        tr.set("fans_num", Fnum);
+        tr.set("fans_turning", Fturning);
+        tr.set("fans_stuck", Fstuck);
     }
 };
 
