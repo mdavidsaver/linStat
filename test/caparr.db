@@ -1,0 +1,9 @@
+record(int64in, "$(IOC):CAP_EFF") {
+    field(FLNK, "$(IOC):CAP_EFF_N")
+}
+record(aai, "$(IOC):CAP_EFF_N") {
+    field(DTYP, "Linux Stat Cap Arr")
+    field(INP , "$(IOC):CAP_EFF MSI")
+    field(FTVL, "STRING")
+    field(NELM, "4")
+}

@@ -82,3 +82,18 @@ record(dfanout, "$(IOC):MALLOC_POOL_") {
     field(OUTA, "$(IOC):MALLOC_USED.HOPR NPP")
     field(TSEL, "$(IOC):MALLOC_POOL.TIME")
 }
+
+
+record(int64in, "$(IOC):CAP_EFF") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@procStatus|self|CapEff")
+    field(SCAN, "I/O Intr")
+    field(TSE , "-2")
+    field(FLNK, "$(IOC):CAP_EFF_N")
+}
+record(aai, "$(IOC):CAP_EFF_N") {
+    field(DTYP, "Linux Stat Cap Arr")
+    field(INP , "$(IOC):CAP_EFF MSI")
+    field(FTVL, "STRING")
+    field(NELM, "4")
+}

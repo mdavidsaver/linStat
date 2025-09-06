@@ -7,6 +7,8 @@
 #define USE_TYPED_RSET
 #define USE_TYPED_DSET
 
+#include <linux/capability.h>
+
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -108,13 +110,34 @@ void testFS() {
     testOk(root_avail >0 && root_avail<=root_size, "ROOT AVAIL %ld MAX %ld", root_avail, root_size);
 }
 
+void testCapArr() {
+    testDiag("%s", __func__);
+
+    using estr = char[MAX_STRING_SIZE];
+
+    testdbPutFieldOk("TST:CAP_EFF", DBR_LONG, 0);
+    testdbGetArrFieldEqual("TST:CAP_EFF_N", DBF_STRING, 16, 0, nullptr);
+
+    testdbPutFieldOk("TST:CAP_EFF", DBR_LONG, CAP_TO_MASK(CAP_SYS_ADMIN));
+    {
+        const estr expect[] = {"SYS_ADMIN"};
+        testdbGetArrFieldEqual("TST:CAP_EFF_N", DBF_STRING, 16, NELEMENTS(expect), expect);
+    }
+
+    testdbPutFieldOk("TST:CAP_EFF", DBR_LONG, CAP_TO_MASK(CAP_SYS_ADMIN)|CAP_TO_MASK(CAP_IPC_LOCK));
+    {
+        const estr expect[] = {"IPC_LOCK", "SYS_ADMIN"};
+        testdbGetArrFieldEqual("TST:CAP_EFF_N", DBF_STRING, 16, NELEMENTS(expect), expect);
+    }
+}
+
 } // namespace
 
 extern "C" void testioc_registerRecordDeviceDriver(struct dbBase *);
 
 MAIN(testLSIOC)
 {
-    testPlan(9);
+    testPlan(15);
     testdbPrepare();
     epicsEnvSet("LOCATION", "No where");
     epicsEnvSet("ENGINEER", "Someone");
@@ -124,6 +147,7 @@ MAIN(testLSIOC)
     testdbReadDatabase("linStatProc.db", "../../db", "IOC=LOCALHOST");
     testdbReadDatabase("linStatNIC.db", "../../db", "IOC=LOCALHOST,NIC=lo");
     testdbReadDatabase("linStatFS.db", "../../db", "P=LOCALHOST:ROOT,DIR=/");
+    testdbReadDatabase("caparr.db", "..:.", "IOC=TST");
     iocshCmd("var linStatDebug 5");
     testIocInitOk();
     iocshCmd("dbior drvLinStat 3 > drvLinStat.dbior");
@@ -141,6 +165,7 @@ MAIN(testLSIOC)
     testProc();
     testEnv();
     testFS();
+    testCapArr();
     testIocShutdownOk();
     testdbCleanup();
     return testDone();

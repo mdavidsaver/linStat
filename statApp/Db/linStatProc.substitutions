@@ -24,7 +24,6 @@ file "tblGetI64.template" {
  ADEL="1048576"}
 {IOC="\$(IOC)", NAME="THREAD_CNT", INP="procStatus|self|Threads"}
 {IOC="\$(IOC)", NAME="CAP_AMB", INP="procStatus|self|CapAmb"}
-{IOC="\$(IOC)", NAME="CAP_EFF", INP="procStatus|self|CapEff"}
 {IOC="\$(IOC)", NAME="THREAD_MAX", INP="pid|self|NPROC"}
 {IOC="\$(IOC)", NAME="LIM_MEMLK", INP="pid|self|MEMLOCK"}
 {IOC="\$(IOC)", NAME="LIM_RTPRIO", INP="pid|self|RTPRIO"}
