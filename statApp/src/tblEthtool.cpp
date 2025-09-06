@@ -11,6 +11,7 @@
  */
 
 #include <string>
+#include <algorithm>
 #include <vector>
 #include <map>
 
@@ -62,6 +63,10 @@ struct EthtoolTable : public StatTable {
     struct ethtool_drvinfo info{};
     std::vector<std::pair<std::string, AggStat>> stat_names;
 
+    int8_t link_mode_masks_nwords = 0;
+
+    std::vector<char> ethbuf;
+
     explicit EthtoolTable(const std::string& inst, const Reactor& react)
         :StatTable(tblName, inst, react)
     {
@@ -110,6 +115,27 @@ struct EthtoolTable : public StatTable {
                 stat_names.emplace_back(std::make_pair(std::move(name), agg));
             }
         }
+
+        {
+            // handshake to query link_mode_masks_nwords
+            // cf. https://github.com/torvalds/linux/commit/3f1ac7a700d039c61d8d8b99f28d605d489a60cf
+            ethbuf.clear();
+            ethbuf.resize(sizeof(ethtool_link_settings));
+            auto link = reinterpret_cast<ethtool_link_settings*>(ethbuf.data());
+            link->cmd = ETHTOOL_GLINKSETTINGS;
+
+            if(!send_ioctl(link) && link->cmd==ETHTOOL_GLINKSETTINGS && link->link_mode_masks_nwords<0) {
+                // complete handshake
+                link_mode_masks_nwords = -link->link_mode_masks_nwords;
+
+            } else if(linStatDebug>1) {
+                auto err = errno;
+                errlogPrintf("%s.%s : error %d unable to prepare for link settings\n",
+                             fact.c_str(),
+                             inst.c_str(),
+                             err);
+            }
+        }
     }
     virtual ~EthtoolTable() {}
 
@@ -118,44 +144,73 @@ struct EthtoolTable : public StatTable {
         tr.set("driver", info.driver);
         tr.set("version", info.version);
 
-        if(stat_names.empty()) {
+        if(!stat_names.empty()) {
+            ethbuf.clear();
+            ethbuf.resize(sizeof(ethtool_stats) + stat_names.size()*sizeof(uint64_t));
+            auto stats = reinterpret_cast<ethtool_stats*>(ethbuf.data());
+            stats->cmd = ETHTOOL_GSTATS;
+            stats->n_stats = stat_names.size();
+
+            if(!send_ioctl(stats)) {
+                const auto out = reinterpret_cast<uint64_t*>(&ethbuf[sizeof(ethtool_stats)]);
+
+                uint64_t rx_drop = 0u, tx_drop = 0u;
+                bool found_stat = false;
+
+                for(size_t i=0; i<stat_names.size(); i++) {
+                    tr.set(SB()<<"stat."<<stat_names[i].first, out[i]);
+
+                    switch(stat_names[i].second) {
+                    case AggNone:
+                        break;
+                    case AggRXDrop:
+                        rx_drop += out[i];
+                        found_stat = true;
+                        break;
+                    case AggTXDrop:
+                        tx_drop += out[i];
+                        found_stat = true;
+                        break;
+                    }
+                }
+
+                tr.set("rx_dropped", rx_drop);
+                tr.set("tx_dropped", tx_drop);
+                tr.set("found_stat", found_stat);
+            }
+
+        } else {
             tr.set("found_stat", 0);
             tr.set("rx_dropped", 0);
             tr.set("tx_dropped", 0);
-            return;
         }
 
-        std::vector<char> buf(sizeof(ethtool_stats) + stat_names.size()*sizeof(uint64_t));
-        auto stats = reinterpret_cast<ethtool_stats*>(buf.data());
-        stats->cmd = ETHTOOL_GSTATS;
-        stats->n_stats = stat_names.size();
+        if(link_mode_masks_nwords) {
+            // cf. https://github.com/torvalds/linux/commit/3f1ac7a700d039c61d8d8b99f28d605d489a60cf
+            ethbuf.clear();
+            ethbuf.resize(sizeof(ethtool_link_settings) + 3*link_mode_masks_nwords*sizeof(uint32_t));
+            auto link = reinterpret_cast<ethtool_link_settings*>(ethbuf.data());
+            link->cmd = ETHTOOL_GLINKSETTINGS;
+            link->link_mode_masks_nwords = link_mode_masks_nwords;
 
-        if(!send_ioctl(stats)) {
-            const auto out = reinterpret_cast<uint64_t*>(&buf[sizeof(ethtool_stats)]);
+            if(!send_ioctl(link)) {
+                tr.set("speed", link->speed, "Mb/s");
+                tr.set("duplex", link->duplex); // DUPLEX_* : 0 - half, 1 - full, 0xff - unknown
 
-            uint64_t rx_drop = 0u, tx_drop = 0u;
-            bool found_stat = false;
-
-            for(size_t i=0; i<stat_names.size(); i++) {
-                tr.set(SB()<<"stat."<<stat_names[i].first, out[i]);
-
-                switch(stat_names[i].second) {
-                case AggNone:
-                    break;
-                case AggRXDrop:
-                    rx_drop += out[i];
-                    found_stat = true;
-                    break;
-                case AggTXDrop:
-                    tx_drop += out[i];
-                    found_stat = true;
-                    break;
+            } else {
+                if(linStatDebug>0) {
+                    auto err = errno;
+                    errlogPrintf("%s.%s : error %d fetching link settings\n",
+                                 fact.c_str(),
+                                 inst.c_str(),
+                                 err);
                 }
+                tr.set("speed");
+                tr.set("duplex");
             }
-
-            tr.set("rx_dropped", rx_drop);
-            tr.set("tx_dropped", tx_drop);
-            tr.set("found_stat", found_stat);
+        } else {
+            tr.set("speed");
+            tr.set("duplex");
         }
     }
 

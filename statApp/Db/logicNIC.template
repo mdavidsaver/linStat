@@ -1,4 +1,35 @@
 
+record(longin, "$(IOC):SPEED") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@ethtool|$(NIC)|speed")
+    field(EGU , "Mb/s")
+    field(SCAN, "I/O Intr")
+    field(FLNK, "$(IOC):SPEED:1_")
+}
+
+record(calcout, "$(IOC):SPEED:1_") {
+    field(INPA, "$(IOC):SPEED NPP MS")
+    field(CALC, "A*1024/8") # Mb/2 -> KB/2
+    field(OUT , "$(IOC):SPEED:2_ PP")
+}
+
+record(dfanout, "$(IOC):SPEED:2_") {
+    field(OUTA, "$(IOC):TX.HOPR NPP")
+    field(OUTB, "$(IOC):RX.HOPR NPP")
+}
+
+record(mbbi, "$(IOC):DPLX") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@ethtool|$(NIC)|duplex")
+    field(SCAN, "I/O Intr")
+    field(ZRVL, "0xff")
+    field(ONVL, "1")
+    field(TWVL, "0")
+    field(ZRST, "Unkn")
+    field(ONST, "Full")
+    field(TWST, "Half")
+}
+
 record(mbbi, "$(IOC):OPER") {
     field(DTYP, "Linux Stat Get")
     field(INP , "@ifstat|$(NIC)|operatate")
