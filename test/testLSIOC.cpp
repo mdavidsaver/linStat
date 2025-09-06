@@ -124,6 +124,7 @@ MAIN(testLSIOC)
     testdbReadDatabase("linStatProc.db", "../../db", "IOC=LOCALHOST");
     testdbReadDatabase("linStatNIC.db", "../../db", "IOC=LOCALHOST,NIC=lo");
     testdbReadDatabase("linStatFS.db", "../../db", "P=LOCALHOST:ROOT,DIR=/");
+    iocshCmd("var linStatDebug 5");
     testIocInitOk();
     iocshCmd("dbior drvLinStat 3 > drvLinStat.dbior");
     iocshCmd("dbl > testLSIOC.dbl");
