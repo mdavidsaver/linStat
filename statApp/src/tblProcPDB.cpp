@@ -15,7 +15,7 @@
 #include <dbStaticLib.h>
 #include <dbServer.h>
 #include <initHooks.h>
-// because dbServer::stats() isn't implemented...
+// when dbServer::stats() isn't implemented...
 #include <rsrv.h>
 #include <taskwd.h>
 #include <errlog.h>
@@ -57,7 +57,11 @@ struct PDBTable : public StatTable {
 
         if(markDBServStarted) { // first update() during init_record(), before RSRV initialized...
             unsigned nchan=0, nconn=0;
+#ifdef HAS_DBSERVER_STATS
+            (void)dbServerStats(nullptr, &nchan, &nconn);
+#else
             casStatsFetch(&nchan, &nconn);
+#endif
             tr.set("rsrv:nchan", nchan);
             tr.set("rsrv:nconn", nconn);
         }
