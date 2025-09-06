@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-05-17 09:46:41 by dev-->
 <display version="2.0.0">
   <name>NIC: $(IOC) $(NIC)</name>
   <macros>
@@ -13,7 +12,7 @@
     <text>NIC: $(IOC) $(NIC)</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
-    <width>550</width>
+    <width>306</width>
     <height>30</height>
     <font use_class="true">
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
@@ -49,31 +48,31 @@
   <widget type="label" version="2.0.0">
     <name>Label_40</name>
     <text>RX</text>
-    <x>100</x>
+    <x>66</x>
     <y>60</y>
     <width>40</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_32</name>
     <pv_name>$(P):RX</pv_name>
-    <x>150</x>
+    <x>90</x>
     <y>60</y>
-    <width>90</width>
+    <width>116</width>
     <horizontal_alignment>2</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_41</name>
     <text>TX</text>
-    <x>296</x>
+    <x>306</x>
     <y>60</y>
     <width>40</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_33</name>
     <pv_name>$(P):TX</pv_name>
-    <x>346</x>
+    <x>330</x>
     <y>60</y>
-    <width>90</width>
+    <width>116</width>
     <horizontal_alignment>2</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -85,7 +84,7 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_34</name>
     <pv_name>$(P):RX:D</pv_name>
-    <x>150</x>
+    <x>116</x>
     <y>85</y>
     <width>90</width>
     <horizontal_alignment>2</horizontal_alignment>
@@ -93,7 +92,7 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_35</name>
     <pv_name>$(P):TX:D</pv_name>
-    <x>346</x>
+    <x>356</x>
     <y>85</y>
     <width>90</width>
     <horizontal_alignment>2</horizontal_alignment>
@@ -139,7 +138,7 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_38</name>
     <pv_name>$(P):RX:E</pv_name>
-    <x>150</x>
+    <x>116</x>
     <y>110</y>
     <width>90</width>
     <horizontal_alignment>2</horizontal_alignment>
@@ -147,7 +146,7 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_39</name>
     <pv_name>$(P):TX:E</pv_name>
-    <x>346</x>
+    <x>356</x>
     <y>110</y>
     <width>90</width>
     <horizontal_alignment>2</horizontal_alignment>
@@ -178,5 +177,48 @@
     <x>370</x>
     <y>135</y>
     <width>66</width>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar</name>
+    <pv_name>$(P):RX</pv_name>
+    <x>220</x>
+    <y>60</y>
+    <width>70</width>
+    <fill_color>
+      <color red="0" green="0" blue="255">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_1</name>
+    <pv_name>$(P):TX</pv_name>
+    <x>460</x>
+    <y>60</y>
+    <width>70</width>
+    <fill_color>
+      <color red="0" green="0" blue="255">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_18</name>
+    <pv_name>$(P):SPEED</pv_name>
+    <x>355</x>
+    <y>5</y>
+    <width>86</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_19</name>
+    <pv_name>$(P):DPLX</pv_name>
+    <x>458</x>
+    <y>5</y>
+    <width>70</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_21</name>
+    <text>Speed</text>
+    <x>270</x>
+    <y>5</y>
+    <width>70</width>
   </widget>
 </display>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-09 18:19:30 by dev-->
 <display version="2.0.0">
   <name>IOC: $(IOC)</name>
   <width>550</width>
@@ -10,7 +9,7 @@
     <text>IOC: $(IOC)</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
-    <width>550</width>
+    <width>260</width>
     <height>30</height>
     <font use_class="true">
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
@@ -118,7 +117,7 @@
     <pv_name>$(IOC):THREAD_CNT</pv_name>
     <x>100</x>
     <y>166</y>
-    <width>90</width>
+    <width>60</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_20</name>
@@ -132,12 +131,12 @@
     <pv_name>$(IOC):FD_FREE</pv_name>
     <x>100</x>
     <y>196</y>
-    <width>90</width>
+    <width>60</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_21</name>
     <text>/</text>
-    <x>190</x>
+    <x>170</x>
     <y>196</y>
     <width>30</width>
     <horizontal_alignment>1</horizontal_alignment>
@@ -145,9 +144,8 @@
   <widget type="progressbar" version="2.0.0">
     <name>Progress Bar_2</name>
     <pv_name>$(IOC):FD_FREE</pv_name>
-    <x>320</x>
+    <x>270</x>
     <y>196</y>
-    <width>210</width>
     <fill_color>
       <color name="On" red="0" green="255" blue="0">
       </color>
@@ -156,9 +154,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_14</name>
     <pv_name>$(IOC):FD_MAX</pv_name>
-    <x>220</x>
+    <x>200</x>
     <y>196</y>
-    <width>90</width>
+    <width>60</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_23</name>
@@ -303,14 +301,14 @@
     <name>Action Button</name>
     <actions>
       <action type="open_display">
-        <description>Show Env.</description>
+        <description>Environ</description>
         <file>linStatProcEnv.bob</file>
         <target>tab</target>
       </action>
     </actions>
-    <x>460</x>
+    <x>390</x>
     <y>106</y>
-    <width>80</width>
+    <width>60</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
   </widget>
@@ -325,7 +323,7 @@
     </actions>
     <pv_name>$(IOC):SYSRESET</pv_name>
     <x>460</x>
-    <y>166</y>
+    <y>770</y>
     <width>80</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
@@ -343,7 +341,7 @@
     </actions>
     <pv_name>$(IOC):READACF</pv_name>
     <x>460</x>
-    <y>146</y>
+    <y>106</y>
     <width>80</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
@@ -367,14 +365,14 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_25</name>
     <pv_name>$(IOC):SUSP_TASK_CNT</pv_name>
-    <x>280</x>
+    <x>370</x>
     <y>166</y>
     <width>90</width>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_32</name>
     <text># Suspend</text>
-    <x>200</x>
+    <x>290</x>
     <y>166</y>
     <width>70</width>
   </widget>
@@ -658,5 +656,86 @@
     <y>550</y>
     <width>70</width>
     <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_33</name>
+    <pv_name>$(IOC):CAP_EFF</pv_name>
+    <x>400</x>
+    <y>560</y>
+    <width>140</width>
+    <format>4</format>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_34</name>
+    <pv_name>$(IOC):LIM_MEMLK</pv_name>
+    <x>420</x>
+    <y>650</y>
+    <width>120</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_35</name>
+    <pv_name>$(IOC):LIM_RTPRIO</pv_name>
+    <x>420</x>
+    <y>620</y>
+    <width>120</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <text>Cap. Eff.</text>
+    <x>320</x>
+    <y>560</y>
+    <width>70</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_10</name>
+    <text>/</text>
+    <x>380</x>
+    <y>136</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_11</name>
+    <text>Lim. RTPRIO</text>
+    <x>300</x>
+    <y>620</y>
+    <width>110</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_12</name>
+    <text>/</text>
+    <x>160</x>
+    <y>166</y>
+    <width>30</width>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_36</name>
+    <pv_name>$(IOC):THREAD_MAX</pv_name>
+    <x>190</x>
+    <y>166</y>
+    <width>90</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_37</name>
+    <text>Lim. MEMLOCK</text>
+    <x>300</x>
+    <y>650</y>
+    <width>110</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_37</name>
+    <pv_name>$(IOC):CAP_EFF_N</pv_name>
+    <x>300</x>
+    <y>590</y>
+    <width>240</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
 </display>
