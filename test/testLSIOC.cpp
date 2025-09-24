@@ -100,6 +100,10 @@ void testEnv() {
 
     testdbGetFieldEqual("LOCALHOST:LOCATION", DBR_STRING, "No where");
     testdbGetFieldEqual("LOCALHOST:ENGINEER", DBR_STRING, "Someone");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT", DBR_STRING, "5065");
+    iocshCmd("epicsEnvSet EPICS_CA_REPEATER_PORT 9999");
+    iocshCmd("dbpf LOCALHOST:CA_RPTR_PORT.PROC 1");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT", DBR_STRING, "9999");
 }
 
 void testFS() {
@@ -137,7 +141,7 @@ extern "C" void testioc_registerRecordDeviceDriver(struct dbBase *);
 
 MAIN(testLSIOC)
 {
-    testPlan(15);
+    testPlan(17);
     testdbPrepare();
     epicsEnvSet("LOCATION", "No where");
     epicsEnvSet("ENGINEER", "Someone");
