@@ -16,6 +16,7 @@ device(lsi, INST_IO, devLinStatLsiValue, "Linux Stat Get")
 
 # link format: "@"
 device(bo, INST_IO, devLinStatsBoExit, "Linux Stat Exit")
+device(stringin,INST_IO,devGetParamSi,"getParam")
 
 # link soft
 device(aai, CONSTANT, devLinStatsAaiCapArr, "Linux Stat Cap Arr")

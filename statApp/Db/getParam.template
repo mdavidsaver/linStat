@@ -1,0 +1,6 @@
+record(stringin, "$(IOC):$(NAME)") {
+    field(DESC, "$(ENV)")
+    field(DTYP, "getParam")
+    field(INP,  "@$(ENV)")
+    field(PINI, "YES")
+}

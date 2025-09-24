@@ -69,7 +69,7 @@ file "tblGetLSI.template" {
 {IOC="\$(IOC)", NAME="APP_DIR", INP="pid|self|cwd"}
 }
 
-file "getenv.template" {
+file "getParam.template" {
 {IOC="\$(IOC)", NAME="ENGINEER", ENV="ENGINEER"}
 {IOC="\$(IOC)", NAME="LOCATION", ENV="LOCATION"}
 {IOC="\$(IOC)", NAME="ST_SCRIPT1", ENV="IOCSH_STARTUP_SCRIPT"}

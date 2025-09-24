@@ -39,6 +39,8 @@ LIB_SRCS_Linux += tblProcPDB.cpp
 LIB_SRCS_Linux += tblProcMallinfo.cpp
 # file system
 LIB_SRCS_Linux += tblStatVFS.cpp
+# env vars and params
+LIB_SRCS_Linux += getParam.cpp
 
 LIB_SRCS_Linux += devcap.cpp
 
