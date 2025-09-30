@@ -1,6 +1,0 @@
-record(stringin, "$(IOC):$(NAME)") {
-    field(DESC, "$(ENV)")
-    field(DTYP, "getenv")
-    field(INP,  "@$(ENV)")
-    field(PINI, "YES")
-}
