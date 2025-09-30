@@ -16,6 +16,7 @@
 
 #include <epicsUnitTest.h>
 #include <envDefs.h>
+#include <alarm.h>
 #include <dbUnitTest.h>
 #include <testMain.h>
 #include <dbAccess.h>
@@ -101,9 +102,19 @@ void testEnv() {
     testdbGetFieldEqual("LOCALHOST:LOCATION", DBR_STRING, "No where");
     testdbGetFieldEqual("LOCALHOST:ENGINEER", DBR_STRING, "Someone");
     testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT", DBR_STRING, "5065");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT.SEVR", DBR_LONG, NO_ALARM);
     iocshCmd("epicsEnvSet EPICS_CA_REPEATER_PORT 9999");
     iocshCmd("dbpf LOCALHOST:CA_RPTR_PORT.PROC 1");
     testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT", DBR_STRING, "9999");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT.SEVR", DBR_LONG, NO_ALARM);
+    iocshCmd("epicsEnvSet EPICS_CA_REPEATER_PORT \"Really long string!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!x\"");
+    iocshCmd("dbpf LOCALHOST:CA_RPTR_PORT.PROC 1");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT", DBR_STRING, "Really long string!!!!!!!!!!!!!!!!!!...");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT.SEVR", DBR_LONG, MINOR_ALARM);
+    iocshCmd("epicsEnvSet EPICS_CA_REPEATER_PORT \"Really long string!!!!!!!!!!!!!!!!!!!!x\"");
+    iocshCmd("dbpf LOCALHOST:CA_RPTR_PORT.PROC 1");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT", DBR_STRING, "Really long string!!!!!!!!!!!!!!!!!!!!x");
+    testdbGetFieldEqual("LOCALHOST:CA_RPTR_PORT.SEVR", DBR_LONG, NO_ALARM);
 }
 
 void testFS() {
@@ -141,7 +152,7 @@ extern "C" void testioc_registerRecordDeviceDriver(struct dbBase *);
 
 MAIN(testLSIOC)
 {
-    testPlan(17);
+    testPlan(23);
     testdbPrepare();
     epicsEnvSet("LOCATION", "No where");
     epicsEnvSet("ENGINEER", "Someone");
