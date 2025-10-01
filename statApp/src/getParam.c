@@ -4,7 +4,7 @@
  * in file LICENSE that is included with this distribution.
  */
 
-/* getParam.cpp - String Device Support Routines for env vars and EPICS
+/* getParam.c - String Device Support Routines for env vars and EPICS
  * parameters */
 
 #define USE_TYPED_RSET
