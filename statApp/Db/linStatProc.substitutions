@@ -47,6 +47,22 @@ file "tblGetI64.template" {
  ADEL="1048576"}
 {IOC="\$(IOC)", NAME="MALLOC_USED", INP="mallinfo|self|uordblks", EGU="B",
  ADEL="1048576"}
+
+{IOC="\$(IOC)", NAME="SCANONCE_Q_SIZE", INP="pdb|self|once:size"}
+{IOC="\$(IOC)", NAME="SCANONCE_Q_HIGH", INP="pdb|self|once:used:max"}
+{IOC="\$(IOC)", NAME="SCANONCE_Q_USED", INP="pdb|self|once:used"}
+{IOC="\$(IOC)", NAME="SCANONCE_Q_OVERRUNS", INP="pdb|self|once:oflows"}
+
+{IOC="\$(IOC)", NAME="CB_Q_SIZE", INP="pdb|self|cb:size"}
+{IOC="\$(IOC)", NAME="CBLOW_Q_HIGH", INP="pdb|self|cb:low:used:max"}
+{IOC="\$(IOC)", NAME="CBLOW_Q_USED", INP="pdb|self|cb:low:used"}
+{IOC="\$(IOC)", NAME="CBLOW_Q_OVERRUNS", INP="pdb|self|cb:low:oflows"}
+{IOC="\$(IOC)", NAME="CBMEDIUM_Q_HIGH", INP="pdb|self|cb:med:used:max"}
+{IOC="\$(IOC)", NAME="CBMEDIUM_Q_USED", INP="pdb|self|cb:med:used"}
+{IOC="\$(IOC)", NAME="CBMEDIUM_Q_OVERRUNS", INP="pdb|self|cb:med:oflows"}
+{IOC="\$(IOC)", NAME="CBHIGH_Q_HIGH", INP="pdb|self|cb:high:used:max"}
+{IOC="\$(IOC)", NAME="CBHIGH_Q_USED", INP="pdb|self|cb:high:used"}
+{IOC="\$(IOC)", NAME="CBHIGH_Q_OVERRUNS", INP="pdb|self|cb:high:oflows"}
 }
 
 file "tblGetRateI64.template" {
@@ -58,6 +74,13 @@ file "tblGetRateI64.template" {
  ADEL="1"}
 {IOC="\$(IOC)", NAME="SWTH_FRC", INP="procStatus|self|nonvoluntary_ctxt_switches", EGU="Hz",
  ADEL="1"}
+
+{IOC="\$(IOC)", NAME="CBLOW_Q_OVERRATE", INP="pdb|self|cb:low:oflows",
+ EGU="Hz", HIGH="0.00001", HSV="MAJOR"}
+{IOC="\$(IOC)", NAME="CBMEDIUM_Q_OVERRATE", INP="pdb|self|cb:med:oflows",
+ EGU="Hz", HIGH="0.00001", HSV="MAJOR"}
+{IOC="\$(IOC)", NAME="CBHIGH_Q_OVERRATE", INP="pdb|self|cb:high:oflows",
+ EGU="Hz", HIGH="0.00001", HSV="MAJOR"}
 }
 
 file "tblGetSI.template" {

@@ -140,8 +140,6 @@ iocInit()
 
 - OPIs
 - PDB
-    - callback pool info
-    - scan once info
 - System
   - [ ] Disk SMART status
   - [ ] RAID array state (`/proc/mdstat` or `ioctl(/dev/md0` or `/sys/block/*/md/array_state`)

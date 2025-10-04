@@ -11,10 +11,13 @@
 
 #include <atomic>
 
+#include <epicsVersion.h>
+#include <dbDefs.h>
 #include <dbAccess.h>
 #include <dbStaticLib.h>
 #include <dbServer.h>
 #include <initHooks.h>
+#include <dbScan.h>
 // when dbServer::stats() isn't implemented...
 #include <rsrv.h>
 #include <taskwd.h>
@@ -55,7 +58,10 @@ struct PDBTable : public StatTable {
         tr.set("nrec", nrec);
         tr.set("nsuspend", nsuspend);
 
-        if(markDBServStarted) { // first update() during init_record(), before RSRV initialized...
+        if(!markDBServStarted)
+            return; // first update() during init_record(), before RSRV initialized...
+
+        {
             unsigned nchan=0, nconn=0;
 #ifdef HAS_DBSERVER_STATS
             (void)dbServerStats(nullptr, &nchan, &nconn);
@@ -64,6 +70,29 @@ struct PDBTable : public StatTable {
 #endif
             tr.set("rsrv:nchan", nchan);
             tr.set("rsrv:nconn", nconn);
+        }
+
+        {
+            scanOnceQueueStats stats{};
+            scanOnceQueueStatus(0, &stats);
+            tr.set("once:size", stats.size);
+            tr.set("once:used", stats.numUsed);
+            tr.set("once:used:max", stats.maxUsed);
+            tr.set("once:oflows", stats.numOverflow);
+        }
+
+        {
+            callbackQueueStats stats;
+            callbackQueueStatus(0, &stats);
+            tr.set("cb:size", stats.size);
+
+            const char * prioNames[] = {"low", "med", "high"};
+            static_assert(NELEMENTS(prioNames) == NUM_CALLBACK_PRIORITIES, "");
+            for(size_t i=0; i<NUM_CALLBACK_PRIORITIES; i++) {
+                tr.set(SB()<<"cb:"<<prioNames[i]<<":used", stats.numUsed[i]);
+                tr.set(SB()<<"cb:"<<prioNames[i]<<":used:max", stats.maxUsed[i]);
+                tr.set(SB()<<"cb:"<<prioNames[i]<<":oflows", stats.numOverflow[i]);
+            }
         }
     }
 };

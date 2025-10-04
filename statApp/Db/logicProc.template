@@ -97,3 +97,15 @@ record(aai, "$(IOC):CAP_EFF_N") {
     field(FTVL, "STRING")
     field(NELM, "4")
 }
+
+substitute "QUEUE=scanOnce, QUEUE_CAPS=SCANONCE, QUEUE_TYPE=SCANONCE"
+include "iocQueueCalc.template"
+
+substitute "QUEUE=cbLow, QUEUE_CAPS=CBLOW, QUEUE_TYPE=CB"
+include "iocQueueCalc.template"
+
+substitute "QUEUE=cbMedium, QUEUE_CAPS=CBMEDIUM, QUEUE_TYPE=CB"
+include "iocQueueCalc.template"
+
+substitute "QUEUE=cbHigh, QUEUE_CAPS=CBHIGH, QUEUE_TYPE=CB"
+include "iocQueueCalc.template"
