@@ -45,32 +45,17 @@ struct FDTable : public StatTable {
     virtual void update() override final {
         Transaction tr(*this);
 
-        std::unique_ptr<DIR, DIRcloser> idir{opendir("/proc/self/fd")};
-        if(!idir) {
-            if(linStatDebug>=3)
-                errlogPrintf(ERL_ERROR " Unable to open /proc/self/fd\n");
-            return;
-        }
-
+        ReadDir ent("/proc/self/fd");
         uint64_t nFD = 0;
 
-        while(true) {
-            errno = 0; // man readdir recommends to distinguish normal end of iteration
-            auto ent = readdir(idir.get());
-            if(!ent)
-                break;
-            else if(strcmp(ent->d_name, ".")==0 || strcmp(ent->d_name, "..")==0)
+        while(ent.next()) {
+            if(strcmp(ent->d_name, ".")==0 || strcmp(ent->d_name, "..")==0)
                 continue;
 
             nFD++;
         }
 
-        if(errno==0) {
-            tr.set("FD_CNT", nFD);
-
-        } else if(linStatDebug>=3) {
-                errlogPrintf(ERL_ERROR " Unable to open /proc/self/fd\n");
-        }
+        tr.set("FD_CNT", nFD);
     }
 };
 
