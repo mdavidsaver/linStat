@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2024-07-06 08:06:34 by dev-->
 <display version="2.0.0">
   <name>ENV: $(IOC)</name>
   <width>550</width>
-  <height>588</height>
+  <height>880</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <class>TITLE</class>
@@ -141,11 +140,66 @@
           <NAME>IOC_LOG_INET</NAME>
         </macros>
       </instance>
+      <instance>
+        <macros>
+          <NAME>PVA_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVA_AUTO_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVA_SERVER_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVA_BROADCAST_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVA_NAME_SERVERS</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVAS_BEACON_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVAS_AUTO_BEACON_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVAS_INTF_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVAS_IGNORE_ADDR_LIST</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVAS_SERVER_PORT</NAME>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <NAME>PVAS_BROADCAST_PORT</NAME>
+        </macros>
+      </instance>
     </instances>
     <x>20</x>
     <y>36</y>
-    <width>459</width>
-    <height>552</height>
+    <width>522</width>
+    <height>816</height>
     <gap>0</gap>
   </widget>
 </display>
