@@ -10,6 +10,7 @@ file "tblScan.template" {
 {NAME="STAT", OUT="stat|localhost|cpu:2", PERIOD="10"}
 {NAME="UP", OUT="uptime|localhost|uptime", PERIOD="10"}
 {NAME="HWMON", OUT="hwmon|localhost|temp_max", PERIOD="30"}
+{NAME="IRQ", OUT="irq|localhost|total_irq", PERIOD="10"}
 }
 
 file "tblGetI64.template" {
@@ -41,6 +42,10 @@ file "tblGetI64.template" {
 {NAME="FAN_NFAIL", INP="hwmon|localhost|fans_stuck",
  DESC="# fans which should be turning",
  HIGH="1", HSV="MAJOR", SAVE="HIGH HSV"}
+}
+
+file "tblGetRateI64.template" {
+{NAME="IRQ_TOT", INP="irq|localhost|total_irq", EGU="Hz", ADEL="100"}
 }
 
 file "tblGetSI.template" {
