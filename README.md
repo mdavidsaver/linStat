@@ -135,15 +135,3 @@ dbLoadRecords("../../db/linStatFS.db","P=$(IOC):ROOT,DIR=/")
 
 iocInit()
 ```
-
-## TODO
-
-- OPIs
-- PDB
-- System
-  - [ ] Disk SMART status
-  - [ ] RAID array state (`/proc/mdstat` or `ioctl(/dev/md0` or `/sys/block/*/md/array_state`)
-  - [ ] Power/battery state
-- Process
-- FS
-- NIC
