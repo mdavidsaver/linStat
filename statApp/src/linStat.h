@@ -19,6 +19,9 @@
 
 #include <stdint.h>
 
+#include <sys/types.h>
+#include <dirent.h>
+
 #include <epicsAssert.h>
 #include <epicsVersion.h>
 #include <epicsTime.h>
@@ -130,6 +133,17 @@ struct StatTableIter {
 // utility
 bool starts_with(const std::string& inp, const char *prefix);
 bool read_file(const std::filesystem::path& fname, std::string& out);
+
+struct ReadDir final {
+    DIR* const dirFD;
+    struct dirent *ent;
+    ReadDir(const char *dir);
+    ReadDir(const std::string& dir) :ReadDir(dir.c_str()) {}
+    ~ReadDir();
+    bool next();
+
+    const struct dirent* operator->() const { return ent; }
+};
 
 } // namespace linStat
 

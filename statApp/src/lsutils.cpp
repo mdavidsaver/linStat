@@ -1,5 +1,7 @@
 
-#include "string.h"
+#include <stdexcept>
+
+#include <string.h>
 
 #include "linStat.h"
 
@@ -20,6 +22,25 @@ bool read_file(const fs::path& fname, std::string& out) {
         return false;
 
     return !!(strm>>out);
+}
+
+ReadDir::ReadDir(const char *dir)
+    :dirFD(opendir(dir))
+{
+    if(!dirFD) {
+        auto err = errno;
+        throw std::runtime_error(SB()<<"opendir "<<dir<<" : "<<err);
+    }
+}
+ReadDir::~ReadDir()
+{
+    (void)closedir(dirFD);
+}
+
+bool ReadDir::next()
+{
+    ent = readdir(dirFD);
+    return ent!=NULL;
 }
 
 } // namespace linState
