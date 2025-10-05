@@ -5,29 +5,31 @@
 # - /proc/self/net/netstat
 # - /proc/self/net/snmp
 
+global {IOC="\$(P)"}
+
 file "tblScan.template" {
-{IOC="\$(P)", NAME="SNMP", OUT="netstat|/proc\$(INST)/net/snmp|Ip:InReceives", PERIOD="60"}
-{IOC="\$(P)", NAME="NET", OUT="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets", PERIOD="60"}
+{NAME="SNMP", OUT="netstat|/proc\$(INST)/net/snmp|Ip:InReceives", PERIOD="60"}
+{NAME="NET", OUT="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets", PERIOD="60"}
 }
 
 file "tblGetRateI64.template" {
-{IOC="\$(P)", NAME="UDP_RX", INP="netstat|/proc\$(INST)/net/snmp|Udp:InDatagrams",
+{NAME="UDP_RX", INP="netstat|/proc\$(INST)/net/snmp|Udp:InDatagrams",
  ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
-{IOC="\$(P)", NAME="UDP_TX", INP="netstat|/proc\$(INST)/net/snmp|Udp:OutDatagrams",
+{NAME="UDP_TX", INP="netstat|/proc\$(INST)/net/snmp|Udp:OutDatagrams",
  ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
-{IOC="\$(P)", NAME="RX:D", INP="netstat|/proc\$(INST)/net/snmp|Ip:InDiscards",
+{NAME="RX:D", INP="netstat|/proc\$(INST)/net/snmp|Ip:InDiscards",
  ADEL="10", ASLO="0.0009765625", EGU="Kpkt/s"}
 
-{IOC="\$(P)", NAME="RX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets",
+{NAME="RX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InOctets",
  ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
-{IOC="\$(P)", NAME="RX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InBcastOctets",
+{NAME="RX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InBcastOctets",
  ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
-{IOC="\$(P)", NAME="RX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InMcastOctets",
+{NAME="RX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:InMcastOctets",
  ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
-{IOC="\$(P)", NAME="TX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets",
+{NAME="TX", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets",
  ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
-{IOC="\$(P)", NAME="TX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets",
+{NAME="TX:B", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutBcastOctets",
  ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
-{IOC="\$(P)", NAME="TX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutMcastOctets",
+{NAME="TX:M", INP="netstat|/proc\$(INST)/net/netstat|IpExt:OutMcastOctets",
  ADEL="10", ASLO="0.0009765625", EGU="KB/s"}
 }
