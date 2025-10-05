@@ -660,8 +660,8 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_33</name>
     <pv_name>$(IOC):CAP_EFF</pv_name>
-    <x>400</x>
-    <y>560</y>
+    <x>392</x>
+    <y>550</y>
     <width>140</width>
     <format>4</format>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -669,24 +669,24 @@
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_34</name>
     <pv_name>$(IOC):LIM_MEMLK</pv_name>
-    <x>420</x>
-    <y>650</y>
+    <x>412</x>
+    <y>640</y>
     <width>120</width>
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_35</name>
     <pv_name>$(IOC):LIM_RTPRIO</pv_name>
-    <x>420</x>
-    <y>620</y>
+    <x>412</x>
+    <y>610</y>
     <width>120</width>
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_4</name>
     <text>Cap. Eff.</text>
-    <x>320</x>
-    <y>560</y>
+    <x>312</x>
+    <y>550</y>
     <width>70</width>
     <tooltip>Time to scan all records</tooltip>
   </widget>
@@ -701,8 +701,8 @@
   <widget type="label" version="2.0.0">
     <name>Label_11</name>
     <text>Lim. RTPRIO</text>
-    <x>300</x>
-    <y>620</y>
+    <x>292</x>
+    <y>610</y>
     <width>110</width>
     <tooltip>Time to scan all records</tooltip>
   </widget>
@@ -725,17 +725,137 @@
   <widget type="label" version="2.0.0">
     <name>Label_37</name>
     <text>Lim. MEMLOCK</text>
-    <x>300</x>
-    <y>650</y>
+    <x>292</x>
+    <y>640</y>
     <width>110</width>
     <tooltip>Time to scan all records</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_37</name>
     <pv_name>$(IOC):CAP_EFF_N</pv_name>
-    <x>300</x>
-    <y>590</y>
+    <x>292</x>
+    <y>580</y>
     <width>240</width>
     <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_40</name>
+    <pv_name>$(IOC):SCANONCE_Q_USEDPER</pv_name>
+    <x>342</x>
+    <y>690</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_41</name>
+    <pv_name>$(IOC):SCANONCE_Q_HIGHPER</pv_name>
+    <x>402</x>
+    <y>690</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_42</name>
+    <pv_name>$(IOC):CBLOW_Q_USEDPER</pv_name>
+    <x>342</x>
+    <y>715</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_43</name>
+    <pv_name>$(IOC):CBLOW_Q_HIGHPER</pv_name>
+    <x>402</x>
+    <y>715</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_44</name>
+    <pv_name>$(IOC):CBMEDIUM_Q_USEDPER</pv_name>
+    <x>342</x>
+    <y>740</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_45</name>
+    <pv_name>$(IOC):CBMEDIUM_Q_HIGHPER</pv_name>
+    <x>402</x>
+    <y>740</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_46</name>
+    <pv_name>$(IOC):CBHIGH_Q_USEDPER</pv_name>
+    <x>342</x>
+    <y>765</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_47</name>
+    <pv_name>$(IOC):CBHIGH_Q_HIGHPER</pv_name>
+    <x>402</x>
+    <y>765</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_38</name>
+    <text>Once</text>
+    <x>292</x>
+    <y>690</y>
+    <width>40</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_39</name>
+    <text>Low</text>
+    <x>292</x>
+    <y>715</y>
+    <width>40</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_40</name>
+    <text>Med.</text>
+    <x>292</x>
+    <y>740</y>
+    <width>40</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_41</name>
+    <text>High</text>
+    <x>292</x>
+    <y>765</y>
+    <width>40</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_42</name>
+    <text>CB Qs</text>
+    <x>292</x>
+    <y>665</y>
+    <width>50</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_43</name>
+    <text>Now</text>
+    <x>342</x>
+    <y>665</y>
+    <width>50</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_44</name>
+    <text>High</text>
+    <x>412</x>
+    <y>665</y>
+    <width>40</width>
+    <tooltip>Time to scan all records</tooltip>
   </widget>
 </display>
