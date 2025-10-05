@@ -2,120 +2,122 @@
 # Macros
 #  IOC - Common record prefix
 
+global {IOC="\$(IOC)"}
+
 file "tblScan.template" {
-{IOC="\$(IOC)", NAME="PID", OUT="pid|self|cwd", PERIOD="60"}
-{IOC="\$(IOC)", NAME="FD", OUT="fd|self|FD_CNT", PERIOD="60"}
-{IOC="\$(IOC)", NAME="PID_STATUS", OUT="procStatus|self|Pid", PERIOD="10"}
-{IOC="\$(IOC)", NAME="PID_STAT", OUT="procStat|self|1", PERIOD="10"}
-{IOC="\$(IOC)", NAME="PDB", OUT="pdb|self|nrec", PERIOD="10"}
-{IOC="\$(IOC)", NAME="MALL", OUT="mallinfo|self|arena", PERIOD="30"}
+{NAME="PID", OUT="pid|self|cwd", PERIOD="60"}
+{NAME="FD", OUT="fd|self|FD_CNT", PERIOD="60"}
+{NAME="PID_STATUS", OUT="procStatus|self|Pid", PERIOD="10"}
+{NAME="PID_STAT", OUT="procStat|self|1", PERIOD="10"}
+{NAME="PDB", OUT="pdb|self|nrec", PERIOD="10"}
+{NAME="MALL", OUT="mallinfo|self|arena", PERIOD="30"}
 }
 
 file "tblGetI64.template" {
-{IOC="\$(IOC)", NAME="PROCESS_ID", INP="procStatus|self|Pid"}
-{IOC="\$(IOC)", NAME="PARENT_ID", INP="procStatus|self|PPid"}
-{IOC="\$(IOC)", NAME="MEM_SWP", INP="procStatus|self|VmSwap",
+{NAME="PROCESS_ID", INP="procStatus|self|Pid"}
+{NAME="PARENT_ID", INP="procStatus|self|PPid"}
+{NAME="MEM_SWP", INP="procStatus|self|VmSwap",
  ADEL="1048576"}
-{IOC="\$(IOC)", NAME="MEM_LCK", INP="procStatus|self|VmLck",
+{NAME="MEM_LCK", INP="procStatus|self|VmLck",
  ADEL="1048576"}
-{IOC="\$(IOC)", NAME="MEM_RSS", INP="procStatus|self|VmRSS",
+{NAME="MEM_RSS", INP="procStatus|self|VmRSS",
  ADEL="1048576"}
-{IOC="\$(IOC)", NAME="MEM_RSS_PEAK", INP="procStatus|self|VmHWM",
+{NAME="MEM_RSS_PEAK", INP="procStatus|self|VmHWM",
  ADEL="1048576"}
-{IOC="\$(IOC)", NAME="THREAD_CNT", INP="procStatus|self|Threads"}
-{IOC="\$(IOC)", NAME="CAP_AMB", INP="procStatus|self|CapAmb"}
-{IOC="\$(IOC)", NAME="THREAD_MAX", INP="pid|self|NPROC"}
-{IOC="\$(IOC)", NAME="LIM_MEMLK", INP="pid|self|MEMLOCK"}
-{IOC="\$(IOC)", NAME="LIM_RTPRIO", INP="pid|self|RTPRIO"}
-{IOC="\$(IOC)", NAME="FD_MAX", INP="pid|self|NOFILE"}
-{IOC="\$(IOC)", NAME="FD_CNT", INP="fd|self|FD_CNT",
+{NAME="THREAD_CNT", INP="procStatus|self|Threads"}
+{NAME="CAP_AMB", INP="procStatus|self|CapAmb"}
+{NAME="THREAD_MAX", INP="pid|self|NPROC"}
+{NAME="LIM_MEMLK", INP="pid|self|MEMLOCK"}
+{NAME="LIM_RTPRIO", INP="pid|self|RTPRIO"}
+{NAME="FD_MAX", INP="pid|self|NOFILE"}
+{NAME="FD_CNT", INP="fd|self|FD_CNT",
  ADEL="10"}
-{IOC="\$(IOC)", NAME="TCKPSEC", INP="pid|self|ticks_per_sec"}
-{IOC="\$(IOC)", NAME="RECORD_CNT", INP="pdb|self|nrec"}
-{IOC="\$(IOC)", NAME="CA_CLNT_CNT", INP="pdb|self|rsrv:nconn",
+{NAME="TCKPSEC", INP="pid|self|ticks_per_sec"}
+{NAME="RECORD_CNT", INP="pdb|self|nrec"}
+{NAME="CA_CLNT_CNT", INP="pdb|self|rsrv:nconn",
  HOPR="200", HIHI="175", HIGH="100", HHSV="MAJOR", HSV="MINOR",
  ADEL="10",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
-{IOC="\$(IOC)", NAME="CA_CONN_CNT", INP="pdb|self|rsrv:nchan",
+{NAME="CA_CONN_CNT", INP="pdb|self|rsrv:nchan",
  HOPR="5000", HIHI="4500", HIGH="4000", HHSV="MAJOR", HSV="MINOR",
  ADEL="10",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
-{IOC="\$(IOC)", NAME="SUSP_TASK_CNT", INP="pdb|self|nsuspend",
+{NAME="SUSP_TASK_CNT", INP="pdb|self|nsuspend",
  HIHI="1", HHSV="MAJOR",
  SAVE="HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV"}
-{IOC="\$(IOC)", NAME="MALLOC_POOL", INP="mallinfo|self|arena", EGU="B",
+{NAME="MALLOC_POOL", INP="mallinfo|self|arena", EGU="B",
  ADEL="1048576"}
-{IOC="\$(IOC)", NAME="MALLOC_USED", INP="mallinfo|self|uordblks", EGU="B",
+{NAME="MALLOC_USED", INP="mallinfo|self|uordblks", EGU="B",
  ADEL="1048576"}
 
-{IOC="\$(IOC)", NAME="SCANONCE_Q_SIZE", INP="pdb|self|once:size"}
-{IOC="\$(IOC)", NAME="SCANONCE_Q_HIGH", INP="pdb|self|once:used:max"}
-{IOC="\$(IOC)", NAME="SCANONCE_Q_USED", INP="pdb|self|once:used"}
-{IOC="\$(IOC)", NAME="SCANONCE_Q_OVERRUNS", INP="pdb|self|once:oflows"}
+{NAME="SCANONCE_Q_SIZE", INP="pdb|self|once:size"}
+{NAME="SCANONCE_Q_HIGH", INP="pdb|self|once:used:max"}
+{NAME="SCANONCE_Q_USED", INP="pdb|self|once:used"}
+{NAME="SCANONCE_Q_OVERRUNS", INP="pdb|self|once:oflows"}
 
-{IOC="\$(IOC)", NAME="CB_Q_SIZE", INP="pdb|self|cb:size"}
-{IOC="\$(IOC)", NAME="CBLOW_Q_HIGH", INP="pdb|self|cb:low:used:max"}
-{IOC="\$(IOC)", NAME="CBLOW_Q_USED", INP="pdb|self|cb:low:used"}
-{IOC="\$(IOC)", NAME="CBLOW_Q_OVERRUNS", INP="pdb|self|cb:low:oflows"}
-{IOC="\$(IOC)", NAME="CBMEDIUM_Q_HIGH", INP="pdb|self|cb:med:used:max"}
-{IOC="\$(IOC)", NAME="CBMEDIUM_Q_USED", INP="pdb|self|cb:med:used"}
-{IOC="\$(IOC)", NAME="CBMEDIUM_Q_OVERRUNS", INP="pdb|self|cb:med:oflows"}
-{IOC="\$(IOC)", NAME="CBHIGH_Q_HIGH", INP="pdb|self|cb:high:used:max"}
-{IOC="\$(IOC)", NAME="CBHIGH_Q_USED", INP="pdb|self|cb:high:used"}
-{IOC="\$(IOC)", NAME="CBHIGH_Q_OVERRUNS", INP="pdb|self|cb:high:oflows"}
+{NAME="CB_Q_SIZE", INP="pdb|self|cb:size"}
+{NAME="CBLOW_Q_HIGH", INP="pdb|self|cb:low:used:max"}
+{NAME="CBLOW_Q_USED", INP="pdb|self|cb:low:used"}
+{NAME="CBLOW_Q_OVERRUNS", INP="pdb|self|cb:low:oflows"}
+{NAME="CBMEDIUM_Q_HIGH", INP="pdb|self|cb:med:used:max"}
+{NAME="CBMEDIUM_Q_USED", INP="pdb|self|cb:med:used"}
+{NAME="CBMEDIUM_Q_OVERRUNS", INP="pdb|self|cb:med:oflows"}
+{NAME="CBHIGH_Q_HIGH", INP="pdb|self|cb:high:used:max"}
+{NAME="CBHIGH_Q_USED", INP="pdb|self|cb:high:used"}
+{NAME="CBHIGH_Q_OVERRUNS", INP="pdb|self|cb:high:oflows"}
 }
 
 file "tblGetRateI64.template" {
-{IOC="\$(IOC)", NAME="PGFLT_MAJ", INP="procStat|self|10", EGU="Hz",
+{NAME="PGFLT_MAJ", INP="procStat|self|10", EGU="Hz",
  ADEL="1"}
-{IOC="\$(IOC)", NAME="PGFLT_MIN", INP="procStat|self|12", EGU="Hz",
+{NAME="PGFLT_MIN", INP="procStat|self|12", EGU="Hz",
  ADEL="1"}
-{IOC="\$(IOC)", NAME="SWTH_VOL", INP="procStatus|self|voluntary_ctxt_switches", EGU="Hz",
+{NAME="SWTH_VOL", INP="procStatus|self|voluntary_ctxt_switches", EGU="Hz",
  ADEL="1"}
-{IOC="\$(IOC)", NAME="SWTH_FRC", INP="procStatus|self|nonvoluntary_ctxt_switches", EGU="Hz",
+{NAME="SWTH_FRC", INP="procStatus|self|nonvoluntary_ctxt_switches", EGU="Hz",
  ADEL="1"}
 
-{IOC="\$(IOC)", NAME="CBLOW_Q_OVERRATE", INP="pdb|self|cb:low:oflows",
+{NAME="CBLOW_Q_OVERRATE", INP="pdb|self|cb:low:oflows",
  EGU="Hz", HIGH="0.00001", HSV="MAJOR"}
-{IOC="\$(IOC)", NAME="CBMEDIUM_Q_OVERRATE", INP="pdb|self|cb:med:oflows",
+{NAME="CBMEDIUM_Q_OVERRATE", INP="pdb|self|cb:med:oflows",
  EGU="Hz", HIGH="0.00001", HSV="MAJOR"}
-{IOC="\$(IOC)", NAME="CBHIGH_Q_OVERRATE", INP="pdb|self|cb:high:oflows",
+{NAME="CBHIGH_Q_OVERRATE", INP="pdb|self|cb:high:oflows",
  EGU="Hz", HIGH="0.00001", HSV="MAJOR"}
 }
 
 file "tblGetSI.template" {
-{IOC="\$(IOC)", NAME="APP_DIR1", INP="pid|self|cwd1"}
-{IOC="\$(IOC)", NAME="APP_DIR2", INP="pid|self|cwd2"}
+{NAME="APP_DIR1", INP="pid|self|cwd1"}
+{NAME="APP_DIR2", INP="pid|self|cwd2"}
 }
 
 file "tblGetLSI.template" {
-{IOC="\$(IOC)", NAME="APP_DIR", INP="pid|self|cwd"}
+{NAME="APP_DIR", INP="pid|self|cwd"}
 }
 
 file "getParam.template" {
-{IOC="\$(IOC)", NAME="ENGINEER", ENV="ENGINEER"}
-{IOC="\$(IOC)", NAME="LOCATION", ENV="LOCATION"}
-{IOC="\$(IOC)", NAME="ST_SCRIPT1", ENV="IOCSH_STARTUP_SCRIPT"}
-{IOC="\$(IOC)", NAME="EPICS_VERSION", ENV="EPICS_VERSION_FULL"}
-{IOC="\$(IOC)", NAME="CA_ADDR_LIST", ENV="EPICS_CA_ADDR_LIST"}
-{IOC="\$(IOC)", NAME="CA_CONN_TIME", ENV="EPICS_CA_CONN_TMO"}
-{IOC="\$(IOC)", NAME="CA_AUTO_ADDR", ENV="EPICS_CA_AUTO_ADDR_LIST"}
-{IOC="\$(IOC)", NAME="CA_RPTR_PORT", ENV="EPICS_CA_REPEATER_PORT"}
-{IOC="\$(IOC)", NAME="CA_SRVR_PORT", ENV="EPICS_CA_SERVER_PORT"}
-{IOC="\$(IOC)", NAME="CA_MAX_ARRAY", ENV="EPICS_CA_MAX_ARRAY_BYTES"}
-{IOC="\$(IOC)", NAME="CA_SRCH_TIME", ENV="EPICS_CA_MAX_SEARCH_PERIOD"}
-{IOC="\$(IOC)", NAME="CA_BEAC_TIME", ENV="EPICS_CA_BEACON_PERIOD"}
-{IOC="\$(IOC)", NAME="CAS_SRVR_PORT", ENV="EPICS_CAS_SERVER_PORT"}
-{IOC="\$(IOC)", NAME="CAS_AUTO_ADDR", ENV="EPICS_CAS_AUTO_BEACON_ADDR_LIST"}
-{IOC="\$(IOC)", NAME="CAS_ADDR_LIST", ENV="EPICS_CAS_BEACON_ADDR_LIST"}
-{IOC="\$(IOC)", NAME="CAS_BEACON_PERIOD", ENV="EPICS_CAS_BEACON_PERIOD"}
-{IOC="\$(IOC)", NAME="CAS_BEACON_PORT", ENV="EPICS_CAS_BEACON_PORT"}
-{IOC="\$(IOC)", NAME="CAS_ADDR_INTF_LIST", ENV="EPICS_CAS_INTF_ADDR_LIST"}
-{IOC="\$(IOC)", NAME="CAS_ADDR_IGNORE_LIST", ENV="EPICS_CAS_IGNORE_ADDR_LIST"}
-{IOC="\$(IOC)", NAME="TIMEZONE", ENV="EPICS_TIMEZONE"}
-{IOC="\$(IOC)", NAME="TS_NTP_INET", ENV="EPICS_TS_NTP_INET"}
-{IOC="\$(IOC)", NAME="IOC_LOG_PORT", ENV="EPICS_IOC_LOG_PORT"}
-{IOC="\$(IOC)", NAME="IOC_LOG_INET", ENV="EPICS_IOC_LOG_INET"}
+{NAME="ENGINEER", ENV="ENGINEER"}
+{NAME="LOCATION", ENV="LOCATION"}
+{NAME="ST_SCRIPT1", ENV="IOCSH_STARTUP_SCRIPT"}
+{NAME="EPICS_VERSION", ENV="EPICS_VERSION_FULL"}
+{NAME="CA_ADDR_LIST", ENV="EPICS_CA_ADDR_LIST"}
+{NAME="CA_CONN_TIME", ENV="EPICS_CA_CONN_TMO"}
+{NAME="CA_AUTO_ADDR", ENV="EPICS_CA_AUTO_ADDR_LIST"}
+{NAME="CA_RPTR_PORT", ENV="EPICS_CA_REPEATER_PORT"}
+{NAME="CA_SRVR_PORT", ENV="EPICS_CA_SERVER_PORT"}
+{NAME="CA_MAX_ARRAY", ENV="EPICS_CA_MAX_ARRAY_BYTES"}
+{NAME="CA_SRCH_TIME", ENV="EPICS_CA_MAX_SEARCH_PERIOD"}
+{NAME="CA_BEAC_TIME", ENV="EPICS_CA_BEACON_PERIOD"}
+{NAME="CAS_SRVR_PORT", ENV="EPICS_CAS_SERVER_PORT"}
+{NAME="CAS_AUTO_ADDR", ENV="EPICS_CAS_AUTO_BEACON_ADDR_LIST"}
+{NAME="CAS_ADDR_LIST", ENV="EPICS_CAS_BEACON_ADDR_LIST"}
+{NAME="CAS_BEACON_PERIOD", ENV="EPICS_CAS_BEACON_PERIOD"}
+{NAME="CAS_BEACON_PORT", ENV="EPICS_CAS_BEACON_PORT"}
+{NAME="CAS_ADDR_INTF_LIST", ENV="EPICS_CAS_INTF_ADDR_LIST"}
+{NAME="CAS_ADDR_IGNORE_LIST", ENV="EPICS_CAS_IGNORE_ADDR_LIST"}
+{NAME="TIMEZONE", ENV="EPICS_TIMEZONE"}
+{NAME="TS_NTP_INET", ENV="EPICS_TS_NTP_INET"}
+{NAME="IOC_LOG_PORT", ENV="EPICS_IOC_LOG_PORT"}
+{NAME="IOC_LOG_INET", ENV="EPICS_IOC_LOG_INET"}
 }
 
 file "iocBase.template" {
@@ -123,13 +125,13 @@ file "iocBase.template" {
 }
 
 file "scanMon.template" {
-{IOC="\$(IOC)", SCANNAME="01HZ", SCAN="10 second", PERIOD="10.0"}
-{IOC="\$(IOC)", SCANNAME="02HZ", SCAN="5 second",  PERIOD="5.0"}
-{IOC="\$(IOC)", SCANNAME="05HZ", SCAN="2 second",  PERIOD="2.0"}
-{IOC="\$(IOC)", SCANNAME="1HZ",  SCAN="1 second",  PERIOD="1.0"}
-{IOC="\$(IOC)", SCANNAME="2HZ",  SCAN=".5 second", PERIOD="0.5"}
-{IOC="\$(IOC)", SCANNAME="5HZ",  SCAN=".2 second", PERIOD="0.2"}
-{IOC="\$(IOC)", SCANNAME="10HZ", SCAN=".1 second", PERIOD="0.1"}
+{SCANNAME="01HZ", SCAN="10 second", PERIOD="10.0"}
+{SCANNAME="02HZ", SCAN="5 second",  PERIOD="5.0"}
+{SCANNAME="05HZ", SCAN="2 second",  PERIOD="2.0"}
+{SCANNAME="1HZ",  SCAN="1 second",  PERIOD="1.0"}
+{SCANNAME="2HZ",  SCAN=".5 second", PERIOD="0.5"}
+{SCANNAME="5HZ",  SCAN=".2 second", PERIOD="0.2"}
+{SCANNAME="10HZ", SCAN=".1 second", PERIOD="0.1"}
 }
 
 file "scanMonSum.template" {
