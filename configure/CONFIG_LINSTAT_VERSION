@@ -5,4 +5,8 @@ LINSTAT_TOP := $(dir $(lastword $(MAKEFILE_LIST)))../
 endif
 
 # pre-release.  May use to test when module included at minimum version...
-LINSTAT_0_0_0 = YES
+LINSTAT_0_0_0 = NO
+# 1.0.0 and 1.0.1 added late...
+LINSTAT_1_0_0 = NO
+LINSTAT_1_0_1 = NO
+LINSTAT_1_1_0 = YES
