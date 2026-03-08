@@ -18,8 +18,5 @@ include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
 
-$(COMMON_DIR)/linStatHost.db: $(COMMON_DIR)/netStat.db
-$(COMMON_DIR)/linStatProc.db: $(COMMON_DIR)/netStat.db
-
-linStatHost.db$(DEP): netStat.db$(DEP)
-linStatProc.db$(DEP): netStat.db$(DEP)
+linStatHost.db$(DEP): $(COMMON_DIR)/netStat.db
+linStatProc.db$(DEP): $(COMMON_DIR)/netStat.db
