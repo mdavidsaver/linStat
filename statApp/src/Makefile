@@ -44,6 +44,7 @@ LIB_SRCS_Linux += tblStatVFS.cpp
 LIB_SRCS_Linux += getParam.c
 
 LIB_SRCS_Linux += devcap.cpp
+LIB_SRCS_Linux += devtdelta.cpp
 
 LIB_SRCS_DEFAULT += dummy.c
 

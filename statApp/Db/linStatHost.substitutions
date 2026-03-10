@@ -52,12 +52,12 @@ file "tblGetRateI64.template" {
 file "tblGetF64.template" {
 {NAME="IRQ_MAX", INP="irq|localhost|max_irq", EGU="Hz",
  LOW="1", LSV="INVALID", HIGH="10000", HSV="MINOR"}
+{NAME="UP_", INP="uptime|localhost|uptime"}
 }
 
 file "tblGetSI.template" {
 {NAME="KERNEL_VERS", INP="host|localhost|version"}
 {NAME="HOSTNAME", INP="host|localhost|nodename"}
-{NAME="UPTIME", INP="uptime|localhost|uptime:disp"}
 {NAME="IRQ_LBL_MAX", INP="irq|localhost|max_irq_name"}
 }
 

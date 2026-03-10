@@ -14,6 +14,8 @@
 #include <string>
 #include <vector>
 
+#include <string.h>
+
 #include <epicsUnitTest.h>
 #include <envDefs.h>
 #include <alarm.h>
@@ -23,6 +25,8 @@
 #include <dbChannel.h>
 #include <iocsh.h>
 #include <epicsEvent.h>
+#include <dbLock.h>
+#include <stringinRecord.h>
 
 #include "linStat.h"
 
@@ -146,13 +150,26 @@ void testCapArr() {
     }
 }
 
+void testUptime() {
+    testDiag("%s", __func__);
+
+    auto prec = testdbRecordPtr("LOCALHOST:UPTIME");
+
+    {
+        dbScanLock(prec);
+        auto psi = reinterpret_cast<stringinRecord*>(prec);
+        testOk(strcmp(psi->val, "")!=0, "uptime string: '%s'", psi->val);
+        dbScanUnlock(prec);
+    }
+}
+
 } // namespace
 
 extern "C" void testioc_registerRecordDeviceDriver(struct dbBase *);
 
 MAIN(testLSIOC)
 {
-    testPlan(23);
+    testPlan(24);
     testdbPrepare();
     epicsEnvSet("LOCATION", "No where");
     epicsEnvSet("ENGINEER", "Someone");
@@ -181,6 +198,7 @@ MAIN(testLSIOC)
     testEnv();
     testFS();
     testCapArr();
+    testUptime();
     testIocShutdownOk();
     testdbCleanup();
     return testDone();
