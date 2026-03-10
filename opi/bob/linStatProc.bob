@@ -264,7 +264,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_21</name>
-    <pv_name>$(IOC):HEARTBEAT</pv_name>
+    <pv_name>$(IOC):UPTIME</pv_name>
     <x>100</x>
     <y>316</y>
     <width>210</width>
@@ -856,6 +856,22 @@
     <x>412</x>
     <y>665</y>
     <width>40</width>
+    <tooltip>Time to scan all records</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_48</name>
+    <pv_name>$(IOC):SCANONCE_Q_OVERRUNS</pv_name>
+    <x>462</x>
+    <y>690</y>
+    <width>50</width>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_48</name>
+    <text>OFlow</text>
+    <x>462</x>
+    <y>665</y>
+    <width>50</width>
     <tooltip>Time to scan all records</tooltip>
   </widget>
 </display>
