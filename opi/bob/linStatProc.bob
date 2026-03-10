@@ -264,7 +264,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_21</name>
-    <pv_name>$(IOC):HEARTBEAT</pv_name>
+    <pv_name>$(IOC):UPTIME</pv_name>
     <x>100</x>
     <y>316</y>
     <width>210</width>

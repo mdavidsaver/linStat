@@ -206,7 +206,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_7</name>
-    <pv_name>$(IOC):UPTIME</pv_name>
+    <pv_name>$(IOC):SYS_UPTIME</pv_name>
     <x>90</x>
     <y>220</y>
     <width>210</width>
