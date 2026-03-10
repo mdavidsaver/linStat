@@ -21,16 +21,6 @@ using namespace linStat;
 
 const char * const tblName = "uptime";
 
-struct Interval {
-    uint64_t period; // seconds
-    const char *label;
-};
-const Interval intervals[] = { // in descending order
-    {60*60*24, "D"},
-    {60*60, "H"},
-    {60, "M"},
-};
-
 struct UptimeTable : public StatTable {
 
     explicit UptimeTable(const std::string& inst, const Reactor& react)
@@ -74,18 +64,7 @@ struct UptimeTable : public StatTable {
         assert(M.size()==3);
 
         auto uptime(std::stod(M[1].str()));
-        tr.set("uptime", uptime, "s");
-
-        std::ostringstream msg;
-        for(size_t i=0; i<NELEMENTS(intervals); i++) {
-            const auto& ivl = intervals[i];
-            if(auto cnt = (unsigned long)(uptime / ivl.period)) {
-                msg<<cnt<<" "<<ivl.label<<" ";
-                uptime = fmod(uptime, ivl.period);
-            }
-        }
-        msg<<(unsigned long)uptime<<" S";
-        tr.set("uptime:disp", msg.str());
+        tr.setf("uptime", uptime, "s");
     }
 };
 

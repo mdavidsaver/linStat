@@ -20,3 +20,4 @@ device(stringin,INST_IO,devGetParamSi,"getParam")
 
 # link soft
 device(aai, CONSTANT, devLinStatsAaiCapArr, "Linux Stat Cap Arr")
+device(stringin, CONSTANT, devLinStatAiTDelta, "Linux Stat Time Delta")
