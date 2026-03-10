@@ -53,7 +53,8 @@ file "tblGetI64.template" {
 {NAME="SCANONCE_Q_SIZE", INP="pdb|self|once:size"}
 {NAME="SCANONCE_Q_HIGH", INP="pdb|self|once:used:max"}
 {NAME="SCANONCE_Q_USED", INP="pdb|self|once:used"}
-{NAME="SCANONCE_Q_OVERRUNS", INP="pdb|self|once:oflows"}
+{NAME="SCANONCE_Q_OVERRUNS", INP="pdb|self|once:oflows",
+ HIGH="1", HSV="MAJOR"}
 
 {NAME="CB_Q_SIZE", INP="pdb|self|cb:size"}
 {NAME="CBLOW_Q_HIGH", INP="pdb|self|cb:low:used:max"}
