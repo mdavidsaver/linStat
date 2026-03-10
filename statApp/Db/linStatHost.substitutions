@@ -52,7 +52,7 @@ file "tblGetRateI64.template" {
 file "tblGetF64.template" {
 {NAME="IRQ_MAX", INP="irq|localhost|max_irq", EGU="Hz",
  LOW="1", LSV="INVALID", HIGH="10000", HSV="MINOR"}
-{NAME="UP_", INP="uptime|localhost|uptime"}
+{NAME="SYS_UP", INP="uptime|localhost|uptime"}
 }
 
 file "tblGetSI.template" {

@@ -153,7 +153,7 @@ void testCapArr() {
 void testUptime() {
     testDiag("%s", __func__);
 
-    auto prec = testdbRecordPtr("LOCALHOST:UPTIME");
+    auto prec = testdbRecordPtr("LOCALHOST:SYS_UPTIME");
 
     {
         dbScanLock(prec);
