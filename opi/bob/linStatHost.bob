@@ -2,7 +2,7 @@
 <display version="2.0.0">
   <name>Host $(IOC)</name>
   <width>550</width>
-  <height>470</height>
+  <height>520</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <class>TITLE</class>
@@ -331,14 +331,14 @@
     <name>Label_20</name>
     <text>Kernel</text>
     <x>10</x>
-    <y>445</y>
+    <y>495</y>
     <width>70</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_17</name>
     <pv_name>$(IOC):KERNEL_VERS_FULL.VAL$</pv_name>
     <x>90</x>
-    <y>445</y>
+    <y>495</y>
     <width>430</width>
     <format>6</format>
   </widget>
@@ -417,5 +417,55 @@
     <x>290</x>
     <y>420</y>
     <width>40</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_30</name>
+    <text>IRQs</text>
+    <x>10</x>
+    <y>445</y>
+    <width>50</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_31</name>
+    <text>Max. rate</text>
+    <x>80</x>
+    <y>445</y>
+    <width>50</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_23</name>
+    <pv_name>$(IOC):IRQ_MAX</pv_name>
+    <x>140</x>
+    <y>445</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_32</name>
+    <text>Total</text>
+    <x>380</x>
+    <y>445</y>
+    <width>40</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_24</name>
+    <pv_name>$(IOC):IRQ_TOT</pv_name>
+    <x>430</x>
+    <y>445</y>
+    <width>90</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_33</name>
+    <text>Max. src.</text>
+    <x>10</x>
+    <y>470</y>
+    <width>70</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_25</name>
+    <pv_name>$(IOC):IRQ_LBL_MAX.VAL$</pv_name>
+    <x>90</x>
+    <y>470</y>
+    <width>430</width>
+    <format>6</format>
   </widget>
 </display>
