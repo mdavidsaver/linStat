@@ -45,11 +45,13 @@ file "tblGetI64.template" {
 }
 
 file "tblGetRateI64.template" {
-{NAME="IRQ_TOT", INP="irq|localhost|total_irq", EGU="Hz"}
+{NAME="IRQ_TOT", INP="irq|localhost|total_irq", EGU="Hz",
+ LOW="1", LSV="INVALID", HIGH="10000", HSV="MINOR"}
 }
 
 file "tblGetF64.template" {
-{NAME="IRQ_MAX", INP="irq|localhost|max_irq", EGU="Hz"}
+{NAME="IRQ_MAX", INP="irq|localhost|max_irq", EGU="Hz",
+ LOW="1", LSV="INVALID", HIGH="10000", HSV="MINOR"}
 }
 
 file "tblGetSI.template" {
