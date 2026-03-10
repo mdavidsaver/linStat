@@ -155,10 +155,10 @@ record(calc, "$(IOC):SYS_TOT_LOAD") {
 
 # system up-time
 
-record("*", "$(IOC):UP_") {
-    field(FLNK, "$(IOC):UPTIME")
+record("*", "$(IOC):SYS_UP") {
+    field(FLNK, "$(IOC):SYS_UPTIME")
 }
-record(stringin, "$(IOC):UPTIME") {
+record(stringin, "$(IOC):SYS_UPTIME") {
     field(DTYP, "Linux Stat Time Delta")
-    field(INP , "$(IOC):UP_ MSS")
+    field(INP , "$(IOC):SYS_UP MSS")
 }

@@ -12,6 +12,11 @@ record(calcout, "$(IOC):HEARTBEAT") {
     field(SCAN, "1 second")
     field(INPA, "$(IOC):HEARTBEAT")
     field(EGU, "s")
+    field(FLNK, "$(IOC):UPTIME")
+}
+record(stringin, "$(IOC):UPTIME") {
+    field(DTYP, "Linux Stat Time Delta")
+    field(INP , "$(IOC):HEARTBEAT MSS")
 }
 
 record(calcout, "$(IOC):START_CNT") {
