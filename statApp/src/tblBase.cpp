@@ -79,6 +79,12 @@ void Transaction::set(const std::string& name, int64_t val, const std::string& e
     ent = std::make_pair(val, egu);
 }
 
+void Transaction::setf(const std::string &name, double val, const std::string &egu)
+{
+    auto& ent = next[name];
+    ent = std::make_pair(val, egu);
+}
+
 void Transaction::set(const std::string& name, const std::string& val)
 {
     auto& ent = next[name];

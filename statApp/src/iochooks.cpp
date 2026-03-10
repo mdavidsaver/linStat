@@ -47,6 +47,11 @@ long linStatReport(int level) noexcept {
                                 pr.first.c_str(),
                                 (long long)val->first,
                                 val->second.c_str());
+                } else if(auto val = std::get_if<FltVal>(&pr.second)) {
+                    epicsStdoutPrintf("    double %s = %g %s\n",
+                                pr.first.c_str(),
+                                val->first,
+                                val->second.c_str());
                 } else if(auto val = std::get_if<std::string>(&pr.second)) {
                     epicsStdoutPrintf("    string %s = %s\n",
                                 pr.first.c_str(),

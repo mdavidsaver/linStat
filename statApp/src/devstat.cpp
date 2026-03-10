@@ -266,15 +266,31 @@ const aidset devLinStatF64Value = {
                 recGblSetSevrMsg(prec, READ_ALARM, INVALID_ALARM, "No val");
                 return 0;
             }
-            const auto& param = std::get<IntVal>(pvar);
+
+            long ret = 0;
+            if(const auto param = std::get_if<IntVal>(&pvar)) {
+                prec->rval = param->first;
+
+            } else if(const auto param = std::get_if<FltVal>(&pvar)) {
+                auto val = param->first;
+                if(prec->aslo!=0.0) val*=prec->aslo;
+                val+=prec->aoff;
+                if(prec->eslo!=0.0) val*=prec->eslo;
+                val+=prec->eoff;
+
+                prec->val = val;
+                ret = 2; // skip RVAL -> VAL
+
+            } else {
+                recGblSetSevrMsg(prec, READ_ALARM, INVALID_ALARM, "Wrong Type");
+            }
 
             if(prec->tse==epicsTimeEventDeviceTime) {
                 prec->time = pvt->tbl->currentTime;
             }
 
-            prec->rval = param.first;
 
-            return 0;
+            return ret;
         } CATCH()
     },
     nullptr,

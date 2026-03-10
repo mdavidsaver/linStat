@@ -51,7 +51,8 @@ struct SB {
 
 // (value, egu)
 using IntVal = std::pair<int64_t, std::string>;
-using Value =  std::variant<std::monostate, std::string, IntVal >;
+using FltVal = std::pair<double, std::string>;
+using Value =  std::variant<std::monostate, std::string, IntVal, FltVal >;
 
 struct StatTable {
     const std::string fact, inst;
@@ -103,6 +104,7 @@ struct Transaction {
     ~Transaction();
 
     void set(const std::string& name, int64_t val, const std::string &egu = std::string());
+    void setf(const std::string& name, double val, const std::string &egu = std::string());
     void set(const std::string& name, const std::string &val);
     void set(const std::string& name);
 };
