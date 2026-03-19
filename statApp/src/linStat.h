@@ -118,13 +118,16 @@ template<typename Tbl>
 std::shared_ptr<StatTable> tblFactory(const std::string& inst, const Reactor& react) {
     return std::make_shared<Tbl>(inst, react);
 }
+
+// When adding a new table, make sure to update tblBase.cpp:crossReference()
 #define DEFINE_TABLE(name, TblKlass) \
     static \
     __attribute__((section("linStatTableFactory"), retain, used)) \
     const linStat::StatTableFactory tbl ## TblKlass = { \
         name, \
         &tblFactory<TblKlass>, \
-    };
+    }; \
+    int TblKlass ## _Ref = 0;
 
 
 struct StatTableIter {

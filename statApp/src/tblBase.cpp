@@ -31,6 +31,31 @@ extern const char __start_linStatTableFactory;
 extern const char __stop_linStatTableFactory;
 }
 
+#define REF_TABLE(_klass) \
+    extern int _klass ## _Ref; \
+    _klass ## _Ref = 1;
+
+// Kludgy attempt to work around object file elimination in static libraries.
+static void __attribute__((used))
+crossReference() {
+    REF_TABLE(UptimeTable);
+    REF_TABLE(HWMonTable);
+    REF_TABLE(FDTable);
+    REF_TABLE(NetstatTable);
+    REF_TABLE(IFStatTable);
+    REF_TABLE(IRQTable);
+    REF_TABLE(ProcStatusTable);
+    REF_TABLE(SysStatTable);
+    REF_TABLE(PidTable);
+    REF_TABLE(EthtoolTable);
+    REF_TABLE(MallInfoTable);
+    REF_TABLE(StatVFSTable);
+    REF_TABLE(PDBTable);
+    REF_TABLE(HostTable);
+    REF_TABLE(ProcStatTable);
+    REF_TABLE(MemInfoTable);
+}
+
 namespace linStat {
 
 StatTable::~StatTable() {}
