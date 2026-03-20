@@ -23,53 +23,6 @@ Reactor linStatReactor;
 namespace {
 using namespace linStat;
 
-long linStatReport(int level) noexcept {
-    try {
-        if(level<=0){
-            linStatReactor.report();
-            return 0;
-        }
-
-        for(auto fact : StatTableIter()) {
-            if(fact.name)
-                epicsStdoutPrintf("  Factory %s : %p\n", fact.name, fact.create);
-        }
-
-        if(level<=2)
-            return 0;
-
-        for(const auto& tbl : StatTable::list_all()) {
-            epicsStdoutPrintf("  Table: %s.%s\n", tbl->fact.c_str(), tbl->inst.c_str());
-            Guard G(tbl->lock);
-            for(const auto& pr : tbl->current) {
-                if(auto val = std::get_if<IntVal>(&pr.second)) {
-                    epicsStdoutPrintf("    int64_t %s = %lld %s\n",
-                                pr.first.c_str(),
-                                (long long)val->first,
-                                val->second.c_str());
-                } else if(auto val = std::get_if<FltVal>(&pr.second)) {
-                    epicsStdoutPrintf("    double %s = %g %s\n",
-                                pr.first.c_str(),
-                                val->first,
-                                val->second.c_str());
-                } else if(auto val = std::get_if<std::string>(&pr.second)) {
-                    epicsStdoutPrintf("    string %s = %s\n",
-                                pr.first.c_str(),
-                                val->c_str());
-                } else {
-                    epicsStdoutPrintf("    ?????? %s\n",
-                                pr.first.c_str());
-                }
-            }
-        }
-
-        return 0;
-    }catch(std::exception& e){
-        epicsStdoutPrintf(ERL_ERROR " : %s\n", e.what());
-        return -1;
-    }
-}
-
 const drvet drvLinStat = {
     2,
     &linStatReport,

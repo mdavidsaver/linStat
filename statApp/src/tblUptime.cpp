@@ -6,7 +6,7 @@
 /* read /proc/uptime
  */
 
-#include <vector>
+#include <fstream>
 #include <regex>
 
 #include <math.h>

@@ -1,4 +1,5 @@
 
+#include <fstream>
 #include <stdexcept>
 
 #include <string.h>

@@ -9,6 +9,7 @@
  */
 
 #include <sstream>
+#include <fstream>
 
 #include <errlog.h>
 #include <epicsThread.h>

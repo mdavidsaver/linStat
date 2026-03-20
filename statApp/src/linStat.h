@@ -13,7 +13,7 @@
 #include <memory>
 #include <mutex>
 #include <sstream>
-#include <fstream>
+#include <functional>
 #include <variant>
 #include <filesystem>
 
@@ -30,6 +30,8 @@
 #include <errlog.h>
 
 #include "nlreact.h"
+
+#include <epicsExport.h>
 
 #define GLIBC_VERSION VERSION_INT(__GLIBC__, __GLIBC_MINOR__, 0, 0)
 
@@ -86,9 +88,6 @@ struct StatTable {
     }
 
     static
-    std::vector<std::shared_ptr<StatTable>>
-    list_all();
-    static
     std::shared_ptr<StatTable>
     lookup(const std::string& name, const std::string& inst, const Reactor &react);
 };
@@ -109,28 +108,22 @@ struct Transaction {
     void set(const std::string& name);
 };
 
-struct StatTableFactory {
-    const char *name;
-    std::shared_ptr<StatTable> (*create)(const std::string&, const Reactor& react);
-};
+using factoryfn = std::function<std::shared_ptr<StatTable>(const std::string& inst, const Reactor& react)>;
 
-template<typename Tbl>
-std::shared_ptr<StatTable> tblFactory(const std::string& inst, const Reactor& react) {
-    return std::make_shared<Tbl>(inst, react);
-}
+long linStatReport(int level) noexcept;
+
+void addStatTableFactory(const std::string& name,
+                         const factoryfn& factory) noexcept;
+
 #define DEFINE_TABLE(name, TblKlass) \
     static \
-    __attribute__((section("linStatTableFactory"), retain, used)) \
-    const linStat::StatTableFactory tbl ## TblKlass = { \
-        name, \
-        &tblFactory<TblKlass>, \
-    };
+    void linStat ## TblKlass () noexcept { \
+        addStatTableFactory(name, [](const std::string& inst, const Reactor& react) -> std::shared_ptr<StatTable> { \
+            return std::make_shared<TblKlass>(inst, react); \
+        }); \
+    }; \
+    extern "C" { epicsExportRegistrar(linStat ## TblKlass); }
 
-
-struct StatTableIter {
-    const StatTableFactory *begin() const;
-    const StatTableFactory* end() const;
-};
 
 // utility
 bool starts_with(const std::string& inp, const char *prefix);
