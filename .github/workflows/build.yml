@@ -12,7 +12,7 @@ jobs:
         env:
             SET: ${{ matrix.set || 'defaults' }}
             CMP: ${{ matrix.compiler || 'gcc' }}
-            BCFG: default
+            BCFG: ${{ matrix.configuration || 'default' }}
             BASE: ${{ matrix.base }}
             EXTRA: ${{ matrix.extra }}
         strategy:
@@ -21,6 +21,10 @@ jobs:
                 include:
                 - name: ubuntu-latest-7.0-cxx17
                   base: "7.0"
+
+                - name: ubuntu-latest-7.0-static
+                  base: "7.0"
+                  configuration: static
 
                 - name: ubuntu-latest-7.0-clang
                   base: "7.0"
