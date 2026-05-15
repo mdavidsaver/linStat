@@ -12,4 +12,4 @@ TARGETS += TOOLCHAIN
 include $(TOP)/configure/RULES
 
 TOOLCHAIN: toolchain.cpp
-	$(CXX) -E $< | grep '^LINSTAT_' > $@
+	$(CCC) -E $< | grep '^LINSTAT_' > $@
