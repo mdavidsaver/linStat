@@ -44,7 +44,7 @@ jobs:
           run: |
             sudo apt-get update
             sudo apt-get -y install git python3 build-essential libreadline-dev gdb
-        - uses: actions/checkout@v4
+        - uses: actions/checkout@v6
           with:
             submodules: true
         - name: Automatic core dumper analysis
@@ -63,7 +63,7 @@ jobs:
           run: cat test/*/drvLinStat.dbior || true
         - name: Upload tapfiles Artifact
           if: ${{ always() }}
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v7
           with:
             name: tapfiles ${{ matrix.name }}
             path: '**/O.*/*.tap'
@@ -99,7 +99,7 @@ jobs:
                   base: "7.0"
 
         steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v6
           with:
               submodules: true
 
@@ -159,7 +159,7 @@ jobs:
           run: cat test/*/drvLinStat.dbior || true
         - name: Upload tapfiles Artifact
           if: ${{ always() }}
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v7
           with:
             name: tapfiles ${{ matrix.name }}
             path: '**/O.*/*.tap'
