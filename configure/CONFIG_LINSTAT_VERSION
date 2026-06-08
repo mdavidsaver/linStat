@@ -12,4 +12,5 @@ LINSTAT_1_0_1 = NO
 LINSTAT_1_1_0 = NO
 # forgot to add for 1.1.1 :P
 LINSTAT_1_1_1 = NO
-LINSTAT_1_2_0 = YES
+LINSTAT_1_2_0 = NO
+LINSTAT_1_2_1 = YES
