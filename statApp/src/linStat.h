@@ -15,7 +15,6 @@
 #include <sstream>
 #include <functional>
 #include <variant>
-#include <filesystem>
 
 #include <stdint.h>
 
@@ -127,17 +126,25 @@ void addStatTableFactory(const std::string& name,
 
 // utility
 bool starts_with(const std::string& inp, const char *prefix);
-bool read_file(const std::filesystem::path& fname, std::string& out);
+bool read_file(const std::string& fname, std::string& out);
 
 struct ReadDir final {
+    const std::string dirname;
     DIR* const dirFD;
-    struct dirent *ent;
-    ReadDir(const char *dir);
-    ReadDir(const std::string& dir) :ReadDir(dir.c_str()) {}
+    struct dirent *ent = nullptr;
+    ReadDir(const std::string& dir);
     ~ReadDir();
-    bool next();
+    bool next() noexcept;
 
-    const struct dirent* operator->() const { return ent; }
+    constexpr struct dirent* operator->() const noexcept { return ent; }
+    constexpr
+    explicit operator bool() const noexcept { return ent; }
+    constexpr
+    bool is_directory() const noexcept { return ent && ent->d_type==DT_DIR; }
+    std::string filename() const {
+        return ent ? ent->d_name : "";
+    }
+    std::string path() const;
 };
 
 } // namespace linStat

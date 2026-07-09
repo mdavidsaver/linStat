@@ -36,11 +36,6 @@ endif
 
 linStatDemo_LIBS += $(EPICS_BASE_IOC_LIBS)
 
-ifeq (YES,$(LINSTAT_NEED_STDCXXFS))
-# see configure/toolchain.cpp
-PROD_SYS_LIBS += stdc++fs
-endif
-
 #===========================
 
 include $(TOP)/configure/RULES

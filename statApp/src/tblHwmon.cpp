@@ -14,7 +14,6 @@
  * https://www.kernel.org/doc/Documentation/hwmon/sysfs-interface
  */
 
-#include <filesystem>
 #include <set>
 #include <fstream>
 #include <regex>
@@ -28,13 +27,12 @@
 
 namespace {
 using namespace linStat;
-namespace fs = std::filesystem;
 
 const char * const tblName = "hwmon";
 
 struct HWMonTable : public StatTable {
 
-    const fs::path base;
+    const std::string base;
 
     explicit HWMonTable(const std::string& inst, const Reactor& react)
         :StatTable(tblName, inst, react)
@@ -57,12 +55,13 @@ struct HWMonTable : public StatTable {
         int64_t Fnum = 0, Fturning = 0, Fstuck = 0;
 
         // iterate through hwmon* devices
-        for(const auto& ent : fs::directory_iterator(base)) {
-            if(!ent.is_directory() || !starts_with(ent.path().filename().string(), "hwmon"))
+        ReadDir ent(base);
+        while(ent.next()) {
+            if(!ent.is_directory() || !starts_with(ent.filename(), "hwmon"))
                 continue;
 
             std::string dev;
-            if(!read_file(ent.path() / "name", dev) || dev.empty())
+            if(!read_file(ent.path() + "/name", dev) || dev.empty())
                 continue;
 
             if(devs_seen.find(dev)!=devs_seen.end())
@@ -79,13 +78,14 @@ struct HWMonTable : public StatTable {
             };
             std::map<std::string, Fan> fans;
 
-            for(const auto& sv : fs::directory_iterator(ent.path())) {
+            ReadDir sv(ent.path());
+            while(sv.next()) {
                 // looking for entries of the form: <type><inst#>_<param>
                 static const std::regex expr(R"(^([a-z]+)(\d+)_([a-z]+)$)");
 
                 std::smatch M;
                 {
-                    auto fname(sv.path().filename().string());
+                    auto fname(sv.filename());
                     if(!std::regex_match(fname, M, expr))
                         continue;
                 }

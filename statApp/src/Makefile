@@ -50,11 +50,6 @@ LIB_SRCS_DEFAULT += dummy.c
 
 LIB_LIBS += $(EPICS_BASE_IOC_LIBS)
 
-ifeq (YES,$(LINSTAT_NEED_STDCXXFS))
-# see configure/toolchain.cpp
-LIB_SYS_LIBS += stdc++fs
-endif
-
 #===========================
 
 include $(TOP)/configure/RULES
