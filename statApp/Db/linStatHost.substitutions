@@ -11,6 +11,7 @@ file "tblScan.template" {
 {NAME="UP", OUT="uptime|localhost|uptime", PERIOD="10"}
 {NAME="HWMON", OUT="hwmon|localhost|temp_max", PERIOD="30"}
 {NAME="IRQ", OUT="irq|localhost|total_irq", PERIOD="10"}
+{NAME="RTC", OUT="rtc|/proc/driver/rtc|ref", PERIOD="30"}
 }
 
 file "tblGetI64.template" {

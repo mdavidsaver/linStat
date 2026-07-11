@@ -162,3 +162,49 @@ record(stringin, "$(IOC):SYS_UPTIME") {
     field(DTYP, "Linux Stat Time Delta")
     field(INP , "$(IOC):SYS_UP MSS")
 }
+
+# RTC status
+
+record(longin, "$(IOC):RTC:DLT") {
+    # difference between persistant RTC and CPU system clock
+    field(DESC, "Diff Sys vs. RTC")
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@rtc|/proc/driver/rtc|delta")
+    field(SCAN, "I/O Intr")
+    field(EGU , "s")
+    field(HIHI, "10")
+    field(HIGH, "2")
+    field(LOW , "-2")
+    field(LOLO, "-10")
+    field(HHSV, "MAJOR")
+    field(HSV , "MINOR")
+    field(LSV , "MINOR")
+    field(LLSV, "MAJOR")
+    field(FLNK, "$(IOC):RTC:REF")
+
+    info(autosaveFields_pass0, "HOPR LOPR HIHI HIGH LOW LOLO HHSV HSV LSV LLSV")
+}
+
+record(bi, "$(IOC):RTC:REF") {
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@rtc|/proc/driver/rtc|ref")
+    field(ZNAM, "UTC")
+    field(ONAM, "Loc")
+    field(FLNK, "$(IOC):RTC:BAT")
+}
+
+record(mbbi, "$(IOC):RTC:BAT") {
+    field(DESC, "RTC Battery State")
+    field(DTYP, "Linux Stat Get")
+    field(INP , "@rtc|/proc/driver/rtc|battery")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "3")
+    field(ZRST, "N/P") # no battery expected
+    field(ONST, "Bad")
+    field(TWST, "Ok")
+    field(THST, "Err")
+    field(ONSV, "MAJOR")
+    field(THSV, "MINOR")
+}
