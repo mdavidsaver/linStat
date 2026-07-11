@@ -23,21 +23,19 @@ using namespace linStat;
 const char * const tblName = "netstat";
 
 struct NetstatTable : public StatTable {
-    std::string fname;
     std::vector<std::string> labels; // persist to avoid re-alloc
 
     explicit NetstatTable(const std::string& inst, const Reactor& react)
         :StatTable(tblName, inst, react)
-        ,fname(inst)
     {}
     virtual ~NetstatTable() {}
 
     virtual void update() override final {
         Transaction tr(*this);
 
-        std::ifstream strm(fname);
+        std::ifstream strm(inst);
         if(!strm.is_open()) {
-            throw std::runtime_error(SB()<<"Unable to open: "<<fname);
+            throw std::runtime_error(SB()<<"Unable to open: "<<inst);
         }
 
         while(true) {
