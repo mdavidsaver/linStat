@@ -2,8 +2,11 @@
 # macros
 #  P - common record prefix.  eg. P=LOCALHOST:ETH0
 #  NIC - Interface name.  eg NIC="eth0"
+#  IOC - Legacy prefix macro, kept for backwards compatibility.
+#        Only needed if P is not given, in which case P defaults
+#        to "$(IOC):NET:$(NIC)".
 
-global {IOC="\$(IOC):NET:$(NIC)"}
+global {IOC="\$(P=\$(IOC):NET:$(NIC))"}
 
 file "tblScan.template" {
 {NAME="NETDEV", OUT="ifstat|\$(NIC)|xxx", PERIOD="10"}
