@@ -123,9 +123,10 @@ dbLoadRecords("../../db/linStatHost.db","IOC=$(IOC)")
 dbLoadRecords("../../db/linStatProc.db","IOC=$(IOC)")
 
 # Network interface information
-dbLoadRecords("../../db/linStatNIC.db","IOC=$(IOC),NIC=lo")
+dbLoadRecords("../../db/linStatNIC.db","P=$(IOC):NET:lo,NIC=lo")
 # may repeat with different NIC= network interface name(s)
-#dbLoadRecords("../../db/linStatNIC.db","IOC=$(IOC),NIC=eth0")
+# change both P= and NIC=
+#dbLoadRecords("../../db/linStatNIC.db","P=$(IOC):NET:eth0,NIC=eth0")
 
 # File system mount point information
 dbLoadRecords("../../db/linStatFS.db","P=$(IOC):ROOT,DIR=/")

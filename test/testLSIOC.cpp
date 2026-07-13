@@ -177,7 +177,7 @@ MAIN(testLSIOC)
     testioc_registerRecordDeviceDriver(pdbbase);
     testdbReadDatabase("linStatHost.db", "../../db", "IOC=LOCALHOST");
     testdbReadDatabase("linStatProc.db", "../../db", "IOC=LOCALHOST");
-    testdbReadDatabase("linStatNIC.db", "../../db", "IOC=LOCALHOST,NIC=lo");
+    testdbReadDatabase("linStatNIC.db", "../../db", "P=LOCALHOST:NET:lo,NIC=lo");
     testdbReadDatabase("linStatFS.db", "../../db", "P=LOCALHOST:ROOT,DIR=/");
     testdbReadDatabase("caparr.db", "..:.", "IOC=TST");
     iocshCmd("var linStatDebug 5");

@@ -12,10 +12,10 @@ linStatDemo_registerRecordDeviceDriver(pdbbase)
 
 dbLoadRecords("linStatHost.db","IOC=LOCALHOST")
 dbLoadRecords("linStatProc.db","IOC=LOCALHOST")
-dbLoadRecords("linStatNIC.db","IOC=LOCALHOST,NIC=lo")
+dbLoadRecords("linStatNIC.db","P=LOCALHOST:NET:lo,NIC=lo")
 dbLoadRecords("linStatFS.db","P=LOCALHOST:ROOT,DIR=/")
 
-dbLoadRecords("linStatNIC.db","IOC=LOCALHOST,NIC=wlp0s20f3")
+dbLoadRecords("linStatNIC.db","P=LOCALHOST:NET:wlp0s20f3,NIC=wlp0s20f3")
 
 
 iocInit()

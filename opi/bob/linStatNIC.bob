@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <display version="2.0.0">
-  <name>NIC: $(IOC) $(NIC)</name>
-  <macros>
-    <P>$(IOC):NET:$(NIC)</P>
-  </macros>
+  <name>NIC: $(P=$(IOC):NET:$(NIC))</name>
   <width>550</width>
   <height>160</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <class>TITLE</class>
-    <text>NIC: $(IOC) $(NIC)</text>
+    <text>NIC: $(P=$(IOC):NET:$(NIC))</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>306</width>
@@ -33,7 +30,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_17</name>
-    <pv_name>$(P):NAME</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):NAME</pv_name>
     <x>90</x>
     <y>35</y>
     <width>140</width>
@@ -54,7 +51,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_32</name>
-    <pv_name>$(P):RX</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):RX</pv_name>
     <x>90</x>
     <y>60</y>
     <width>116</width>
@@ -69,7 +66,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_33</name>
-    <pv_name>$(P):TX</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):TX</pv_name>
     <x>330</x>
     <y>60</y>
     <width>116</width>
@@ -83,7 +80,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_34</name>
-    <pv_name>$(P):RX:D</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):RX:D</pv_name>
     <x>116</x>
     <y>85</y>
     <width>90</width>
@@ -91,7 +88,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_35</name>
-    <pv_name>$(P):TX:D</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):TX:D</pv_name>
     <x>356</x>
     <y>85</y>
     <width>90</width>
@@ -105,14 +102,14 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_36</name>
-    <pv_name>$(P):MTU</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):MTU</pv_name>
     <x>80</x>
     <y>135</y>
     <width>90</width>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
-    <pv_name>$(P):LINK</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):LINK</pv_name>
     <x>250</x>
     <y>35</y>
     <width>80</width>
@@ -121,7 +118,7 @@
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_1</name>
-    <pv_name>$(P):CR</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):CR</pv_name>
     <x>340</x>
     <y>35</y>
     <width>80</width>
@@ -130,14 +127,14 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_37</name>
-    <pv_name>$(P):OPER</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):OPER</pv_name>
     <x>430</x>
     <y>35</y>
     <width>90</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_38</name>
-    <pv_name>$(P):RX:E</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):RX:E</pv_name>
     <x>116</x>
     <y>110</y>
     <width>90</width>
@@ -145,7 +142,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_39</name>
-    <pv_name>$(P):TX:E</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):TX:E</pv_name>
     <x>356</x>
     <y>110</y>
     <width>90</width>
@@ -166,21 +163,21 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_42</name>
-    <pv_name>$(P):DRV</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):DRV</pv_name>
     <x>270</x>
     <y>135</y>
     <width>90</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_43</name>
-    <pv_name>$(P):DRV:STAT</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):DRV:STAT</pv_name>
     <x>370</x>
     <y>135</y>
     <width>66</width>
   </widget>
   <widget type="progressbar" version="2.0.0">
     <name>Progress Bar</name>
-    <pv_name>$(P):RX</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):RX</pv_name>
     <x>220</x>
     <y>60</y>
     <width>70</width>
@@ -191,7 +188,7 @@
   </widget>
   <widget type="progressbar" version="2.0.0">
     <name>Progress Bar_1</name>
-    <pv_name>$(P):TX</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):TX</pv_name>
     <x>460</x>
     <y>60</y>
     <width>70</width>
@@ -202,14 +199,14 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_18</name>
-    <pv_name>$(P):SPEED</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):SPEED</pv_name>
     <x>355</x>
     <y>5</y>
     <width>86</width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_19</name>
-    <pv_name>$(P):DPLX</pv_name>
+    <pv_name>$(P=$(IOC):NET:$(NIC)):DPLX</pv_name>
     <x>458</x>
     <y>5</y>
     <width>70</width>
